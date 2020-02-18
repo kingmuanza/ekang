@@ -1,19 +1,56 @@
 import { Injectable } from '@angular/core';
 import * as firebsase from 'firebase';
+import { ToastController } from '@ionic/angular';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationService {
 
-  constructor() { }
+  utilisateur: firebsase.User;
+  utilisateurSubject = new Subject<firebsase.User>();
 
-  connexion(login: string, passe: string) {
-    return firebsase.auth().signInWithEmailAndPassword(login, passe);
+  constructor(public toastController: ToastController) { }
+
+
+  emettre() {
+    this.utilisateurSubject.next(this.utilisateur);
   }
 
-  inscription(login: string, passe: string) {
-    return firebsase.auth().createUserWithEmailAndPassword(login, passe);
+  connexion(login: string, passe: string): Promise<firebsase.User> {
+    return new Promise((resolve, reject) => {
+      firebsase.auth().signInWithEmailAndPassword(login, passe).then((credentials) => {
+        const utilisateur = credentials.user;
+        this.utilisateur = utilisateur;
+        this.emettre();
+        resolve(utilisateur);
+      }).catch(() => {
+
+      });
+    });
   }
+
+  inscription(login: string, passe: string): Promise<firebsase.User> {
+    return new Promise((resolve, reject) => {
+      firebsase.auth().createUserWithEmailAndPassword(login, passe).then((credentials) => {
+        const utilisateur = credentials.user;
+        this.utilisateur = utilisateur;
+        this.emettre();
+        resolve(utilisateur);
+      });
+    });
+  }
+
+  async notifier(texte: string) {
+    const toast = await this.toastController.create({
+      message: texte,
+      duration: 5000,
+      animated: true,
+      position: 'top'
+    });
+    toast.present();
+  }
+
 
 }

@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import * as firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { AuthentificationService } from './services/authentification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -48,12 +50,20 @@ export class AppComponent implements OnInit {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
+  utilisateur: firebase.User;
+  utilisateurSubscription = new Subscription();
   constructor(
+    public auth: AuthentificationService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
+    this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe((utilisateur) => {
+      this.utilisateur = utilisateur;
+      const variable = utilisateur.displayName;
+      const variable2 = utilisateur.email;
+    });
   }
 
   initializeApp() {

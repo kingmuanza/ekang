@@ -14,18 +14,19 @@
           Ekang
         </h1>
       </div>
-  
-      <div>
-        <input type="text" placeholder="Login">
-        <input type="text" placeholder="Mot de passe">
-      </div>
-  
-      <div class="connexion">
-        <button (click)="connexion()" class="bg-primaire">
-          Connexion
-        </button>
-      </div>
-  
+      <form [formGroup]="connexionForm" (ngSubmit)="onConnexionFormSubmit()">
+        <div>
+          <input formControlName="login" type="text" placeholder="Login">
+          <input formControlName="passe" type="password" placeholder="Mot de passe">
+        </div>
+
+        <div class="connexion">
+          <button [disabled]="connexionForm.invalid" class="bg-primaire">
+            Connexion
+          </button>
+        </div>
+      </form>
+
       <div class="infos-oubliees">
         Informations de connexion oubliées ?
         <br>
@@ -33,18 +34,18 @@
           Obtenez de l'aide pour vous connecter
         </b>
       </div>
-  
+
       <div class="vague">
         <img src="../../../assets/img/wave.png" style="width: 100%;">
       </div>
-  
+
       <div (click)="inscription()" class="inscription">
         Vous n'avez pas de compte ?
         <br>
         <b>
           Inscrivez vous
         </b>
-  
+
       </div>
     </div>
   </div>
