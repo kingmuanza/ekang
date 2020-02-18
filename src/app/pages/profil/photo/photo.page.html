@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modifier ma photo de profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="photo">
+    <img src="../../../../assets/img/user.png" style="width: 100%;">
+  </div>
+
+  <div style="position: fixed; bottom: 0; left: 0; width: 100%;">
+    <button (click)="galerie()" class="bg-primaire">
+      Galerie
+    </button>
+  </div>
+
+</ion-content>

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mon profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only"  name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="page">
+    <div class="div--photo">
+      <div class="photo">
+        <img src="../../../assets/img/user.png" style="width: 100%;">
+      </div>
+      <div class="photo moins" (click)="photo()">
+        <small>
+          Appuyer ici pour modifier
+        </small>
+      </div>
+
+      <div style="margin-top: 20px; text-align: center;">
+        <b style="font-size: 1.2em;">Nom d'utilisateur</b>
+      </div>
+    </div>
+    <div class="div--informations">
+
+
+      <div style="margin-left: 5vw; margin-right: 5vw;">
+        <input type="text" placeholder="Nom d'utilisateur">
+        <div>
+          <small>Ce nom sera visible par tous les utilisateurs</small>
+        </div>
+        <select>
+          <option>Pays d'origine</option>
+        </select>
+        <select>
+          <option>Pays de résidence</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>

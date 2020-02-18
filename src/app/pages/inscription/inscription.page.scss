@@ -1,0 +1,84 @@
+@mixin muanza-padding() {
+    padding: 20px;
+}
+
+// Enelver l'ombre sur le header
+ion-header {
+    &.header-md:after {
+        background: none;
+    }
+}
+
+$primaire: #0f9b0f;
+
+
+.image-arriere {
+    background-image: url('../../../assets/img/masque.jpg');
+    background-size: cover;
+    background-position: center center;
+    height: 100%;
+}
+
+.page {
+
+    @include muanza-padding();
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+
+    button {
+        font-size: 1.3em;
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+        color: white;
+        &:disabled.bg-primaire{
+            filter: grayscale(1);
+        }
+    }
+
+    * {
+        font-family: 'Ubuntu';
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        font-family: 'Ubuntu';
+    }
+
+    .connexion {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        color: #444;
+    }
+
+    .infos-oubliees {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .inscription {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        color: #444;
+        @include muanza-padding();
+        text-align: center;
+    }
+
+    .vague {
+        position: absolute;
+        display: none;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        margin-top: 15px;
+    }
+}
+
+ion-toolbar {
+    text-align: center;
+    font-family: 'Ubuntu';
+}

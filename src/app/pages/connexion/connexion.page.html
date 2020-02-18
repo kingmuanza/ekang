@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Francais</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="image-arriere">
+
+    <div class="page">
+
+      <div>
+        <h1>
+          Ekang
+        </h1>
+      </div>
+  
+      <div>
+        <input type="text" placeholder="Login">
+        <input type="text" placeholder="Mot de passe">
+      </div>
+  
+      <div class="connexion">
+        <button (click)="connexion()" class="bg-primaire">
+          Connexion
+        </button>
+      </div>
+  
+      <div class="infos-oubliees">
+        Informations de connexion oubliées ?
+        <br>
+        <b>
+          Obtenez de l'aide pour vous connecter
+        </b>
+      </div>
+  
+      <div class="vague">
+        <img src="../../../assets/img/wave.png" style="width: 100%;">
+      </div>
+  
+      <div (click)="inscription()" class="inscription">
+        Vous n'avez pas de compte ?
+        <br>
+        <b>
+          Inscrivez vous
+        </b>
+  
+      </div>
+    </div>
+  </div>
+</ion-content>
