@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
+import { Subscription } from 'rxjs';
+import { AuthentificationService } from 'src/app/services/authentification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accueil',
@@ -7,9 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccueilPage implements OnInit {
 
-  constructor() { }
+  utilisateur: firebase.User;
+  utilisateurSubscription: Subscription;
+
+  constructor(private router: Router, public auth: AuthentificationService) { }
 
   ngOnInit() {
+    this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe((utilisateur) => {
+      this.utilisateur = utilisateur;
+      if (!utilisateur) {
+        this.router.navigate(['connexion']);
+      }
+    });
+    this.auth.emettre();
+  }
+
+  profil() {
+    this.router.navigate(['profil']);
   }
 
 }

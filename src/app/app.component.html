@@ -3,7 +3,9 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
+          <ion-list-header *ngIf="utilisateur">
+            {{utilisateur.displayName ? utilisateur.displayName: defaultName(utilisateur)}}
+          </ion-list-header>
           <ion-note *ngIf="utilisateur">
             {{utilisateur.email}}
           </ion-note>

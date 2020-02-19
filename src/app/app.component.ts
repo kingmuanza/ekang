@@ -61,8 +61,10 @@ export class AppComponent implements OnInit {
     this.initializeApp();
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe((utilisateur) => {
       this.utilisateur = utilisateur;
-      const variable = utilisateur.displayName;
-      const variable2 = utilisateur.email;
+      if (utilisateur) {
+        const variable = utilisateur.displayName;
+        const variable2 = utilisateur.email;
+      }
     });
   }
 
@@ -79,5 +81,9 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+  }
+
+  defaultName(utilisateur: firebase.User) {
+    return utilisateur.email.split('@')[0];
   }
 }

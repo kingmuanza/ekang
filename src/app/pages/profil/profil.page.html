@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Mon profil</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="enregistrer()">
         <ion-icon slot="icon-only"  name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -26,14 +26,20 @@
       </div>
 
       <div style="margin-top: 20px; text-align: center;">
-        <b style="font-size: 1.2em;">Nom d'utilisateur</b>
+        <b style="font-size: 1.2em;">
+          {{utilisateur.displayName ? utilisateur.displayName : displayName ? displayName : 'Nom d\'utilisateur'}}
+        </b>
+        <br>
+        <small *ngIf="utilisateur" style="color: #777;">
+          {{utilisateur.email}}
+        </small>
       </div>
     </div>
     <div class="div--informations">
 
 
       <div style="margin-left: 5vw; margin-right: 5vw;">
-        <input type="text" placeholder="Nom d'utilisateur">
+        <input [(ngModel)]="displayName" type="text" placeholder="Nom d'utilisateur">
         <div>
           <small>Ce nom sera visible par tous les utilisateurs</small>
         </div>
