@@ -9,7 +9,10 @@
 
 <ion-content>
   <ng-container *ngIf="utilisateur">
-    <ion-card (click)="profil()" *ngIf="!utilisateur.displayName">
+    <ion-card
+      (click)="profil()"
+      *ngIf="!utilisateur.displayName || !utilisateur.photoURL"
+    >
       <ion-card-header>
         <ion-card-title>
           Mettre à jour mon profil
@@ -31,8 +34,8 @@
     </ion-item>
 
     <ion-card-content>
-      This is content, without any paragraph or header tags,
-      within an ion-card-content element.
+      This is content, without any paragraph or header tags, within an
+      ion-card-content element.
     </ion-card-content>
   </ion-card>
 
@@ -57,5 +60,4 @@
       <ion-label>Card Button Item 2</ion-label>
     </ion-item>
   </ion-card>
-
 </ion-content>

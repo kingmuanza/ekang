@@ -3,10 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Modifier ma photo de profil</ion-title>
+    <ion-title>photo de profil</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      <ion-button *ngIf="file" (click)="save()">
+        save
+        <ion-icon slot="end" name="save-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -14,7 +15,7 @@
 
 <ion-content>
   <div class="photo">
-    <img src="../../../../assets/img/user.png" style="width: 100%;">
+    <img [src]="photoURL" style="width: 100%;" />
   </div>
 
   <div style="position: fixed; bottom: 0; left: 0; width: 100%;">
@@ -22,5 +23,12 @@
       Galerie
     </button>
   </div>
-
+  <input
+    id="uploadBtn"
+    type="file"
+    class="upload"
+    (change)="uploadFile($event)"
+    class="filebtn"
+    #fileButton
+  />
 </ion-content>
