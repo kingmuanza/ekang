@@ -1,4 +1,72 @@
-<ion-header>
+<ion-content>
+  <div class="header">
+    <h2>
+      {{utilisateur.displayName ? utilisateur.displayName : displayName ?
+      displayName : 'Nom d\'utilisateur'}}
+    </h2>
+    <div class="space-between">
+      <div class="followings">
+        <ion-badge color="primary" mode="ios">50</ion-badge>
+        <p>Abonnés</p>
+      </div>
+      <div class="followings">
+        <ion-badge color="primary" mode="ios">42</ion-badge>
+        <p>Abonnements</p>
+      </div>
+    </div>
+    <div class="flex" (click)="photo()">
+      <div class="box-border">
+        <div class="border-white">
+          <div class="img-box" *ngIf="!photoURL">
+            <img src="../../../assets/img/user.png" />
+          </div>
+          <div class="img-box" *ngIf="photoURL">
+            <img [src]="photoURL" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-card>
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img src="../../../assets/img/user.png" />
+      </ion-avatar>
+      <ion-label>
+        <h2>
+          <b
+            >{{utilisateur.displayName ? utilisateur.displayName : displayName ?
+            displayName : 'Nom d\'utilisateur'}}</b
+          >
+        </h2>
+        <p>Il y a 14 heures</p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none" class="tweet">
+      <ion-label text-wrap
+        >Production version will be a lot more polished than this prototype, but
+        still fun to see</ion-label
+      >
+    </ion-item>
+    <img
+      class="tweet-img"
+      src="https://pbs.twimg.com/media/EFjhHzwUEAIM2n_?format=jpg&name=medium"
+    />
+    <ion-button size="small" fill="clear" (click)="onClick()">
+      <ion-icon slot="start" name="heart-outline"></ion-icon> 34
+    </ion-button>
+    <ion-button size="small" fill="clear" (click)="onClick()">
+      <ion-icon slot="start" name="chatbubbles-outline"></ion-icon> 116
+    </ion-button>
+    <ion-button size="small" fill="clear" (click)="onClick()">
+      <ion-icon slot="start" name="heart-empty"></ion-icon> 210
+    </ion-button>
+  </ion-card>
+</ion-content>
+
+<!--
+  <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button color="primary"></ion-menu-button>
@@ -61,3 +129,5 @@
     </ion-item>
   </ion-card>
 </ion-content>
+
+-->

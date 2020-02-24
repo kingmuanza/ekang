@@ -12,7 +12,8 @@ import { Router } from "@angular/router";
 export class AccueilPage implements OnInit {
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
-
+  photoURL: string;
+  displayName: string;
   constructor(private router: Router, public auth: AuthentificationService) {}
 
   ngOnInit() {
@@ -22,6 +23,12 @@ export class AccueilPage implements OnInit {
         console.log(this.utilisateur);
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
+        }
+        if (utilisateur.photoURL) {
+          this.photoURL = utilisateur.photoURL;
+        }
+        if (utilisateur.displayName) {
+          this.displayName = utilisateur.displayName;
         }
       }
     );
