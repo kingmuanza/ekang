@@ -48,13 +48,37 @@
         <div>
           <small>Ce nom sera visible par tous les utilisateurs</small>
         </div>
-        <select>
-          <option *ngFor="let p of pays; let i = index">{{ p.name }}</option>
-        </select>
-        <select>
-          <option>Pays de résidence</option>
-        </select>
+        <ion-select
+          (ionChange)="chooseCountry($event)"
+          interface="popover"
+          placeholder="Pays de residence"
+        >
+          <ion-select-option *ngFor="let p of pays" value="{{ p.name }}"
+            >{{ p.name }}</ion-select-option
+          >
+        </ion-select>
+        <ion-select
+          (ionChange)="chooseProfession($event)"
+          interface="popover"
+          placeholder="Profession "
+        >
+          <ion-select-option
+            *ngFor="let pro of listProfesion"
+            value="{{ pro.Name }}"
+            >{{ pro.Name }}</ion-select-option
+          >
+        </ion-select>
       </div>
     </div>
   </div>
 </ion-content>
+<ion-footer (click)="suivant()" *ngIf="userPays && userProfession">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" fill="outline" size="small">
+        suivant
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

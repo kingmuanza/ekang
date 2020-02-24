@@ -6,18 +6,20 @@
 
 <ion-content>
   <div class="image-arriere">
-
     <div class="page">
-
       <div>
         <h1>
-          Ekang
+          Ekang ôssu
         </h1>
       </div>
       <form [formGroup]="connexionForm" (ngSubmit)="onConnexionFormSubmit()">
         <div>
-          <input formControlName="login" type="text" placeholder="Login">
-          <input formControlName="passe" type="password" placeholder="Mot de passe">
+          <input formControlName="login" type="text" placeholder="Login" />
+          <input
+            formControlName="passe"
+            type="password"
+            placeholder="Mot de passe"
+          />
         </div>
 
         <div class="connexion">
@@ -29,23 +31,22 @@
 
       <div class="infos-oubliees">
         Informations de connexion oubliées ?
-        <br>
+        <br />
         <b>
           Obtenez de l'aide pour vous connecter
         </b>
       </div>
 
       <div class="vague">
-        <img src="../../../assets/img/wave.png" style="width: 100%;">
+        <img src="../../../assets/img/wave.png" style="width: 100%;" />
       </div>
 
       <div (click)="inscription()" class="inscription">
         Vous n'avez pas de compte ?
-        <br>
+        <br />
         <b>
           Inscrivez vous
         </b>
-
       </div>
     </div>
   </div>

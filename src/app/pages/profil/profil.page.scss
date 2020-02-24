@@ -1,20 +1,20 @@
 .div--photo {
-    padding-left: 20vw;
-    padding-right: 20vw;
-    padding-bottom: 5vh;
-    padding-top: 5vh;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  padding-bottom: 5vh;
+  padding-top: 5vh;
 
-    .photo {
-        margin-left: 10vw;
-        margin-right: 10vw;
-        border-radius: 50%;
-        overflow: hidden;
-        &.moins {
-            margin-top: -40vw;
-            height: 40vw;
-            padding: 20px;
-            padding-top: 15vw;
-            text-align: center;
-        }
+  .photo {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    border-radius: 50%;
+    overflow: hidden;
+    &.moins {
+      margin-top: -40vw;
+      height: 40vw;
+      padding: 20px;
+      padding-top: 15vw;
+      text-align: center;
     }
+  }
 }

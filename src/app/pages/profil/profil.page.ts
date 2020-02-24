@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { ToastController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
-
+import { UserService } from "src/app/services/user.service";
 @Component({
   selector: "app-profil",
   templateUrl: "./profil.page.html",
@@ -16,11 +16,15 @@ export class ProfilPage implements OnInit {
   displayName: string;
   photoURL: string;
   pays: any;
+  userPays: any;
+  userProfession: any;
+  listProfesion: any;
   constructor(
     public toastController: ToastController,
     private router: Router,
     public auth: AuthentificationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -41,6 +45,7 @@ export class ProfilPage implements OnInit {
     );
     this.auth.emettre();
     this.getCountry();
+    this.listProfession();
   }
 
   enregistrer() {
@@ -54,7 +59,6 @@ export class ProfilPage implements OnInit {
         this.notifier("Votre profil a été mis à jour");
       })
       .catch(err => {
-        console.log("erreur");
         console.log(err);
       });
   }
@@ -80,5 +84,38 @@ export class ProfilPage implements OnInit {
         console.log(data);
         this.pays = data;
       });
+  }
+
+  chooseCountry(ev: Event) {
+    this.userPays = ev.target["value"];
+  }
+
+  chooseProfession(ev: Event) {
+    this.userProfession = ev.target["value"];
+  }
+
+  suivant() {
+    console.log(this.utilisateur);
+    let user = {};
+    user["displayName"] = this.utilisateur.displayName;
+    user["photoUrl"] = this.utilisateur.photoURL;
+    user["email"] = this.utilisateur.email;
+    user["pays"] = this.userPays;
+    user["profession"] = this.userProfession;
+    this.userService.create_User(user).then(data => {});
+  }
+
+  listProfession() {
+    this.userService.read_ProfessionList().subscribe(data => {
+      this.listProfesion = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          isEdit: false,
+          Name: e.payload.doc.data()["nom"]
+          // Age: e.payload.doc.data()['Age'],
+          // Address: e.payload.doc.data()['Address'],
+        };
+      });
+    });
   }
 }

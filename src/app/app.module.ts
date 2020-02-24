@@ -10,6 +10,10 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireDatabaseModule } from "@angular/fire/database";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { FIREBASE_CONFIG } from "./app.firebase.config";
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +24,10 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     StatusBar,

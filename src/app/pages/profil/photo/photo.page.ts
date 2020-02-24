@@ -39,6 +39,7 @@ export class PhotoPage implements OnInit {
   }
 
   galerie() {
+    // firebase.firestore().
     this.fileButton.nativeElement.click();
   }
   uploadFile(event: any) {
@@ -66,15 +67,11 @@ export class PhotoPage implements OnInit {
     task.then(data => {
       console.log("ok", data);
       const imageUrl = storageRef.getDownloadURL().then(url => {
-        console.log("URL:" + url);
         this.utilisateur
           .updateProfile({
             photoURL: url
           })
           .then(() => {
-            // this.utilisateur.photoURL = url;
-            console.log(this.utilisateur);
-
             this.auth.updateUser(this.utilisateur);
             this.notifier("Votre profil a été mis à jour");
             this.router.navigate(["profil"]);
