@@ -45,7 +45,11 @@ const routes: Routes = [
       import("./pages/principale/principale.module").then(
         m => m.PrincipalePageModule
       )
+  },  {
+    path: 'amis',
+    loadChildren: () => import('./pages/amis/amis.module').then( m => m.AmisPageModule)
   }
+
 ];
 
 @NgModule({

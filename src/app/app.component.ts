@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Mes amis',
-      url: '/folder/Favorites',
+      url: 'amis',
       icon: 'people'
     },
     {

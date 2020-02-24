@@ -26,6 +26,38 @@ export class UserService {
     });
   }
 
+  getUtilisateurs(): Promise<Array<firebase.User>>{
+    const db = firebase.firestore();
+    const utilisateurs = new Array<firebase.User>();
+    return new Promise((resolve, reject) => {
+      db.collection('utilisateurs').get().then((resultats) => {
+        resultats.forEach((resultat)=>{
+          const utilisateur = resultat.data() as firebase.User;
+          utilisateurs.push(utilisateur);
+        });
+        resolve(utilisateurs);
+      }).catch((e) => {
+        reject(e);
+      });
+    });
+  }
+
+  getProfils(): Promise<Array<Profil>>{
+    const db = firebase.firestore();
+    const profils = new Array<Profil>();
+    return new Promise((resolve, reject) => {
+      db.collection('profils').get().then((resultats) => {
+        resultats.forEach((resultat)=>{
+          const profil = resultat.data() as Profil;
+          profils.push(profil);
+        });
+        resolve(profils);
+      }).catch((e) => {
+        reject(e);
+      });
+    });
+  }
+
   updateProfil(profil: Profil) {
     const db = firebase.firestore();
     const element = this.purifier(profil);
