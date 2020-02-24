@@ -5,6 +5,7 @@ import { AuthentificationService } from "src/app/services/authentification.servi
 import { ToastController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/services/user.service";
+import { Profil } from 'src/app/models/profil.model';
 @Component({
   selector: "app-profil",
   templateUrl: "./profil.page.html",
@@ -19,6 +20,9 @@ export class ProfilPage implements OnInit {
   userPays: any;
   userProfession: any;
   listProfesion: any;
+  profil: Profil;
+
+
   constructor(
     public toastController: ToastController,
     private router: Router,
@@ -34,6 +38,11 @@ export class ProfilPage implements OnInit {
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
+          this.userService.getProfil(this.utilisateur).then((profil)=>{
+            if(profil) {
+              this.profil = profil;
+            }
+          })
           if (utilisateur.displayName) {
             this.displayName = utilisateur.displayName;
           }
@@ -57,6 +66,11 @@ export class ProfilPage implements OnInit {
       .then(resultat => {
         console.log(resultat);
         this.notifier("Votre profil a été mis à jour");
+        if(this.utilisateur.photoURL) {
+          this.router.navigate(['accueil']);
+        } else {
+          this.photo();
+        }
       })
       .catch(err => {
         console.log(err);
@@ -96,13 +110,14 @@ export class ProfilPage implements OnInit {
 
   suivant() {
     console.log(this.utilisateur);
-    let user = {};
-    user["displayName"] = this.utilisateur.displayName;
-    user["photoUrl"] = this.utilisateur.photoURL;
-    user["email"] = this.utilisateur.email;
-    user["pays"] = this.userPays;
-    user["profession"] = this.userProfession;
-    this.userService.create_User(user).then(data => {});
+    let profil = new Profil(this.utilisateur);
+    profil.pays = this.userPays;
+    profil.profession = this.userProfession;
+    this.userService.createUser(this.utilisateur).then(data => {
+      this.userService.updateProfil(profil).then(()=>{
+        this.enregistrer();
+      });
+    });
   }
 
   listProfession() {
@@ -118,4 +133,8 @@ export class ProfilPage implements OnInit {
       });
     });
   }
+
+  compareWithFn = (o1, o2) => {
+    return o1 && o2 ? o1.name === o2.name : o1 === o2;
+  };
 }

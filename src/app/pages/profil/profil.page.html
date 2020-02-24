@@ -5,8 +5,9 @@
     </ion-buttons>
     <ion-title>Mon profil</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="enregistrer()">
-        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      <ion-button color="primary" *ngIf="userPays && userProfession" (click)="suivant()">
+        Suivant
+        <ion-icon name="arrow-forward-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -34,51 +35,27 @@
         </b>
         <br />
         <small *ngIf="utilisateur" style="color: #777;">
-          {{utilisateur.email}}
+          {{utilisateur.email}}<br>
+          {{profil.pays}}<br>
+          {{profil.profession}}
         </small>
       </div>
     </div>
     <div class="div--informations">
       <div style="margin-left: 5vw; margin-right: 5vw;">
-        <input
-          [(ngModel)]="displayName"
-          type="text"
-          placeholder="Nom d'utilisateur"
-        />
+        <input [(ngModel)]="displayName" type="text" placeholder="Nom d'utilisateur" />
         <div>
           <small>Ce nom sera visible par tous les utilisateurs</small>
         </div>
-        <ion-select
-          (ionChange)="chooseCountry($event)"
-          interface="popover"
-          placeholder="Pays de residence"
-        >
-          <ion-select-option *ngFor="let p of pays" value="{{ p.name }}"
-            >{{ p.name }}</ion-select-option
-          >
+        <ion-select (ionChange)="chooseCountry($event)" interface="popover" placeholder="Pays de residence">
+          <ion-select-option *ngFor="let p of pays" value="{{ p.name }}">
+            {{ p.name }}
+          </ion-select-option>
         </ion-select>
-        <ion-select
-          (ionChange)="chooseProfession($event)"
-          interface="popover"
-          placeholder="Profession "
-        >
-          <ion-select-option
-            *ngFor="let pro of listProfesion"
-            value="{{ pro.Name }}"
-            >{{ pro.Name }}</ion-select-option
-          >
+        <ion-select (ionChange)="chooseProfession($event)" interface="popover" placeholder="Profession ">
+          <ion-select-option *ngFor="let pro of listProfesion" value="{{ pro.Name }}">{{ pro.Name }}</ion-select-option>
         </ion-select>
       </div>
     </div>
   </div>
 </ion-content>
-<ion-footer (click)="suivant()" *ngIf="userPays && userProfession">
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button color="secondary" fill="outline" size="small">
-        suivant
-        <ion-icon name="arrow-forward-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
