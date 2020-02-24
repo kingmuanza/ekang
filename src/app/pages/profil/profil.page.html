@@ -35,10 +35,8 @@
         </b>
         <br />
         <small *ngIf="utilisateur" style="color: #777;">
-          {{utilisateur.email}}<br>
-          {{profil.pays}}<br>
-          {{profil.profession}}
-        </small>
+          {{utilisateur.email}}
+          </small>
       </div>
     </div>
     <div class="div--informations">
@@ -47,13 +45,13 @@
         <div>
           <small>Ce nom sera visible par tous les utilisateurs</small>
         </div>
-        <ion-select (ionChange)="chooseCountry($event)" interface="popover" placeholder="Pays de residence">
-          <ion-select-option *ngFor="let p of pays" value="{{ p.name }}">
+        <ion-select [value]="profil ? profil.pays.name : ''" (ionChange)="chooseCountry($event)" interface="popover" placeholder="Pays de residence">
+          <ion-select-option *ngFor="let p of pays" [value]="p.name">
             {{ p.name }}
           </ion-select-option>
         </ion-select>
-        <ion-select (ionChange)="chooseProfession($event)" interface="popover" placeholder="Profession ">
-          <ion-select-option *ngFor="let pro of listProfesion" value="{{ pro.Name }}">{{ pro.Name }}</ion-select-option>
+        <ion-select [value]="profil ? profil.profession.name : ''" (ionChange)="chooseProfession($event)" interface="popover" placeholder="Profession ">
+          <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.Name">{{ pro.Name }}</ion-select-option>
         </ion-select>
       </div>
     </div>

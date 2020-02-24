@@ -18,42 +18,41 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
+      title: 'Accueil',
+      url: 'accueil',
+      icon: 'home'
+    },{
+      title: 'Notifications',
+      url: 'accueil',
+      icon: 'notifications'
     },
     {
-      title: 'Outbox',
+      title: 'Mes publications',
       url: '/folder/Outbox',
       icon: 'paper-plane'
     },
     {
-      title: 'Favorites',
+      title: 'Mes amis',
+      url: '/folder/Favorites',
+      icon: 'people'
+    },
+    {
+      title: 'Mes favoris',
       url: '/folder/Favorites',
       icon: 'heart'
     },
     {
-      title: 'Archived',
+      title: 'Rechercher',
       url: '/folder/Archived',
-      icon: 'archive'
+      icon: 'search'
     },
     {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
-    },
-    {
-      title: 'Profile',
-      url: '/profil',
-      icon: 'person-outline'
+      title: 'Mon profil',
+      url: 'profil',
+      icon: 'person'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public labels = ['Déconnexion'];
 
   utilisateur: firebase.User;
   utilisateurSubscription = new Subscription();
@@ -68,7 +67,7 @@ export class AppComponent implements OnInit {
       utilisateur => {
         this.utilisateur = utilisateur;
         if (utilisateur) {
-          const variable = utilisateur.displayName;
+          const variable = utilisateur.photoURL;
           const variable2 = utilisateur.email;
         }
       }
