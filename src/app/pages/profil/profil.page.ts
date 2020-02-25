@@ -6,6 +6,8 @@ import { ToastController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/services/user.service";
 import { Profil } from 'src/app/models/profil.model';
+import { NotificationEkang } from 'src/app/models/notification.model';
+import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: "app-profil",
   templateUrl: "./profil.page.html",
@@ -27,6 +29,7 @@ export class ProfilPage implements OnInit {
     public toastController: ToastController,
     private router: Router,
     public auth: AuthentificationService,
+    public notifService: NotificationService,
     private http: HttpClient,
     private userService: UserService
   ) {}
@@ -55,6 +58,13 @@ export class ProfilPage implements OnInit {
     this.auth.emettre();
     this.getCountry();
     this.listProfession();
+  }
+
+  createNotification(profil: Profil, type: string) {
+    const notification = new NotificationEkang(profil, type);
+    this.notifService.createNotification(notification).then(()=>{
+      console.log('La notification a été crée');
+    });
   }
 
   enregistrer() {
@@ -116,6 +126,7 @@ export class ProfilPage implements OnInit {
     this.userService.createUser(this.utilisateur).then(data => {
       this.userService.updateProfil(profil).then(()=>{
         this.enregistrer();
+        this.createNotification(profil, 'UPDATE_PROFIL');
       });
     });
   }

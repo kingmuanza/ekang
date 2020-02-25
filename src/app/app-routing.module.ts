@@ -48,6 +48,10 @@ const routes: Routes = [
   },  {
     path: 'amis',
     loadChildren: () => import('./pages/amis/amis.module').then( m => m.AmisPageModule)
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
   }
 
 ];

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+
+    <ng-container *ngFor="let notification of notifications">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img class="image-muanza" [src]="notification.profil.utilisateur.photoURL ? notification.profil.utilisateur.photoURL: '../../../assets/img/user.png'">
+        </ion-avatar>
+        <ion-label>
+          <ion-label class="ion-text-wrap" *ngIf="notification.type === 'UPDATE_PROFIL'">
+            {{notification.profil.utilisateur.displayName}}
+            a mis à jour son profil
+          </ion-label>
+          
+        </ion-label>
+      </ion-item>
+    </ng-container>
+    
+  </ion-list>
+</ion-content>

@@ -21,9 +21,10 @@ export class AppComponent implements OnInit {
       title: 'Accueil',
       url: 'accueil',
       icon: 'home'
-    },{
+    }, 
+    {
       title: 'Notifications',
-      url: 'accueil',
+      url: 'notifications',
       icon: 'notifications'
     },
     {
