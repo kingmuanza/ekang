@@ -1,59 +1,58 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
-import { Platform } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import * as firebase from "firebase";
-import { FIREBASE_CONFIG } from "./app.firebase.config";
-import { AuthentificationService } from "./services/authentification.service";
-import { Subscription } from "rxjs";
+import * as firebase from 'firebase';
+import { FIREBASE_CONFIG } from './app.firebase.config';
+import { AuthentificationService } from './services/authentification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "app.component.html",
-  styleUrls: ["app.component.scss"]
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: "Inbox",
-      url: "/folder/Inbox",
-      icon: "mail"
+      title: 'Accueil',
+      url: 'accueil',
+      icon: 'home'
+    },{
+      title: 'Notifications',
+      url: 'accueil',
+      icon: 'notifications'
     },
     {
-      title: "Outbox",
-      url: "/folder/Outbox",
-      icon: "paper-plane"
+      title: 'Mes publications',
+      url: '/folder/Outbox',
+      icon: 'paper-plane'
     },
     {
-      title: "Favorites",
-      url: "/folder/Favorites",
-      icon: "heart"
+      title: 'Mes amis',
+      url: 'amis',
+      icon: 'people'
     },
     {
-      title: "Archived",
-      url: "/folder/Archived",
-      icon: "archive"
+      title: 'Mes favoris',
+      url: '/folder/Favorites',
+      icon: 'heart'
     },
     {
-      title: "Trash",
-      url: "/folder/Trash",
-      icon: "trash"
+      title: 'Rechercher',
+      url: '/folder/Archived',
+      icon: 'search'
     },
     {
-      title: "Spam",
-      url: "/folder/Spam",
-      icon: "warning"
-    },
-    {
-      title: "Profile",
-      url: "/profil",
-      icon: "person-outline"
+      title: 'Mon profil',
+      url: 'profil',
+      icon: 'person'
     }
   ];
-  public labels = ["Family", "Friends", "Notes", "Work", "Travel", "Reminders"];
+  public labels = ['Déconnexion'];
 
   utilisateur: firebase.User;
   utilisateurSubscription = new Subscription();
@@ -68,7 +67,7 @@ export class AppComponent implements OnInit {
       utilisateur => {
         this.utilisateur = utilisateur;
         if (utilisateur) {
-          const variable = utilisateur.displayName;
+          const variable = utilisateur.photoURL;
           const variable2 = utilisateur.email;
         }
       }
@@ -84,7 +83,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split("folder/")[1];
+    const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(
         page => page.title.toLowerCase() === path.toLowerCase()
@@ -93,6 +92,6 @@ export class AppComponent implements OnInit {
   }
 
   defaultName(utilisateur: firebase.User) {
-    return utilisateur.email.split("@")[0];
+    return utilisateur.email.split('@')[0];
   }
 }

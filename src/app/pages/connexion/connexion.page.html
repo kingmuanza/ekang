@@ -1,8 +1,85 @@
-<ion-header>
+<ion-content>
+  <div class="padding">
+    <div class="logo">
+      <!--  <ion-icon color="light" name="sunny"></ion-icon> 
+       <ion-icon name="person-circle-outline"></ion-icon>-->
+
+      <img src="../../../assets/ekang.PNG" />
+
+      <!-- <ion-icon color="light" name="cloudy-night"></ion-icon>
+       -->
+    </div>
+    <form [formGroup]="connexionForm" (ngSubmit)="onConnexionFormSubmit()">
+      <ion-item>
+        <ion-label stacked class="my-label"> Email:</ion-label>
+        <ion-input
+          color="black"
+          type="mail"
+          formControlName="login"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked class="my-label"> Mot de passe:</ion-label>
+        <ion-input
+          color="black"
+          type="password"
+          formControlName="passe"
+        ></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button color="black" slot="end" fill="clear"
+          >Mot de passe oublié ?</ion-button
+        >
+      </ion-item>
+
+      <ion-button
+        [disabled]="connexionForm.invalid"
+        (click)="onConnexionFormSubmit()"
+        color="black"
+        expand="block"
+        shape="round"
+        fill="outline"
+        >Connexion</ion-button
+      >
+      <br />
+      <ion-button
+        (click)="inscription()"
+        color="warning"
+        expand="block"
+        shape="round"
+        >Inscription</ion-button
+      >
+    </form>
+
+    <ion-item lines="none">
+      <ion-label color="light" text-center>Ou connectez-vous avec</ion-label>
+    </ion-item>
+
+    <div class="flex">
+      <div style="flex-grow: 1">
+        <ion-button color="primary" shape="round" size="default">
+          <ion-icon slot="start" name="logo-facebook"></ion-icon>
+          Facebook
+        </ion-button>
+      </div>
+      <div style="flex-grow: 1">
+        <ion-button color="danger" shape="round" size="default">
+          <ion-icon slot="start" name="logo-google"></ion-icon>
+          Google
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!--
+  <ion-header>
   <ion-toolbar>
     <ion-title>Francais</ion-title>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
   <div class="image-arriere">
@@ -16,6 +93,7 @@
         <div>
           <input formControlName="login" type="text" placeholder="Login" />
           <input
+            style="margin-top: 10px;"
             formControlName="passe"
             type="password"
             placeholder="Mot de passe"
@@ -51,3 +129,4 @@
     </div>
   </div>
 </ion-content>
+-->

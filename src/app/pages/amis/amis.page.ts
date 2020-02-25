@@ -3,18 +3,26 @@ import * as firebase from "firebase";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { Router } from "@angular/router";
+import { UserService } from 'src/app/services/user.service';
+import { Profil } from 'src/app/models/profil.model';
 
 @Component({
-  selector: "app-accueil",
-  templateUrl: "./accueil.page.html",
-  styleUrls: ["./accueil.page.scss"]
+  selector: 'app-amis',
+  templateUrl: './amis.page.html',
+  styleUrls: ['./amis.page.scss'],
 })
-export class AccueilPage implements OnInit {
+export class AmisPage implements OnInit {
+
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
   photoURL: string;
   displayName: string;
-  constructor(private router: Router, public auth: AuthentificationService) {}
+  profils = new Array<Profil>();
+  profilsResultats = new Array<Profil>();
+
+  saisie = '';
+
+  constructor(private userService: UserService, private router: Router, public auth: AuthentificationService) { }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -24,6 +32,7 @@ export class AccueilPage implements OnInit {
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
+
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
@@ -34,10 +43,19 @@ export class AccueilPage implements OnInit {
       }
     );
     this.auth.emettre();
+    this.userService.getProfils().then((profils) => {
+      this.profils = profils;
+      this.profilsResultats = profils;
+    });
   }
 
-  profil() {
-    this.router.navigate(["profil"]);
+  rechercher(ev) {
+    console.log(this.saisie);
+    this.profilsResultats = this.profils
+    this.profilsResultats = this.profilsResultats.filter((element) => {
+      return element.utilisateur.displayName.toLocaleLowerCase().indexOf(this.saisie.toLowerCase()) !== -1;
+    })
+
   }
-  onClick() {}
+
 }

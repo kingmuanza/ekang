@@ -1,11 +1,14 @@
-<ion-content>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>M'Bolo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="utilisateur">
   <div class="header">
-    <div class="menu">
-      <ion-buttons slot="start">
-        <ion-menu-button color="primary"></ion-menu-button>
-      </ion-buttons>
-      <ion-title>M'Bolo</ion-title>
-    </div>
     <h2>
       {{utilisateur.displayName ? utilisateur.displayName : displayName ?
       displayName : 'Nom d\'utilisateur'}}
@@ -20,7 +23,7 @@
         <p>Abonnements</p>
       </div>
     </div>
-    <div class="flex" (click)="photo()">
+    <div class="flex" (click)="profil()">
       <div class="box-border">
         <div class="border-white">
           <div class="img-box" *ngIf="!photoURL">
@@ -72,15 +75,7 @@
 </ion-content>
 
 <!--
-  <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button color="primary"></ion-menu-button>
-    </ion-buttons>
-    <ion-title>M'Bolo</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+  
 <ion-content>
   <ng-container *ngIf="utilisateur">
     <ion-card
