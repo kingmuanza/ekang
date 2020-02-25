@@ -1,0 +1,20 @@
+.muanza-header {
+    background-color: #0062ff;
+    height: 70vw;
+    padding-top: 10vw;
+    padding-left: 25vw;
+
+    .muanza-image {
+        height: 50vw;
+        width: 50vw;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid white;
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+ion-toolbar {
+    --border-color: #0062ff;
+}

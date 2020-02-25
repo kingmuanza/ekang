@@ -3,18 +3,25 @@
     <ion-buttons slot="start">
       <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-searchbar (ionChange)="rechercher()" [(ngModel)]="saisie"></ion-searchbar>
+    <ion-searchbar
+      (ionChange)="rechercher($event)"
+      [(ngModel)]="saisie"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
   <ion-list>
-
+    <ion-list-header>
+      <ion-label>Mes amis</ion-label>
+    </ion-list-header>
     <ng-container *ngFor="let profil of profilsResultats">
-      <ion-item>
+      <ion-item (click)="voirProfil(profil)">
         <ion-avatar slot="start">
-          <img class="image-muanza" [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'">
+          <img
+            class="image-muanza"
+            [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
         </ion-avatar>
         <ion-label>
           <h2>{{profil.utilisateur.displayName}}</h2>
@@ -22,6 +29,24 @@
         </ion-label>
       </ion-item>
     </ng-container>
-    
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Personnes qui pourraient vous intéresser</ion-label>
+    </ion-list-header>
+    <ng-container *ngFor="let profil of profilsResultats">
+      <ion-item (click)="voirProfil(profil)">
+        <ion-avatar slot="start">
+          <img
+            class="image-muanza"
+            [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{profil.utilisateur.displayName}}</h2>
+          <h3>{{profil.pays}}, {{profil.profession}}</h3>
+        </ion-label>
+      </ion-item>
+    </ng-container>
   </ion-list>
 </ion-content>

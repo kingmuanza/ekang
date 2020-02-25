@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{profil ? profil.utilisateur.displayName: 'Veuillez patienter...'}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="muanza-header">
+    <div  *ngIf="profil" class="muanza-image" [ngStyle]="{'background-image': 'url('+profil.utilisateur.photoURL+')' }">
+    </div>
+  </div>
+  <ion-list  *ngIf="profil">
+    <ion-item>
+      <ion-text slot="start">
+        Pays : 
+      </ion-text>
+      <ion-label>{{ profil.pays }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-text slot="start">
+        Profession : 
+      </ion-text>
+      <ion-label>{{ profil.profession }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

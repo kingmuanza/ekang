@@ -24,7 +24,6 @@ export class ProfilPage implements OnInit {
   listProfesion: any;
   profil: Profil;
 
-
   constructor(
     public toastController: ToastController,
     private router: Router,
@@ -41,11 +40,11 @@ export class ProfilPage implements OnInit {
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
-          this.userService.getProfil(this.utilisateur).then((profil)=>{
-            if(profil) {
+          this.userService.getProfil(this.utilisateur).then(profil => {
+            if (profil) {
               this.profil = profil;
             }
-          })
+          });
           if (utilisateur.displayName) {
             this.displayName = utilisateur.displayName;
           }
@@ -76,8 +75,8 @@ export class ProfilPage implements OnInit {
       .then(resultat => {
         console.log(resultat);
         this.notifier("Votre profil a été mis à jour");
-        if(this.utilisateur.photoURL) {
-          this.router.navigate(['accueil']);
+        if (this.utilisateur.photoURL) {
+          this.router.navigate(["accueil"]);
         } else {
           this.photo();
         }
@@ -124,7 +123,7 @@ export class ProfilPage implements OnInit {
     profil.pays = this.userPays;
     profil.profession = this.userProfession;
     this.userService.createUser(this.utilisateur).then(data => {
-      this.userService.updateProfil(profil).then(()=>{
+      this.userService.updateProfil(profil).then(() => {
         this.enregistrer();
         this.createNotification(profil, 'UPDATE_PROFIL');
       });

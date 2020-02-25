@@ -5,7 +5,11 @@
     </ion-buttons>
     <ion-title>Mon profil</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" *ngIf="userPays && userProfession" (click)="suivant()">
+      <ion-button
+        color="primary"
+        *ngIf="userPays && userProfession"
+        (click)="suivant()"
+      >
         Suivant
         <ion-icon name="arrow-forward-outline"></ion-icon>
       </ion-button>
@@ -36,22 +40,40 @@
         <br />
         <small *ngIf="utilisateur" style="color: #777;">
           {{utilisateur.email}}
-          </small>
+        </small>
       </div>
     </div>
     <div class="div--informations">
       <div style="margin-left: 5vw; margin-right: 5vw;">
-        <input [(ngModel)]="displayName" type="text" placeholder="Nom d'utilisateur" />
+        <input
+          [(ngModel)]="displayName"
+          type="text"
+          placeholder="Nom d'utilisateur"
+        />
         <div>
           <small>Ce nom sera visible par tous les utilisateurs</small>
         </div>
-        <ion-select [value]="profil ? profil.pays.name : ''" (ionChange)="chooseCountry($event)" interface="popover" placeholder="Pays de residence">
+        <ion-select
+          [value]="profil ? profil.pays : ''"
+          (ionChange)="chooseCountry($event)"
+          interface="popover"
+          placeholder="Pays de residence"
+        >
           <ion-select-option *ngFor="let p of pays" [value]="p.name">
             {{ p.name }}
           </ion-select-option>
         </ion-select>
-        <ion-select [value]="profil ? profil.profession.name : ''" (ionChange)="chooseProfession($event)" interface="popover" placeholder="Profession ">
-          <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.Name">{{ pro.Name }}</ion-select-option>
+        <ion-select
+          [value]="profil ? profil.profession : ''"
+          (ionChange)="chooseProfession($event)"
+          interface="popover"
+          placeholder="Profession "
+        >
+          <ion-select-option
+            *ngFor="let pro of listProfesion"
+            [value]="pro.Name"
+            >{{ pro.Name }}</ion-select-option
+          >
         </ion-select>
       </div>
     </div>

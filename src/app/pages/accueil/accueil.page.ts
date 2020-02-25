@@ -24,7 +24,6 @@ export class AccueilPage implements OnInit {
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
-
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
@@ -40,4 +39,5 @@ export class AccueilPage implements OnInit {
   profil() {
     this.router.navigate(["profil"]);
   }
+  onClick() {}
 }

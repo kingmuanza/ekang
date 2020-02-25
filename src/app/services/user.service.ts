@@ -89,6 +89,21 @@ export class UserService {
       })
     });
   }
+  getProfilByID(id: string): Promise<Profil> {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('profils').doc(id).get().then((resultat) => {
+        if (resultat.data()) {
+          const profil = resultat.data() as Profil;
+          resolve(profil);
+        } else {
+          resolve(null);
+        }
+      }).catch((e) => {
+        reject(e);
+      })
+    });
+  }
 
   read_Users() {
     return this.firestore.collection("Users").snapshotChanges();

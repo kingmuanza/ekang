@@ -55,7 +55,10 @@ export class AmisPage implements OnInit {
     this.profilsResultats = this.profilsResultats.filter((element) => {
       return element.utilisateur.displayName.toLocaleLowerCase().indexOf(this.saisie.toLowerCase()) !== -1;
     })
+  }
 
+  voirProfil(profil: Profil) {
+    this.router.navigate(['amis', 'amis-view', profil.utilisateur.uid])
   }
 
 }
