@@ -45,15 +45,26 @@ const routes: Routes = [
       import("./pages/principale/principale.module").then(
         m => m.PrincipalePageModule
       )
-  },  {
-    path: 'amis',
-    loadChildren: () => import('./pages/amis/amis.module').then( m => m.AmisPageModule)
   },
   {
-    path: 'notifications',
-    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
+    path: "amis",
+    loadChildren: () =>
+      import("./pages/amis/amis.module").then(m => m.AmisPageModule)
+  },
+  {
+    path: "notifications",
+    loadChildren: () =>
+      import("./pages/notifications/notifications.module").then(
+        m => m.NotificationsPageModule
+      )
+  },
+  {
+    path: "recherche",
+    loadChildren: () =>
+      import("./pages/recherche/recherche.module").then(
+        m => m.RecherchePageModule
+      )
   }
-
 ];
 
 @NgModule({

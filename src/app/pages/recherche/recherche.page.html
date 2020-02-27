@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>recherche</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="margin-left: 5vw; margin-right: 5vw;">
+    <ion-select
+      [value]="profil ? profil.pays : ''"
+      (ionChange)="chooseCountry($event)"
+      interface="popover"
+      placeholder="Pays de residence"
+    >
+      <ion-select-option *ngFor="let p of pays" [value]="p.name">
+        {{ p.name }}
+      </ion-select-option>
+    </ion-select>
+
+    <ion-select
+      [value]="profil ? profil.profession : ''"
+      (ionChange)="chooseProfession($event)"
+      interface="popover"
+      placeholder="Profession "
+    >
+      <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.nom"
+        >{{ pro.nom }}</ion-select-option
+      >
+    </ion-select>
+    <ion-button
+      expand="block"
+      fill="outline"
+      shape="round"
+      color="success"
+      *ngIf="userPays && userProfession"
+      (click)="findUsers()"
+      >Rechercher</ion-button
+    >
+  </div>
+  <ion-list *ngIf="profilsResultats">
+    <ion-list-header>
+      <ion-label>Resultat</ion-label>
+    </ion-list-header>
+    <ng-container *ngFor="let profil of profilsResultats">
+      <ion-item (click)="voirProfil(profil)">
+        <ion-avatar slot="start">
+          <img
+            class="image-muanza"
+            [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{profil.utilisateur.displayName}}</h2>
+          <h3>{{profil.pays}}, {{profil.profession}}</h3>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

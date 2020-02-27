@@ -5,9 +5,9 @@ import { AuthentificationService } from "src/app/services/authentification.servi
 import { ToastController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/services/user.service";
-import { Profil } from 'src/app/models/profil.model';
-import { NotificationEkang } from 'src/app/models/notification.model';
-import { NotificationService } from 'src/app/services/notification.service';
+import { Profil } from "src/app/models/profil.model";
+import { NotificationEkang } from "src/app/models/notification.model";
+import { NotificationService } from "src/app/services/notification.service";
 @Component({
   selector: "app-profil",
   templateUrl: "./profil.page.html",
@@ -61,8 +61,8 @@ export class ProfilPage implements OnInit {
 
   createNotification(profil: Profil, type: string) {
     const notification = new NotificationEkang(profil, type);
-    this.notifService.createNotification(notification).then(()=>{
-      console.log('La notification a été crée');
+    this.notifService.createNotification(notification).then(() => {
+      console.log("La notification a été crée");
     });
   }
 
@@ -125,14 +125,18 @@ export class ProfilPage implements OnInit {
     this.userService.createUser(this.utilisateur).then(data => {
       this.userService.updateProfil(profil).then(() => {
         this.enregistrer();
-        this.createNotification(profil, 'UPDATE_PROFIL');
+        this.createNotification(profil, "UPDATE_PROFIL");
       });
     });
   }
 
   listProfession() {
-    this.userService.read_ProfessionList().subscribe(data => {
-      this.listProfesion = data.map(e => {
+    // this.userService.read_ProfessionList().subscribe(data => {
+    this.userService.read_ProfessionList().then(data => {
+      // console.log(data);
+
+      this.listProfesion = data;
+      /* this.listProfesion = data.map(e => {
         return {
           id: e.payload.doc.id,
           isEdit: false,
@@ -140,7 +144,7 @@ export class ProfilPage implements OnInit {
           // Age: e.payload.doc.data()['Age'],
           // Address: e.payload.doc.data()['Address'],
         };
-      });
+      });*/
     });
   }
 
