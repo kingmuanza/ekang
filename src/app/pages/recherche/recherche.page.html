@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>recherche</ion-title>
+    <ion-title>Rechercher</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -35,14 +35,14 @@
       fill="outline"
       shape="round"
       color="success"
-      *ngIf="userPays && userProfession"
+      *ngIf="userPays || userProfession"
       (click)="findUsers()"
       >Rechercher</ion-button
     >
   </div>
-  <ion-list *ngIf="profilsResultats">
+  <ion-list *ngIf="profilsResultats && profilsResultats.length > 0">
     <ion-list-header>
-      <ion-label>Resultat</ion-label>
+      <ion-label>Résultats</ion-label>
     </ion-list-header>
     <ng-container *ngFor="let profil of profilsResultats">
       <ion-item (click)="voirProfil(profil)">
