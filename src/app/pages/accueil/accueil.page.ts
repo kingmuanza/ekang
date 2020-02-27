@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { Router } from "@angular/router";
+import { Profil } from "src/app/models/profil.model";
 
 @Component({
   selector: "app-accueil",
@@ -14,6 +15,7 @@ export class AccueilPage implements OnInit {
   utilisateurSubscription: Subscription;
   photoURL: string;
   displayName: string;
+  profil: Profil;
   constructor(private router: Router, public auth: AuthentificationService) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class AccueilPage implements OnInit {
     this.auth.emettre();
   }
 
-  profil() {
+  voirProfil() {
     this.router.navigate(["profil"]);
   }
   onClick() {}
