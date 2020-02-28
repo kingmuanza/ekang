@@ -1,3 +1,10 @@
-<p>
-  profil-list-item works!
-</p>
+<ion-item>
+  <ion-avatar slot="start">
+    <img class="image-muanza"
+      [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" />
+  </ion-avatar>
+  <ion-label>
+    <h2>{{profil.utilisateur.displayName}}</h2>
+    <h3>{{profil.pays}}, {{profil.profession}}</h3>
+  </ion-label>
+</ion-item>

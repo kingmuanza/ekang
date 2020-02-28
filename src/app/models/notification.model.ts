@@ -1,11 +1,13 @@
 import { Profil } from './profil.model';
+import { Publication } from './publication.model';
 
 export class NotificationEkang {
 
     id: string;
     profil: Profil;
     date = new Date();
-    type: string 
+    type: string;
+    publication?: Publication;
 
     constructor(profil: Profil, type: string) {
 

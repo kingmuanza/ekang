@@ -64,7 +64,11 @@ const routes: Routes = [
       import("./pages/recherche/recherche.module").then(
         m => m.RecherchePageModule
       )
+  },  {
+    path: 'publications',
+    loadChildren: () => import('./pages/publications/publications.module').then( m => m.PublicationsPageModule)
   }
+
 ];
 
 @NgModule({

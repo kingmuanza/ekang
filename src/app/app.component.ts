@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: "Mes publications",
-      url: "/folder/Outbox",
+      url: "publications",
       icon: "paper-plane"
     },
     {

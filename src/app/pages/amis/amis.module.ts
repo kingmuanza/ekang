@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AmisPageRoutingModule } from './amis-routing.module';
 
 import { AmisPage } from './amis.page';
+import { ProfilListItemComponent } from 'src/app/components/profil-list-item/profil-list-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { AmisPage } from './amis.page';
     IonicModule,
     AmisPageRoutingModule
   ],
-  declarations: [AmisPage]
+  declarations: [
+    AmisPage,
+    ProfilListItemComponent
+  ]
 })
 export class AmisPageModule {}

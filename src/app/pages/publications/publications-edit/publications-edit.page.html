@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dites nous quelque chose</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="publicationForm.invalid || !utilisateur" color="primary" (click)="onSubmitPublicationForm()">
+        Publier 
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="padding-left: 1vw; padding-right: 1vw;">
+    <form [formGroup]="publicationForm">
+      <ion-item>
+        <ion-textarea rows="6" formControlName="texte" placeholder="Ecrivez quelque chose ici..."></ion-textarea>
+      </ion-item>
+    </form>
+  </div>
+  <div style="margin-top: 5vh;">
+    <span style="margin-left: 5vw;">
+      <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="camera"></ion-icon>
+    </span>
+    <span style="margin-left: 5vh;">
+      <ion-icon color="primary" style="font-size: 2.8em;" slot="icon-only" name="image"></ion-icon>
+    </span>
+    <span style="margin-left: 5vh;">
+      <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="videocam"></ion-icon>
+    </span>
+    <span style="margin-left: 5vh;">
+      <ion-icon color="primary" style="font-size: 2.6em;" slot="icon-only" name="person-add"></ion-icon>
+    </span>
+  </div>
+
+</ion-content>

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AccueilPageRoutingModule } from './accueil-routing.module';
+import { PublicationsPageRoutingModule } from './publications-routing.module';
 
-import { AccueilPage } from './accueil.page';
+import { PublicationsPage } from './publications.page';
 import { PublicationItemComponent } from 'src/app/components/publication-item/publication-item.component';
 
 @NgModule({
@@ -14,8 +14,8 @@ import { PublicationItemComponent } from 'src/app/components/publication-item/pu
     CommonModule,
     FormsModule,
     IonicModule,
-    AccueilPageRoutingModule
+    PublicationsPageRoutingModule
   ],
-  declarations: [AccueilPage, PublicationItemComponent]
+  declarations: [PublicationsPage, PublicationItemComponent]
 })
-export class AccueilPageModule {}
+export class PublicationsPageModule {}

@@ -20,7 +20,6 @@ export class NotificationsPage implements OnInit {
     this.notifService.getNotifications().then((notifications)=>{
       this.notifications = notifications;
     })
-
   }
 
 }
