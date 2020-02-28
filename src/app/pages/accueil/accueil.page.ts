@@ -59,6 +59,7 @@ export class AccueilPage implements OnInit {
 
 
   getNotifications() {
+    this.all = new Array<Publication | NotificationEkang>();
     this.notifService.getNotifications().then((notifications) => {
       this.notifications = notifications;
       this.all = this.all.concat(this.notifications);
@@ -73,7 +74,7 @@ export class AccueilPage implements OnInit {
         console.log('this.publications');
         console.log(this.publications);
         this.all = this.all.sort((a, b) => {
-          return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1: 1;
+          return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
         });
       }
     });

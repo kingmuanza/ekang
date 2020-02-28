@@ -35,7 +35,7 @@ export class ProfilPage implements OnInit {
     private http: HttpClient,
     private userService: UserService,
     private villeService: VilleService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -47,6 +47,11 @@ export class ProfilPage implements OnInit {
           this.userService.getProfil(this.utilisateur).then(profil => {
             if (profil) {
               this.profil = profil;
+              this.userPays = this.profil.pays;
+              this.userProfession = this.profil.profession;
+              this.getCountry();
+              this.listProfession();
+              this.takeVille();
             }
           });
           if (utilisateur.displayName) {
@@ -59,9 +64,6 @@ export class ProfilPage implements OnInit {
       }
     );
     this.auth.emettre();
-    this.getCountry();
-    this.listProfession();
-    this.takeVille();
   }
 
   createNotification(profil: Profil, type: string) {

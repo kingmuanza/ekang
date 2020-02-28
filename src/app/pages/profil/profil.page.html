@@ -70,7 +70,7 @@
           placeholder="Profession "
         >
           <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.nom"
-            >{{ pro.nom }}</ion-select-option
+            >{{ pro.nom | titlecase }}</ion-select-option
           >
         </ion-select>
         <ion-select
@@ -80,7 +80,7 @@
           placeholder="Votre ville"
         >
           <ion-select-option *ngFor="let v of villes" [value]="v.nom"
-            >{{ v.nom }}</ion-select-option
+            >{{ v.nom | titlecase}}</ion-select-option
           >
         </ion-select>
       </div>

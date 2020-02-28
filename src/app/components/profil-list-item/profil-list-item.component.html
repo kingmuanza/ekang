@@ -4,7 +4,16 @@
       [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" />
   </ion-avatar>
   <ion-label>
-    <h2>{{profil.utilisateur.displayName}}</h2>
-    <h3>{{profil.pays}}, {{profil.profession}}</h3>
+    <h2>
+      <b>{{profil.utilisateur.displayName}}</b>, 
+      {{profil.profession}}
+    </h2>
+    <h3>
+      <span *ngIf="profil.ville">
+        {{profil.ville}},
+      </span>
+      {{profil.pays}}
+    </h3>
+    <small></small>
   </ion-label>
 </ion-item>
