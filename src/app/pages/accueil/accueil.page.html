@@ -10,31 +10,35 @@
 <ion-content>
   <ng-container *ngFor="let publication of all">
     <ng-container *ngIf="publication.texte">
-      <app-publication-item [publication]="publication">
-
-      </app-publication-item>
+      <app-publication-item [publication]="publication"> </app-publication-item>
     </ng-container>
     <ng-container *ngIf="!publication.texte">
       <ion-item>
         <ion-avatar slot="start">
-          <img class="image-muanza"
-            [src]="publication.profil.utilisateur.photoURL ? publication.profil.utilisateur.photoURL: '../../../assets/img/user.png'">
+          <img
+            class="image-muanza"
+            [src]="publication.profil.utilisateur.photoURL ? publication.profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
         </ion-avatar>
-        <ion-label class="ion-text-wrap" *ngIf="publication.type === 'UPDATE_PROFIL'">
+        <ion-label
+          class="ion-text-wrap"
+          *ngIf="publication.type === 'UPDATE_PROFIL'"
+        >
           <b color="primary">
             {{publication.profil.utilisateur.displayName}}
           </b>
           a mis à jour son profil
           <div class="date">
             <small>
-              le
-              {{publication.date | date: 'dd-MM-yyyy'}}
-              à
-              {{publication.date | date: 'HH:mm'}}
+              le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date
+              | date: 'HH:mm'}}
             </small>
           </div>
         </ion-label>
-        <ion-label class="ion-text-wrap" *ngIf="publication.type === 'PUBLICATION'">
+        <ion-label
+          class="ion-text-wrap"
+          *ngIf="publication.type === 'PUBLICATION'"
+        >
           <b ion-text color="primary">
             {{publication.profil.utilisateur.displayName}}
           </b>
@@ -44,17 +48,14 @@
           </b>
           <div class="date">
             <small>
-              le
-              {{publication.date | date: 'dd-MM-yyyy'}}
-              à
-              {{publication.date | date: 'HH:mm'}}
+              le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date
+              | date: 'HH:mm'}}
             </small>
           </div>
         </ion-label>
       </ion-item>
     </ng-container>
   </ng-container>
-
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="primary" (click)="nouveau()">

@@ -7,7 +7,7 @@ import { Profil } from "../models/profil.model";
   providedIn: "root"
 })
 export class UserService {
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   // Cette fonction permet de mettre une classe en format JSON pour firebase
   purifier(element) {
@@ -68,7 +68,7 @@ export class UserService {
     });
   }
 
-  getProfilsPaysProfession(pays, profession): Promise<Array<Profil>> {
+  getProfilsPaysProfession(pays, profession, ville): Promise<Array<Profil>> {
     const db = firebase.firestore();
     const profils = new Array<Profil>();
     const collection = db.collection("profils");
@@ -77,22 +77,33 @@ export class UserService {
       resultats = collection.where("pays", "==", `${pays}`);
     }
     if (!pays && profession) {
-      resultats = collection.where("profession", "==", `${profession}`)
+      resultats = collection.where("profession", "==", `${profession}`);
     }
     if (pays && profession) {
-      resultats = collection.where("pays", "==", `${pays}`).where("profession", "==", `${profession}`)
+      resultats = collection
+        .where("pays", "==", `${pays}`)
+        .where("profession", "==", `${profession}`);
+    }
+    if (pays && profession && ville) {
+      resultats = collection
+        .where("pays", "==", `${pays}`)
+        .where("profession", "==", `${profession}`)
+        .where("ville", "==", `${ville}`);
     }
     return new Promise((resolve, reject) => {
       if (resultats) {
-        resultats.get().then(resultats => {
-          resultats.forEach(resultat => {
-            const profil = resultat.data() as Profil;
-            profils.push(profil);
+        resultats
+          .get()
+          .then(resultats => {
+            resultats.forEach(resultat => {
+              const profil = resultat.data() as Profil;
+              profils.push(profil);
+            });
+            resolve(profils);
+          })
+          .catch(e => {
+            reject(e);
           });
-          resolve(profils);
-        }).catch(e => {
-          reject(e);
-        });
       } else {
         reject([]);
       }

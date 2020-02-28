@@ -8,6 +8,8 @@ import { UserService } from "src/app/services/user.service";
 import { Profil } from "src/app/models/profil.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
+import { VilleService } from "src/app/services/ville.service";
+
 @Component({
   selector: "app-profil",
   templateUrl: "./profil.page.html",
@@ -21,16 +23,18 @@ export class ProfilPage implements OnInit {
   pays: any;
   userPays: any;
   userProfession: any;
+  userVille: any;
   listProfesion: any;
   profil: Profil;
-
+  villes: any;
   constructor(
     public toastController: ToastController,
     private router: Router,
     public auth: AuthentificationService,
     public notifService: NotificationService,
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private villeService: VilleService
   ) {}
 
   ngOnInit() {
@@ -57,6 +61,7 @@ export class ProfilPage implements OnInit {
     this.auth.emettre();
     this.getCountry();
     this.listProfession();
+    this.takeVille();
   }
 
   createNotification(profil: Profil, type: string) {
@@ -117,11 +122,18 @@ export class ProfilPage implements OnInit {
     this.userProfession = ev.target["value"];
   }
 
+  chooseVille(ev: Event) {
+    this.userVille = ev.target["value"];
+  }
+
   suivant() {
     console.log(this.utilisateur);
     let profil = new Profil(this.utilisateur);
     profil.pays = this.userPays;
     profil.profession = this.userProfession;
+    if (this.userVille) {
+      profil.ville = this.userVille;
+    }
     this.userService.createUser(this.utilisateur).then(data => {
       this.userService.updateProfil(profil).then(() => {
         this.enregistrer();
@@ -131,20 +143,16 @@ export class ProfilPage implements OnInit {
   }
 
   listProfession() {
-    // this.userService.read_ProfessionList().subscribe(data => {
     this.userService.read_ProfessionList().then(data => {
-      // console.log(data);
-
       this.listProfesion = data;
-      /* this.listProfesion = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          isEdit: false,
-          Name: e.payload.doc.data()["nom"]
-          // Age: e.payload.doc.data()['Age'],
-          // Address: e.payload.doc.data()['Address'],
-        };
-      });*/
+      console.log(data);
+    });
+  }
+
+  takeVille() {
+    this.villeService.getVilles().then(data => {
+      // console.log(data);
+      this.villes = data;
     });
   }
 

@@ -30,6 +30,16 @@
         >{{ pro.nom }}</ion-select-option
       >
     </ion-select>
+    <ion-select
+      [value]="profil ? profil.ville : ''"
+      (ionChange)="chooseVille($event)"
+      interface="popover"
+      placeholder="Votre ville"
+    >
+      <ion-select-option *ngFor="let v of villes" [value]="v.nom"
+        >{{ v.nom }}</ion-select-option
+      >
+    </ion-select>
     <ion-button
       expand="block"
       fill="outline"
