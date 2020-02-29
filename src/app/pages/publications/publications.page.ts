@@ -41,5 +41,7 @@ export class PublicationsPage implements OnInit {
   nouveau() {
     this.router.navigate(['publications', 'publications-edit'])
   }
-
+onClick(){
+  
+}
 }
