@@ -21,7 +21,6 @@
     </ion-select>
 
     <ion-select
-      [value]="profil ? profil.profession : ''"
       (ionChange)="chooseProfession($event)"
       interface="popover"
       placeholder="Profession "
@@ -31,7 +30,6 @@
       >
     </ion-select>
     <ion-select
-      [value]="profil ? profil.ville : ''"
       (ionChange)="chooseVille($event)"
       interface="popover"
       placeholder="Votre ville"
@@ -50,6 +48,25 @@
       >Rechercher</ion-button
     >
   </div>
+  <ion-list *ngIf="profilsVilles && profilsVilles.length > 0">
+    <ion-list-header>
+      <ion-label>Dans votre ville</ion-label>
+    </ion-list-header>
+    <ng-container *ngFor="let profil of profilsVilles">
+      <ion-item (click)="voirProfil(profil)">
+        <ion-avatar slot="start">
+          <img
+            class="image-muanza"
+            [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{profil.utilisateur.displayName}}</h2>
+          <h3>{{profil.pays}}, {{profil.profession}}</h3>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
   <ion-list *ngIf="profilsResultats && profilsResultats.length > 0">
     <ion-list-header>
       <ion-label>Résultats</ion-label>

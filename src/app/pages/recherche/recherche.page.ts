@@ -4,6 +4,8 @@ import { UserService } from "src/app/services/user.service";
 import { Profil } from "src/app/models/profil.model";
 import { Router } from "@angular/router";
 import { VilleService } from "src/app/services/ville.service";
+import { Subscription } from 'rxjs';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 
 @Component({
   selector: "app-recherche",
@@ -19,15 +21,41 @@ export class RecherchePage implements OnInit {
   profils = new Array<Profil>();
   profil: Profil;
   villes: any;
+
   profilsResultats = new Array<Profil>();
+  profilsVilles = new Array<Profil>();
+
+  utilisateur: firebase.User;
+  utilisateurSubscription: Subscription;
+  
   constructor(
     private http: HttpClient,
     private userService: UserService,
     private router: Router,
+    public auth: AuthentificationService,
     private villeService: VilleService
   ) {}
 
   ngOnInit() {
+    this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
+      utilisateur => {
+        this.utilisateur = utilisateur;
+        if (!utilisateur) {
+          this.router.navigate(["connexion"]);
+        } else {
+          this.userService.getProfil(this.utilisateur).then(profil => {
+            if (profil) {
+              this.profil = profil;
+              const ville = profil.ville;
+              this.userService.getProfilsVille(ville).then((profilsVilles)=>{
+                this.profilsVilles = profilsVilles;
+              });
+            }
+          });
+        }
+      }
+    );
+    this.auth.emettre();
     this.getCountry();
     this.getProfession();
     this.takeVille();
@@ -45,17 +73,7 @@ export class RecherchePage implements OnInit {
     // this.userService.read_ProfessionList().subscribe(data => {
     this.userService.read_ProfessionList().then(data => {
       console.log(data);
-
       this.listProfesion = data;
-      /* this.listProfesion = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          isEdit: false,
-          Name: e.payload.doc.data()["nom"]
-          // Age: e.payload.doc.data()['Age'],
-          // Address: e.payload.doc.data()['Address'],
-        };
-      }); */
     });
   }
 

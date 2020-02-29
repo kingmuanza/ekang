@@ -27,8 +27,9 @@ export class PublicationsPage implements OnInit {
         this.pubService.getPublicationsFromUser(this.utilisateur).then((publications)=>{
           if(publications) {
             this.publications = publications;
-            console.log('this.publications');
-            console.log(this.publications);
+            this.publications.sort((a, b) => {
+              return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
+            });
           }
         });
       } else {

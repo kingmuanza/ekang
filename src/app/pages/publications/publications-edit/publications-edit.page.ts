@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as firebase from "firebase";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,10 +18,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PublicationsEditPage implements OnInit {
 
+  @ViewChild("fileButton", { static: false }) fileButton;
   publicationForm: FormGroup;
   utilisateur: firebase.User;
   profil: Profil;
   utilisateurSubscription: Subscription;
+  file: any;
+  photoURL: string;
+  imageUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,8 +39,8 @@ export class PublicationsEditPage implements OnInit {
     this.initForm();
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(utilisateur => {
       this.utilisateur = utilisateur;
-      if(this.utilisateur) {
-        this.userService.getProfil(utilisateur).then((profil)=>{
+      if (this.utilisateur) {
+        this.userService.getProfil(utilisateur).then((profil) => {
           this.profil = profil;
         });
       }
@@ -55,17 +59,68 @@ export class PublicationsEditPage implements OnInit {
     console.log('value');
     console.log(value);
     const publication = new Publication(value.texte, this.utilisateur);
+    if (this.photoURL) {
+      this.enregistrerImageFirebase().then((url)=>{
+        publication.cover = url;
+        this.savePublication(publication);
+      })
+      
+    } else {
+      this.savePublication(publication);
+    }
+  }
+
+  savePublication(publication: Publication) {
     this.pubService.savePublication(publication).then(() => {
-      if(this.profil) {
+      if (this.profil) {
         const notification = new NotificationEkang(this.profil, 'PUBLICATION');
         notification.publication = publication;
-        this.notifService.createNotification(notification).then(()=>{
+        this.notifService.createNotification(notification).then(() => {
           this.router.navigate(['publications']);
         });
       } else {
         this.router.navigate(['publications']);
       }
-    })
+    });
+  }
+
+  galerie() {
+    this.fileButton.nativeElement.click();
+  }
+
+  uploadFile(event: any) {
+    console.log(event.target.files);
+    this.file = event.target.files.item(0);
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.photoURL = event.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  resetImage() {
+    this.photoURL = null;
+  }
+
+  enregistrerImageFirebase(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      var storageRef = firebase.storage().ref(this.utilisateur.email + "/publications/" + this.file.name);
+      var task = storageRef.put(this.file);
+      task.then(data => {
+        console.log('data');
+        console.log(data);
+        storageRef.getDownloadURL().then(url => {
+          resolve(url);
+        }).catch((e)=>{
+          reject(e);
+        });
+      }).catch((e)=>{
+        reject(e);
+      });
+    });
   }
 
 }
+

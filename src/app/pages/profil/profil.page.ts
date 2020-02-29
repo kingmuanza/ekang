@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
@@ -15,7 +15,7 @@ import { VilleService } from "src/app/services/ville.service";
   templateUrl: "./profil.page.html",
   styleUrls: ["./profil.page.scss"]
 })
-export class ProfilPage implements OnInit {
+export class ProfilPage implements OnInit, AfterViewInit {
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
   displayName: string;
@@ -35,9 +35,9 @@ export class ProfilPage implements OnInit {
     private http: HttpClient,
     private userService: UserService,
     private villeService: VilleService
-  ) { }
+  ) {
 
-  ngOnInit() {
+    console.log('onInit');
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
@@ -65,6 +65,18 @@ export class ProfilPage implements OnInit {
     );
     this.auth.emettre();
   }
+
+  ngOnInit() {
+    this.auth.emettre();
+  }
+
+
+  ngAfterViewInit(): void {
+    console.log('ngAfterViewInit');
+    // this.auth.emettre();
+  }
+
+
 
   createNotification(profil: Profil, type: string) {
     const notification = new NotificationEkang(profil, type);

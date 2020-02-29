@@ -22,18 +22,41 @@
     </form>
   </div>
   <div style="margin-top: 5vh;">
-    <span style="margin-left: 5vw;">
+    <span (click)="galerie()" style="margin-left: 5vw;">
       <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="camera"></ion-icon>
     </span>
-    <span style="margin-left: 5vh;">
+    <span (click)="galerie()" style="margin-left: 5vh;">
       <ion-icon color="primary" style="font-size: 2.8em;" slot="icon-only" name="image"></ion-icon>
     </span>
-    <span style="margin-left: 5vh;">
+    <span (click)="galerie()" style="margin-left: 5vh;">
       <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="videocam"></ion-icon>
     </span>
     <span style="margin-left: 5vh;">
       <ion-icon color="primary" style="font-size: 2.6em;" slot="icon-only" name="person-add"></ion-icon>
     </span>
+  </div>
+
+
+  
+  <input
+    id="uploadBtn"
+    type="file"
+    class="upload"
+    (change)="uploadFile($event)"
+    class="filebtn"
+    #fileButton
+  />
+
+  
+  <div *ngIf="photoURL" class="photo" style="height: 50vh;">
+    <div style="height: 50vh;">
+      <img [src]="photoURL" style="width: 100%;" />
+    </div>
+    <div style="font-size: 2.0em; text-align: right; margin-top: -48vh;">
+      <span (click)="resetImage()" style="padding: 20px;">
+        <ion-icon style="" name="trash"></ion-icon>
+      </span>
+    </div>
   </div>
 
 </ion-content>
