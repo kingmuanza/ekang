@@ -68,6 +68,36 @@ export class UserService {
     });
   }
 
+  getProfilsVille(ville: string): Promise<Array<Profil>> {
+    const db = firebase.firestore();
+    const profils = new Array<Profil>();
+    const collection = db.collection("profils");
+    let resultats;
+    
+    if (ville) {
+      resultats = collection.where("ville", "==", `${ville}`);
+    }
+    
+    return new Promise((resolve, reject) => {
+      if (resultats) {
+        resultats
+          .get()
+          .then(resultats => {
+            resultats.forEach(resultat => {
+              const profil = resultat.data() as Profil;
+              profils.push(profil);
+            });
+            resolve(profils);
+          })
+          .catch(e => {
+            reject(e);
+          });
+      } else {
+        reject([]);
+      }
+    });
+  }
+
   getProfilsPaysProfession(pays, profession, ville): Promise<Array<Profil>> {
     const db = firebase.firestore();
     const profils = new Array<Profil>();

@@ -20,7 +20,7 @@ export class PhotoPage implements OnInit {
     public toastController: ToastController,
     private router: Router,
     public auth: AuthentificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -39,7 +39,6 @@ export class PhotoPage implements OnInit {
   }
 
   galerie() {
-    // firebase.firestore().
     this.fileButton.nativeElement.click();
   }
   uploadFile(event: any) {

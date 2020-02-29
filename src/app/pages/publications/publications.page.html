@@ -31,7 +31,7 @@
           {{publication.texte}}
         </ion-label>
       </ion-item>
-      <img class="tweet-img" src="../../../assets/imgekang.jpg" />
+      <img  *ngIf="publication.cover" class="tweet-img" [src]="publication.cover" />
       <ion-button size="small" fill="clear" (click)="onClick()">
         <ion-icon slot="start" name="heart-outline"></ion-icon> 34
       </ion-button>
