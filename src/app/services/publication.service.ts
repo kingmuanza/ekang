@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Publication } from '../models/publication.model';
 import * as firebase from 'firebase';
+import { Like } from '../models/like.model';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,58 @@ export class PublicationService {
 
   deletePublication(id: string) {
 
+  }
+
+  like(utilisateur: firebase.User, publication: Publication): Promise<Publication> {
+    const db = firebase.firestore();
+    const like = new Like(utilisateur, publication);
+    return new Promise((resolve, reject) => {
+      db.collection('likes').doc(like.id).set(this.purifier(like)).then(()=>{
+        if(publication.likes) {
+          publication.likes+=1
+        } else {
+          publication.likes = 1 ;
+        }
+        if(publication.likeurs) {
+          publication.likeurs.push(utilisateur.uid);
+        } else {
+          publication.likeurs = new Array<string>();
+          publication.likeurs.push(utilisateur.uid);
+        }
+        this.savePublication(publication).then((p) => {
+          resolve(publication)
+        }).catch((e)=>{
+          reject(e);
+        });
+      }).catch((e)=>{
+        reject(e);
+      });;
+    });
+  }
+  unlike(utilisateur: firebase.User, publication: Publication): Promise<Publication> {
+    const db = firebase.firestore();
+    const like = new Like(utilisateur, publication);
+    return new Promise((resolve, reject) => {
+      db.collection('likes').doc(like.id).set(this.purifier(like)).then(()=>{
+        if(publication.likes) {
+          publication.likes-=1
+        } else {
+          publication.likes = 0 ;
+        }
+        if(publication.likeurs) {
+          publication.likeurs.push(utilisateur.uid);
+        } else {
+          publication.likeurs = new Array<string>();
+          publication.likeurs.push(utilisateur.uid);
+        }
+        this.savePublication(publication).then((p) => {
+          resolve(publication)
+        }).catch((e)=>{
+          reject(e);
+        });
+      }).catch((e)=>{
+        reject(e);
+      });;
+    });
   }
 }

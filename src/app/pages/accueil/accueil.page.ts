@@ -62,6 +62,8 @@ export class AccueilPage implements OnInit {
     this.all = new Array<Publication | NotificationEkang>();
     this.notifService.getNotifications().then((notifications) => {
       this.notifications = notifications;
+      console.log('notifications');
+      console.log(notifications);
       this.all = this.all.concat(this.notifications);
       this.getPublications();
     })
@@ -77,6 +79,12 @@ export class AccueilPage implements OnInit {
           return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
         });
       }
+    });
+  }
+
+  like(publication: Publication) {
+    this.pubService.like(this.utilisateur, publication).then((p)=>{
+      publication = p;
     });
   }
 
