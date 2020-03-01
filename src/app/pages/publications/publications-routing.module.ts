@@ -13,7 +13,15 @@ const routes: Routes = [
     loadChildren: () => import('./publications-view/publications-view.module').then( m => m.PublicationsViewPageModule)
   },
   {
+    path: 'publications-view/:id',
+    loadChildren: () => import('./publications-view/publications-view.module').then( m => m.PublicationsViewPageModule)
+  },
+  {
     path: 'publications-edit',
+    loadChildren: () => import('./publications-edit/publications-edit.module').then( m => m.PublicationsEditPageModule)
+  },
+  {
+    path: 'publications-edit/:id',
     loadChildren: () => import('./publications-edit/publications-edit.module').then( m => m.PublicationsEditPageModule)
   }
 ];

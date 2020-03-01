@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Publication } from '../models/publication.model';
 import * as firebase from 'firebase';
 import { Like } from '../models/like.model';
+import { Commentaire } from '../models/commentaire.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,16 @@ export class PublicationService {
     });
   }
 
-  getPublication(id: string) {
-
+  getPublication(id: string): Promise<Publication> {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('publications').doc(id).get().then((resultat) => {
+        const publication = resultat.data() as Publication;
+        resolve(publication);
+      }).catch((e) => {
+        reject(e);
+      });
+    });
   }
 
   getPublications(): Promise<Array<Publication>> {
@@ -39,7 +48,7 @@ export class PublicationService {
           publications.push(publication);
         });
         resolve(publications);
-      }).catch((e)=>{
+      }).catch((e) => {
         reject(e);
       });
     });
@@ -55,7 +64,7 @@ export class PublicationService {
           publications.push(publication);
         });
         resolve(publications);
-      }).catch((e)=>{
+      }).catch((e) => {
         reject(e);
       });
     });
@@ -69,13 +78,13 @@ export class PublicationService {
     const db = firebase.firestore();
     const like = new Like(utilisateur, publication);
     return new Promise((resolve, reject) => {
-      db.collection('likes').doc(like.id).set(this.purifier(like)).then(()=>{
-        if(publication.likes) {
-          publication.likes+=1
+      db.collection('likes').doc(like.id).set(this.purifier(like)).then(() => {
+        if (publication.likes) {
+          publication.likes += 1
         } else {
-          publication.likes = 1 ;
+          publication.likes = 1;
         }
-        if(publication.likeurs) {
+        if (publication.likeurs) {
           publication.likeurs.push(utilisateur.uid);
         } else {
           publication.likeurs = new Array<string>();
@@ -83,10 +92,10 @@ export class PublicationService {
         }
         this.savePublication(publication).then((p) => {
           resolve(publication)
-        }).catch((e)=>{
+        }).catch((e) => {
           reject(e);
         });
-      }).catch((e)=>{
+      }).catch((e) => {
         reject(e);
       });;
     });
@@ -95,13 +104,13 @@ export class PublicationService {
     const db = firebase.firestore();
     const like = new Like(utilisateur, publication);
     return new Promise((resolve, reject) => {
-      db.collection('likes').doc(like.id).set(this.purifier(like)).then(()=>{
-        if(publication.likes) {
-          publication.likes-=1
+      db.collection('likes').doc(like.id).set(this.purifier(like)).then(() => {
+        if (publication.likes) {
+          publication.likes -= 1
         } else {
-          publication.likes = 0 ;
+          publication.likes = 0;
         }
-        if(publication.likeurs) {
+        if (publication.likeurs) {
           publication.likeurs.push(utilisateur.uid);
         } else {
           publication.likeurs = new Array<string>();
@@ -109,12 +118,40 @@ export class PublicationService {
         }
         this.savePublication(publication).then((p) => {
           resolve(publication)
-        }).catch((e)=>{
+        }).catch((e) => {
           reject(e);
         });
-      }).catch((e)=>{
+      }).catch((e) => {
         reject(e);
       });;
+    });
+  }
+
+  saveCommentaire(commentaire: Commentaire): Promise<Commentaire> {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection('commentaires').doc(commentaire.id).set(this.purifier(commentaire)).then(() => {
+        resolve(commentaire);
+      }).catch((e) => {
+        reject(e);
+      });
+    });
+  }
+
+  getCommentaires(publication: Publication): Promise<Array<Commentaire>> {
+    const db = firebase.firestore();
+    const commentaires = new Array<Commentaire>();
+    return new Promise((resolve, reject) => {
+      db.collection('commentaires').where('publication.id', '==', publication.id).get().then((resutats) => {
+        resutats.forEach(resutat => {
+          const commentaire = resutat.data() as Commentaire;
+          commentaires.push(commentaire);
+        });
+        commentaires.sort((a, b) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime() ? -1: 1
+        });
+        resolve(commentaires);
+      });
     });
   }
 }

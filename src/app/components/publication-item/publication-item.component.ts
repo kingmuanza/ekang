@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Publication } from 'src/app/models/publication.model';
 import { PublicationService } from 'src/app/services/publication.service';
 import * as firebase from "firebase";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publication-item',
@@ -14,7 +15,7 @@ export class PublicationItemComponent implements OnInit, OnChanges{
   @Input() utilisateur: firebase.User;
   jaiLike = false;
 
-  constructor(private pubService: PublicationService) { }
+  constructor(private router: Router, private pubService: PublicationService) { }
 
   ngOnInit() {
     if(this.publication && this.utilisateur) {
@@ -63,6 +64,12 @@ export class PublicationItemComponent implements OnInit, OnChanges{
       this.publication = p;
       this.jaiLike = false;
     });
+  }
+
+
+  ouvrirPublication(){
+    this.router.navigate(['publications', 'publications-view', this.publication.id]);
+
   }
 
 }
