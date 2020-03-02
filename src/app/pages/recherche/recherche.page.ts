@@ -132,13 +132,18 @@ export class RecherchePage implements OnInit {
       });
       this.villes = data;
       this.pays.forEach(p => {
-        p["expanded"] = "false";
+        p["expanded"] = false;
+        p["expandedVille"] = false;
         if (p.name === "Cameroon") {
           p["ville"] = this.villes;
         } else {
-          p["ville"] = [{nom: "ville1"}, {nom: "ville2"}, {nom: "ville1"}, {nom: "ville1"}];
+          p["ville"] = [
+            { nom: "ville1" },
+            { nom: "ville2" },
+            { nom: "ville3" },
+            { nom: "ville4" }
+          ];
         }
-
       });
     });
   }
@@ -153,7 +158,7 @@ export class RecherchePage implements OnInit {
   expandItem3(p): void {
     console.log(p);
     this.userPays = p.name;
-    this.expandedVille = !this.expandedVille;
+    p.expandedVille = !p.expandedVille;
     if (p.expanded) {
       p.expanded = false;
     } else {
@@ -172,7 +177,7 @@ export class RecherchePage implements OnInit {
     this.userVille = ville;
 
     this.items.expanded = !this.items.expanded;
-    this.expandedVille = !this.expandedVille;
+    p.expandedVille = !p.expandedVille;
     if (p.expanded) {
       p.expanded = false;
     } else {
@@ -187,5 +192,4 @@ export class RecherchePage implements OnInit {
     }
     this.items2.expanded = !this.items2.expanded;
   }
- 
 }

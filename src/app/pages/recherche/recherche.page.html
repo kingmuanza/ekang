@@ -27,7 +27,7 @@
                         <p (click)="expandItem3(p)">{{p.name}}</p>
                         <app-accordionpays
                           expandHeight="100%"
-                          [expanded]="expandedVille"
+                          [expanded]="p.expandedVille"
                         >
                           <ion-list>
                             <ion-item *ngFor="let v of p.ville">
