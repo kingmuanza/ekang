@@ -34,7 +34,7 @@
       </ion-item>
 
       <ion-button
-        [disabled]="connexionForm.invalid"
+        [disabled]="connexionForm.invalid || inactif"
         (click)="onConnexionFormSubmit()"
         color="black"
         expand="block"

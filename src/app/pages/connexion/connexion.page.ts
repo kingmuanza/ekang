@@ -13,6 +13,7 @@ export class ConnexionPage implements OnInit {
 
 
   connexionForm: FormGroup;
+  inactif = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(public auth: AuthentificationService, public toastController: ToastController, private formBuilder: FormBuilder, private router: Router) { }
@@ -29,11 +30,14 @@ export class ConnexionPage implements OnInit {
   }
 
   onConnexionFormSubmit() {
+
+    this.inactif = true;
     console.log('onConnexionFormSubmit');
     const value = this.connexionForm.value;
     const login = value.login;
     const passe = value.passe;
     this.auth.connexion(login, passe).then(() => {
+      this.inactif = false;
       this.connexion();
     });
   }
