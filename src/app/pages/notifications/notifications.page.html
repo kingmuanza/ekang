@@ -53,6 +53,32 @@
         </ion-label>
 
 
+        <!-- LIKE -->
+        <ion-label class="ion-text-wrap" *ngIf="notification.type === 'LIKE'">
+          <b ion-text color="primary">
+            {{notification.profil.utilisateur.displayName}}
+          </b>
+          a aimé une publication de 
+          <b *ngIf="notification.publication">
+            {{notification.publication.utilisateur.displayName}}
+          </b>
+          <span> 
+            :
+            <i *ngIf="notification.publication">
+              "{{notification.publication.texte}}"
+            </i>
+          </span>
+          <div class="date">
+            <small>
+              le
+              {{notification.date | date: 'dd-MM-yyyy'}}
+              à
+              {{notification.date | date: 'HH:mm'}}
+            </small>
+          </div>
+        </ion-label>
+
+
         <!-- COMMENTAIRE -->
         <ion-label class="ion-text-wrap" *ngIf="notification.type === 'COMMENTAIRE'">
           <b ion-text color="primary">

@@ -4,6 +4,9 @@ import { PublicationService } from "src/app/services/publication.service";
 import * as firebase from "firebase";
 import { Router } from "@angular/router";
 import { Commentaire } from 'src/app/models/commentaire.model';
+import { Profil } from 'src/app/models/profil.model';
+import { NotificationEkang } from 'src/app/models/notification.model';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: "app-publication-item",
@@ -16,7 +19,9 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   jaiLike = false;
   commentaire: Commentaire;
 
-  constructor(private router: Router, private pubService: PublicationService) { }
+  constructor(private router: Router, 
+    private pubService: PublicationService,
+    private notifService: NotificationService) { }
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
@@ -53,6 +58,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     this.pubService.like(this.utilisateur, this.publication).then(p => {
       this.publication = p;
       this.jaiLike = true;
+      this.createNotificationLike();
     });
   }
 
@@ -81,4 +87,14 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
 
   onClick() { }
+
+  
+  createNotificationLike() {
+    const profilFlou = new Profil(this.utilisateur);
+    const notification = new NotificationEkang(profilFlou, 'LIKE');
+    notification.publication = this.publication;
+    this.notifService.createNotification(notification).then((t)=>{
+
+    });
+  }
 }
