@@ -16,7 +16,9 @@
   </ion-item>
   <ion-item lines="none" class="tweet">
     <ion-label text-wrap (click)="ouvrirPublication()">
-      {{publication.texte}}
+      <span [innerHTML]="urlify(publication.texte)">
+
+      </span>
     </ion-label>
   </ion-item>
   <img *ngIf="publication.cover" class="tweet-img" [src]="publication.cover" />
@@ -43,7 +45,7 @@
         [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'" />
     </ion-avatar>
 
-    <ion-label>
+    <ion-label text-wrap>
       <h4>
         {{commentaire.utilisateur ? commentaire.utilisateur.displayName : 'Aucun
         utilisateur'}}

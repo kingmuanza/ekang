@@ -19,7 +19,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   jaiLike = false;
   commentaire: Commentaire;
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     private pubService: PublicationService,
     private notifService: NotificationService) { }
 
@@ -42,6 +42,15 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire
     }
+  }
+
+  urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, (url) => {
+      return '<a href="' + url + '">' + url + '</a>';
+    });
+    // or alternatively
+    // return text.replace(urlRegex, '<a href="$1">$1</a>')
   }
 
   aiJeLike() {
@@ -88,12 +97,12 @@ export class PublicationItemComponent implements OnInit, OnChanges {
 
   onClick() { }
 
-  
+
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, 'LIKE');
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then((t)=>{
+    this.notifService.createNotification(notification).then((t) => {
 
     });
   }

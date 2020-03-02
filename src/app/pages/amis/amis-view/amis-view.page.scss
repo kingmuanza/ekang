@@ -1,3 +1,21 @@
+.muanza-image {
+  height: 30vw; 
+  width: 30vw; 
+  background-color: green; 
+  border-radius: 50%;
+  margin-left: 2.5vw;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.muanza-photo {
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+
 .muanza-header {
   background-color: #0062ff;
   height: 70vw;
@@ -23,11 +41,14 @@ h1 {
   font-size: 30px;
 }
 .info_box {
-  display: flex;
+  float: right;
+  width: 60vw;
+  display: inline-block;
 }
 .date_box {
-  margin: 4px 36px 7px 15px;
+  margin: 5px;
   text-align: center;
+  display: inline-block;
 }
 .date_box b {
   font-size: 20px;
