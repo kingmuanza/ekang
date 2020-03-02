@@ -18,7 +18,11 @@ export class NotificationsPage implements OnInit {
 
   getNotifications() {
     this.notifService.getNotifications().then((notifications)=>{
-      this.notifications = notifications;
+      this.notifications = notifications.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime() > 0
+          ? -1
+          : 1;
+      });;
     })
   }
 

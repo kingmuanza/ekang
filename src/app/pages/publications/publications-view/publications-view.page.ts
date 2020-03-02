@@ -5,6 +5,9 @@ import { Publication } from "src/app/models/publication.model";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { Commentaire } from "src/app/models/commentaire.model";
+import { NotificationEkang } from 'src/app/models/notification.model';
+import { Profil } from 'src/app/models/profil.model';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: "app-publications-view",
@@ -23,7 +26,8 @@ export class PublicationsViewPage implements OnInit {
     private router: Router,
     public auth: AuthentificationService,
     private pubService: PublicationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notifService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -39,6 +43,11 @@ export class PublicationsViewPage implements OnInit {
               console.log("comment", commentaires);
 
               this.commentaires = commentaires;
+              const listeDesIndex = new Array<string>();
+              this.commentaires.forEach(comment => {
+                listeDesIndex.push(comment.id);
+              });
+              this.publication.commentaires = listeDesIndex;
             });
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
@@ -71,6 +80,7 @@ export class PublicationsViewPage implements OnInit {
     this.pubService.like(this.utilisateur, this.publication).then(p => {
       this.publication = p;
       this.jaiLike = true;
+      this.createNotificationLike();
     });
   }
 
@@ -92,16 +102,49 @@ export class PublicationsViewPage implements OnInit {
 
   envoyer() {
     if (this.texte) {
+      
       const commentaire = new Commentaire(
         this.texte,
         this.publication,
         this.utilisateur
       );
+
+      if(!this.publication.commentaires) {
+        this.publication.commentaires = new Array<string>();
+      }
+      this.publication.commentaires.push(commentaire.id);
+
       this.pubService.saveCommentaire(commentaire).then(c => {
         this.commentaires.unshift(commentaire);
+        commentaire.publication = null;
+        this.publication.dernierCommentaire = commentaire;
+        this.pubService.savePublication(this.publication).then((publication)=>{
+          this.publication = publication;
+          // Création de la notification
+          this.createNotificationCommentaire(commentaire.texte);
+
+        });
       });
       this.texte = null;
     }
+  }
+
+  createNotificationCommentaire(texte: string) {
+    const profilFlou = new Profil(this.utilisateur);
+    const notification = new NotificationEkang(profilFlou, 'COMMENTAIRE');
+    notification.publication = this.publication;
+    notification.texte = texte;
+    this.notifService.createNotification(notification).then((t)=>{
+
+    });
+  }
+  createNotificationLike() {
+    const profilFlou = new Profil(this.utilisateur);
+    const notification = new NotificationEkang(profilFlou, 'LIKE');
+    notification.publication = this.publication;
+    this.notifService.createNotification(notification).then((t)=>{
+
+    });
   }
   onClick() {}
   ouvrirPublication() {}

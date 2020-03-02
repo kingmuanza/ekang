@@ -8,6 +8,7 @@ export class NotificationEkang {
     date = new Date();
     type: string;
     publication?: Publication;
+    texte?: string;
 
     constructor(profil: Profil, type: string) {
 

@@ -28,7 +28,7 @@ export class AccueilPage implements OnInit {
     private pubService: PublicationService,
     private notifService: NotificationService,
     public auth: AuthentificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -45,7 +45,7 @@ export class AccueilPage implements OnInit {
             this.displayName = utilisateur.displayName;
           }
         }
-        this.getNotifications();
+        this.getPublications();
       }
     );
     this.auth.emettre();
@@ -57,18 +57,8 @@ export class AccueilPage implements OnInit {
   nouveau() {
     this.router.navigate(["publications", "publications-edit"]);
   }
-  onClick() {}
+  onClick() { }
 
-  getNotifications() {
-    this.all = new Array<Publication | NotificationEkang>();
-    this.notifService.getNotifications().then(notifications => {
-      this.notifications = notifications;
-      console.log("notifications");
-      console.log(notifications);
-      this.all = this.all.concat(this.notifications);
-      this.getPublications();
-    });
-  }
   getPublications() {
     this.pubService.getPublications().then(publications => {
       if (publications) {

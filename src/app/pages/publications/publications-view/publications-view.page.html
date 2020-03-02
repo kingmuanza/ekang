@@ -52,12 +52,9 @@
         <ion-icon slot="start" name="heart-outline"></ion-icon>
         {{publication.likes}}
       </ion-button>
-      <ion-button fill="clear" (click)="onClick()">
+      <ion-button fill="clear">
         <ion-icon slot="start" name="chatbubbles-outline"></ion-icon>
-        {{commentaires.length}}
-      </ion-button>
-      <ion-button fill="clear" (click)="onClick()">
-        <ion-icon slot="start" name="heart-empty"></ion-icon> 0
+        {{publication.commentaires ? publication.commentaires.length : 0}}
       </ion-button>
     </div>
   </ion-card>

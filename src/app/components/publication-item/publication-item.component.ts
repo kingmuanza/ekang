@@ -3,6 +3,7 @@ import { Publication } from "src/app/models/publication.model";
 import { PublicationService } from "src/app/services/publication.service";
 import * as firebase from "firebase";
 import { Router } from "@angular/router";
+import { Commentaire } from 'src/app/models/commentaire.model';
 
 @Component({
   selector: "app-publication-item",
@@ -13,12 +14,16 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   @Input() publication: Publication;
   @Input() utilisateur: firebase.User;
   jaiLike = false;
+  commentaire: Commentaire;
 
-  constructor(private router: Router, private pubService: PublicationService) {}
+  constructor(private router: Router, private pubService: PublicationService) { }
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
+      if (this.publication && this.publication.dernierCommentaire) {
+        this.commentaire = this.publication.dernierCommentaire
+      }
     }
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
@@ -28,6 +33,9 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     // console.log(this.utilisateur);
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
+    }
+    if (this.publication && this.publication.dernierCommentaire) {
+      this.commentaire = this.publication.dernierCommentaire
     }
   }
 
@@ -72,5 +80,5 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     ]);
   }
 
-  onClick() {}
+  onClick() { }
 }

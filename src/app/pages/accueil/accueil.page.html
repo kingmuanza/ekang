@@ -12,49 +12,6 @@
     <ng-container *ngIf="publication.texte">
       <app-publication-item [publication]="publication" [utilisateur]="utilisateur"> </app-publication-item>
     </ng-container>
-    <ng-container *ngIf="!publication.texte">
-      <ion-item>
-        <ion-avatar slot="start">
-          <img
-            class="image-muanza"
-            [src]="publication.profil ? publication.profil.utilisateur.photoURL: '../../../assets/img/user.png'"
-          />
-        </ion-avatar>
-        <ion-label
-          class="ion-text-wrap"
-          *ngIf="publication.type === 'UPDATE_PROFIL'"
-        >
-          <b color="primary">
-            {{publication.profil.utilisateur.displayName}}
-          </b>
-          a mis à jour son profil
-          <div class="date">
-            <small>
-              le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date
-              | date: 'HH:mm'}}
-            </small>
-          </div>
-        </ion-label>
-        <ion-label
-          class="ion-text-wrap"
-          *ngIf="publication.type === 'PUBLICATION'"
-        >
-          <b ion-text color="primary">
-            {{publication.profil.utilisateur.displayName}}
-          </b>
-          vient de faire une publication :
-          <b *ngIf="publication.publication">
-            "{{publication.publication.texte}}"
-          </b>
-          <div class="date">
-            <small>
-              le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date
-              | date: 'HH:mm'}}
-            </small>
-          </div>
-        </ion-label>
-      </ion-item>
-    </ng-container>
   </ng-container>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
