@@ -65,6 +65,16 @@ export class PublicationsViewPage implements OnInit {
       }
     });
   }
+  
+  urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, (url) => {
+      return '<a href="' + url + '">' + url + '</a>';
+    });
+    // or alternatively
+    // return text.replace(urlRegex, '<a href="$1">$1</a>')
+  }
+
 
   aiJeLike() {
     if (this.publication.likeurs) {
