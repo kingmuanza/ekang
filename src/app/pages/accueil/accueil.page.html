@@ -7,17 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="utilisateur">
   <ng-container *ngFor="let publication of all">
     <ng-container *ngIf="publication.texte">
-      <app-publication-item [publication]="publication"> </app-publication-item>
+      <app-publication-item [publication]="publication" [utilisateur]="utilisateur"> </app-publication-item>
     </ng-container>
     <ng-container *ngIf="!publication.texte">
       <ion-item>
         <ion-avatar slot="start">
           <img
             class="image-muanza"
-            [src]="publication.profil.utilisateur.photoURL ? publication.profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+            [src]="publication.profil ? publication.profil.utilisateur.photoURL: '../../../assets/img/user.png'"
           />
         </ion-avatar>
         <ion-label

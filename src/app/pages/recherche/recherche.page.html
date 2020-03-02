@@ -8,36 +8,72 @@
 </ion-header>
 
 <ion-content>
-  <div style="margin-left: 5vw; margin-right: 5vw;">
-    <ion-select
-      [value]="profil ? profil.pays : ''"
-      (ionChange)="chooseCountry($event)"
-      interface="popover"
-      placeholder="Pays de residence"
-    >
-      <ion-select-option *ngFor="let p of pays" [value]="p.name">
-        {{ p.name }}
-      </ion-select-option>
-    </ion-select>
+  <ion-card>
+    <ion-card-header (click)="expandItem()">
+      <ion-card-title>{{userVille}}</ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content>
+      <app-accordion expandHeight="100%" [expanded]="items.expanded">
+        <ion-list>
+          <ion-item>
+            <ion-label color="primary">
+              <p (click)="expandItem2()">Afrique</p>
+              <ng-container>
+                <app-accordion expandHeight="100%" [expanded]="items2.expanded">
+                  <ion-list>
+                    <ion-item *ngFor="let p of pays">
+                      <ion-label color="danger">
+                        <p (click)="expandItem3(p)">{{p.name}}</p>
+                        <app-accordionpays
+                          expandHeight="100%"
+                          [expanded]="expandedVille"
+                        >
+                          <ion-list>
+                            <ion-item *ngFor="let v of p.ville">
+                              <ion-label color="success">
+                                <p (click)="closeExpand(v.nom, p)">{{v.nom}}</p>
+                              </ion-label>
+                            </ion-item>
+                          </ion-list>
+                        </app-accordionpays>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </app-accordion>
+              </ng-container>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">
+              <p>Amerique</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">
+              <p>Asie</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">
+              <p>Europe</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </app-accordion>
+    </ion-card-content>
+  </ion-card>
+  <div style="margin-left: 5vw; margin-right: 5vw;">
     <ion-select
       (ionChange)="chooseProfession($event)"
       interface="popover"
-      placeholder="Profession "
+      placeholder="centre d'intérêt"
     >
       <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.nom"
         >{{ pro.nom }}</ion-select-option
       >
     </ion-select>
-    <ion-select
-      (ionChange)="chooseVille($event)"
-      interface="popover"
-      placeholder="Votre ville"
-    >
-      <ion-select-option *ngFor="let v of villes" [value]="v.nom"
-        >{{ v.nom }}</ion-select-option
-      >
-    </ion-select>
+
     <ion-button
       expand="block"
       fill="outline"
@@ -87,3 +123,16 @@
     </ng-container>
   </ion-list>
 </ion-content>
+
+<!--
+   <ion-select
+      [value]="profil ? profil.pays : ''"
+      (ionChange)="chooseCountry($event)"
+      interface="popover"
+      placeholder="Pays de residence"
+    >
+      <ion-select-option *ngFor="let p of pays" [value]="p.name">
+        {{ p.name }}
+      </ion-select-option>
+    </ion-select>
+-->

@@ -4,8 +4,8 @@ import { UserService } from "src/app/services/user.service";
 import { Profil } from "src/app/models/profil.model";
 import { Router } from "@angular/router";
 import { VilleService } from "src/app/services/ville.service";
-import { Subscription } from 'rxjs';
-import { AuthentificationService } from 'src/app/services/authentification.service';
+import { Subscription } from "rxjs";
+import { AuthentificationService } from "src/app/services/authentification.service";
 
 @Component({
   selector: "app-recherche",
@@ -13,28 +13,44 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
   styleUrls: ["./recherche.page.scss"]
 })
 export class RecherchePage implements OnInit {
+  public items: any;
+  public items2: any;
   pays: any;
   userPays: any;
-  userVille: any;
+  userVille: string = "situation géographique";
   userProfession: any;
   listProfesion: any;
   profils = new Array<Profil>();
   profil: Profil;
   villes: any;
-
+  expandedVille: boolean = false;
   profilsResultats = new Array<Profil>();
   profilsVilles = new Array<Profil>();
 
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
-  
+
   constructor(
     private http: HttpClient,
     private userService: UserService,
     private router: Router,
     public auth: AuthentificationService,
     private villeService: VilleService
-  ) {}
+  ) {
+    /* this.items = [
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false },
+      { expanded: false }
+    ]; */
+    this.items = { expanded: false, name: "situation geographique" };
+    this.items2 = { expanded: false, name: "situation geographique" };
+  }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -47,7 +63,7 @@ export class RecherchePage implements OnInit {
             if (profil) {
               this.profil = profil;
               const ville = profil.ville;
-              this.userService.getProfilsVille(ville).then((profilsVilles)=>{
+              this.userService.getProfilsVille(ville).then(profilsVilles => {
                 this.profilsVilles = profilsVilles;
               });
             }
@@ -58,7 +74,7 @@ export class RecherchePage implements OnInit {
     this.auth.emettre();
     this.getCountry();
     this.getProfession();
-    this.takeVille();
+    //this.takeVille();
   }
   getCountry() {
     this.http
@@ -66,6 +82,12 @@ export class RecherchePage implements OnInit {
       .subscribe(data => {
         // console.log(data);
         this.pays = data;
+        /* this.pays.forEach(p => {
+          if (p.name === "Cameroon") {
+            p["ville"] = this.userVille;
+          }
+        }); */
+        this.takeVille();
       });
   }
 
@@ -104,8 +126,66 @@ export class RecherchePage implements OnInit {
   }
   takeVille() {
     this.villeService.getVilles().then(data => {
-      // console.log(data);
+      console.log(data);
+      data.forEach(v => {
+        v["expanded"] = false;
+      });
       this.villes = data;
+      this.pays.forEach(p => {
+        p["expanded"] = "false";
+        if (p.name === "Cameroon") {
+          p["ville"] = this.villes;
+        } else {
+          p["ville"] = [{nom: "ville1"}, {nom: "ville2"}, {nom: "ville1"}, {nom: "ville1"}];
+        }
+
+      });
     });
   }
+
+  expandItem(): void {
+    this.items.expanded = !this.items.expanded;
+  }
+  expandItem2(): void {
+    this.items2.expanded = !this.items2.expanded;
+  }
+
+  expandItem3(p): void {
+    console.log(p);
+    this.userPays = p.name;
+    this.expandedVille = !this.expandedVille;
+    if (p.expanded) {
+      p.expanded = false;
+    } else {
+      this.pays.map(listItem => {
+        if (p == listItem) {
+          listItem.expanded = !listItem.expanded;
+        } else {
+          listItem.expanded = false;
+        }
+        return listItem;
+      });
+    }
+  }
+
+  closeExpand(ville, p) {
+    this.userVille = ville;
+
+    this.items.expanded = !this.items.expanded;
+    this.expandedVille = !this.expandedVille;
+    if (p.expanded) {
+      p.expanded = false;
+    } else {
+      this.pays.map(listItem => {
+        if (p == listItem) {
+          listItem.expanded = !listItem.expanded;
+        } else {
+          listItem.expanded = false;
+        }
+        return listItem;
+      });
+    }
+    this.items2.expanded = !this.items2.expanded;
+  }
+ 
 }
