@@ -140,7 +140,7 @@ export class UserService {
     });
   }
 
-  updateProfil(profil: Profil) {
+  updateProfil(profil: Profil): Promise<Profil>{
     const db = firebase.firestore();
     const element = this.purifier(profil);
     return new Promise((resolve, reject) => {
@@ -149,7 +149,7 @@ export class UserService {
           .doc(profil.utilisateur.uid)
           .set(element)
           .then(() => {
-            resolve();
+            resolve(profil);
           })
           .catch(e => {
             reject(e);

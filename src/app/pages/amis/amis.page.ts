@@ -15,10 +15,11 @@ export class AmisPage implements OnInit {
 
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
-  photoURL: string;
-  displayName: string;
+  monProfil: Profil;
   profils = new Array<Profil>();
   profilsResultats = new Array<Profil>();
+  amis = new Array<Profil>();
+  propositions = new Array<Profil>();
 
   saisie = '';
 
@@ -28,25 +29,54 @@ export class AmisPage implements OnInit {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
+        this.userService.getProfil(this.utilisateur).then((monProfil)=>{
+          this.monProfil = monProfil
+        });
         console.log(this.utilisateur);
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
 
-          if (utilisateur.photoURL) {
-            this.photoURL = utilisateur.photoURL;
-          }
-          if (utilisateur.displayName) {
-            this.displayName = utilisateur.displayName;
-          }
+          this.userService.getProfils().then((profils) => {
+            this.profils = profils.filter((profil) => {
+              return profil.utilisateur.uid !== this.utilisateur.uid
+            });
+            this.profilsResultats = profils.filter((profil) => {
+              return profil.utilisateur.uid !== this.utilisateur.uid
+            });
+            this.setAmis();
+          });
+
         }
       }
     );
     this.auth.emettre();
-    this.userService.getProfils().then((profils) => {
-      this.profils = profils;
-      this.profilsResultats = profils;
+  }
+
+  setAmis() {
+
+    // Mes amis
+    this.amis = this.profilsResultats.filter((profil) => {
+      return this.sontIlsAmis(profil);
     });
+    this.propositions = this.profilsResultats.filter((profil) => {
+      return !this.sontIlsAmis(profil);
+    });
+
+  }
+
+  sontIlsAmis(profil: Profil) {
+    if(this.monProfil && profil) {
+      if(this.monProfil.abonnements) {
+        const resultats = this.monProfil.abonnements.find((index)=>{
+          return index === profil.utilisateur.uid;
+        });
+        if(resultats) {
+          return true
+        }
+      }
+    }
+    return false
   }
 
   rechercher(ev) {
@@ -54,7 +84,8 @@ export class AmisPage implements OnInit {
     this.profilsResultats = this.profils
     this.profilsResultats = this.profilsResultats.filter((element) => {
       return element.utilisateur.displayName.toLocaleLowerCase().indexOf(this.saisie.toLowerCase()) !== -1;
-    })
+    });
+    this.setAmis();
   }
 
   voirProfil(profil: Profil) {

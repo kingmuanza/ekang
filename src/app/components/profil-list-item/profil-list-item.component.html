@@ -16,4 +16,6 @@
     </h3>
     <small></small>
   </ion-label>
+  <ion-button (click)="unSuivre()" *ngIf="sontAmis" slot="end">Suivi</ion-button>
+  <ion-button (click)="suivre()" *ngIf="!sontAmis" fill="outline" slot="end">Suivre</ion-button>
 </ion-item>

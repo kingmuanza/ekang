@@ -6,25 +6,26 @@
     <ion-searchbar
       (ionChange)="rechercher($event)"
       [(ngModel)]="saisie"
+      placeholder="Rechercher"
     ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content *ngIf="monProfil">
+  <ion-list *ngIf="amis.length>0">
     <ion-list-header>
       <ion-label>Mes amis</ion-label>
     </ion-list-header>
-    <ng-container *ngFor="let profil of profilsResultats">
-      <app-profil-list-item [profil]="profil" (click)="voirProfil(profil)"></app-profil-list-item>
+    <ng-container *ngFor="let profil of amis">
+      <app-profil-list-item [profil]="profil" [monProfil]="monProfil"></app-profil-list-item>
     </ng-container>
   </ion-list>
   <ion-list>
     <ion-list-header>
       <ion-label>Personnes qui pourraient vous intéresser</ion-label>
     </ion-list-header>
-    <ng-container *ngFor="let profil of profilsResultats">
-      <app-profil-list-item [profil]="profil" (click)="voirProfil(profil)"></app-profil-list-item>
+    <ng-container *ngFor="let profil of propositions">
+      <app-profil-list-item [profil]="profil" [monProfil]="monProfil"></app-profil-list-item>
     </ng-container>
   </ion-list>
 </ion-content>

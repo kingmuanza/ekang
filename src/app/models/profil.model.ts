@@ -8,6 +8,9 @@ export class Profil {
   ville: string;
   utilisateur: firebase.User;
 
+  abonnements = new Array<string>();
+  abonnes = new Array<string>();
+
   constructor(utilisateur: firebase.User) {
     this.utilisateur = utilisateur;
   }
