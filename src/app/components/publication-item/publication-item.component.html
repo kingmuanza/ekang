@@ -1,5 +1,5 @@
 <ion-card>
-  <ion-item lines="none">
+  <ion-item (click)="voirAmi()" lines="none">
     <ion-avatar slot="start">
       <img [src]="publication.utilisateur ? publication.utilisateur.photoURL :'../../../assets/img/user.png'" />
     </ion-avatar>
@@ -39,7 +39,7 @@
 
   <!-- COMMENTAIRES -->
   <hr *ngIf="commentaire">
-  <ion-item *ngIf="commentaire">
+  <ion-item *ngIf="commentaire"  (click)="ouvrirPublication()">
     <ion-avatar slot="start">
       <img class="image-muanza"
         [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'" />

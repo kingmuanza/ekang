@@ -44,6 +44,10 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     }
   }
 
+  voirAmi() {
+    this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
+  }
+
   // Permet d'extraire un lien d'une URL
   urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;

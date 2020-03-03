@@ -12,13 +12,13 @@
   <ion-list>
 
     <ng-container *ngFor="let notification of notifications">
-      <ion-item>
-        <ion-avatar slot="start">
+      <ion-item> 
+        <ion-avatar (click)="voirProfil(notification)" slot="start">
           <img class="image-muanza"
             [src]="notification.profil.utilisateur.photoURL ? notification.profil.utilisateur.photoURL: '../../../assets/img/user.png'">
         </ion-avatar>
         <!--MISE A JOUR DU PROFIL -->
-        <ion-label class="ion-text-wrap" *ngIf="notification.type === 'UPDATE_PROFIL'">
+        <ion-label (click)="voirProfil(notification)" class="ion-text-wrap" *ngIf="notification.type === 'UPDATE_PROFIL'">
           <b color="primary">
             {{notification.profil.utilisateur.displayName}}
           </b>
@@ -34,7 +34,7 @@
         </ion-label>
 
         <!-- PUBLICATION -->
-        <ion-label class="ion-text-wrap" *ngIf="notification.type === 'PUBLICATION'">
+        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'PUBLICATION'">
           <b ion-text color="primary">
             {{notification.profil.utilisateur.displayName}}
           </b>
@@ -54,7 +54,7 @@
 
 
         <!-- LIKE -->
-        <ion-label class="ion-text-wrap" *ngIf="notification.type === 'LIKE'">
+        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'LIKE'">
           <b ion-text color="primary">
             {{notification.profil.utilisateur.displayName}}
           </b>
@@ -80,7 +80,7 @@
 
 
         <!-- COMMENTAIRE -->
-        <ion-label class="ion-text-wrap" *ngIf="notification.type === 'COMMENTAIRE'">
+        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'COMMENTAIRE'">
           <b ion-text color="primary">
             {{notification.profil.utilisateur.displayName}}
           </b>

@@ -43,6 +43,11 @@ export class PublicationsViewPage implements OnInit {
               console.log("comment", commentaires);
 
               this.commentaires = commentaires;
+              this.commentaires.sort((a, b)=>{
+                return new Date(b.date).getTime() - new Date(a.date).getTime() > 0
+                  ? -1
+                  : 1;
+              })
               const listeDesIndex = new Array<string>();
               this.commentaires.forEach(comment => {
                 listeDesIndex.push(comment.id);

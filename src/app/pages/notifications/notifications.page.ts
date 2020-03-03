@@ -39,6 +39,17 @@ export class NotificationsPage implements OnInit {
     this.auth.emettre();
   }
 
+  voirProfil(notification: NotificationEkang) {
+    this.router.navigate(['amis', 'amis-view', notification.profil.utilisateur.uid]);
+  }
+  voirPublication(notification: NotificationEkang) {
+    if(notification.publication) {
+      this.router.navigate(['publications', 'publications-view', notification.publication.id]);
+    } else {
+      
+    }
+  }
+
   getNotifications() {
     this.notifService.getMyNotifications(this.profil).then((notifications) => {
       this.notifications = notifications.filter((notification) => {
