@@ -44,6 +44,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     }
   }
 
+  // Permet d'extraire un lien d'une URL
   urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, (url) => {
@@ -98,6 +99,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   onClick() { }
 
 
+  // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, 'LIKE');

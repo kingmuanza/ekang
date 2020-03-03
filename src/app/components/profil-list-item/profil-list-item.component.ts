@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Profil } from 'src/app/models/profil.model';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profil-list-item',
@@ -9,19 +10,24 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfilListItemComponent implements OnInit, OnChanges {
 
-  @Input() profil: Profil;
+  @Input() profil: Profil; // profil de la personn qu'on regarde
   @Input() monProfil: Profil;
   sontAmis = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
     this.sontAmis = this.sontIlsAmis();
   }
 
+  ouvrir() {
+    this.router.navigate(['amis', 'amis-view', this.profil.utilisateur.uid]);
+  }
+
   sontIlsAmis() {
     if(this.monProfil && this.profil) {
       if(this.monProfil.abonnements) {
+        // Si l'index du profil se retrouve dans mes abonnements alors on est amis
         const resultats = this.monProfil.abonnements.find((index)=>{
           return index === this.profil.utilisateur.uid;
         });
@@ -40,6 +46,7 @@ export class ProfilListItemComponent implements OnInit, OnChanges {
   }
 
   enregistrerTout() {
+    // On met à jour les profils
     this.userService.updateProfil(this.monProfil).then((pA)=>{
       this.monProfil = pA;
       this.sontAmis = this.sontIlsAmis();

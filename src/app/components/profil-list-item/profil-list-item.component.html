@@ -1,9 +1,9 @@
 <ion-item>
-  <ion-avatar slot="start">
+  <ion-avatar (click)="ouvrir()" slot="start">
     <img class="image-muanza"
       [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" />
   </ion-avatar>
-  <ion-label>
+  <ion-label (click)="ouvrir()">
     <h2>
       <b>{{profil.utilisateur.displayName}}</b>, 
       {{profil.profession}}
