@@ -18,6 +18,7 @@ export class MessagerieService {
     senderId: string,
     receiverId: string
   ): Promise<any> {
+    console.log("le msg", message);
     const db = firebase.firestore();
     let id1 = senderId + "ekang" + receiverId;
     let id2 = receiverId + "ekang" + senderId;
@@ -46,6 +47,8 @@ export class MessagerieService {
     senderId: string,
     receiverId: string
   ): Promise<any> {
+    console.log("le msg", message);
+
     const db = firebase.firestore();
     let id1 = senderId + "ekang" + receiverId;
     let id2 = receiverId + "ekang" + senderId;

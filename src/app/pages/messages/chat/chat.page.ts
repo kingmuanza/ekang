@@ -70,8 +70,8 @@ export class ChatPage implements OnInit {
       );
       let tab = [];
       tab.push({
-        senderID: message.senderId,
-        receiverID: message.receiverId,
+        senderID: this.senderId,
+        receiverID: this.receiverId,
         texte: this.messageText
       });
       message["chats"] = tab;
