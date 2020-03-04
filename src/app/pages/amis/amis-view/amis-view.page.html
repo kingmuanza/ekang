@@ -4,16 +4,18 @@
       <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
     <ion-title *ngIf="profil">
-      {{profil.utilisateur ? profil.utilisateur.displayName: 'Veuillez patienter...'}}
+      {{profil.utilisateur ? profil.utilisateur.displayName: 'Veuillez
+      patienter...'}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
   <div *ngIf="profil" class="muanza-image" style="">
     <div class="">
-      <img [src]="profil.utilisateur ? profil.utilisateur.photoURL: '../../../../assets/img/user.png'"
-        class="muanza-photo">
+      <img
+        [src]="profil.utilisateur ? profil.utilisateur.photoURL: '../../../../assets/img/user.png'"
+        class="muanza-photo"
+      />
     </div>
   </div>
   <div class="info_box">
@@ -32,15 +34,32 @@
       </div>
     </div>
     <div style="padding-right: 20px;">
-      <ion-button (click)="unSuivre()" expand="full" *ngIf="sontAmis" shape="round" slot="end">Suivi</ion-button>
-      <ion-button (click)="suivre()" expand="full" *ngIf="!sontAmis" shape="round" fill="outline" slot="end">Suivre</ion-button>
+      <ion-button
+        (click)="unSuivre()"
+        expand="full"
+        *ngIf="sontAmis"
+        shape="round"
+        slot="end"
+        >Suivi</ion-button
+      >
+      <ion-button
+        (click)="suivre()"
+        expand="full"
+        *ngIf="!sontAmis"
+        shape="round"
+        fill="outline"
+        slot="end"
+        >Suivre</ion-button
+      >
     </div>
-
   </div>
 
   <ion-item lines="none">
     <ion-label>
-      <p *ngIf="profil">{{ profil.profession }}<br> {{ profil.pays }}</p>
+      <p *ngIf="profil">
+        {{ profil.profession }}<br />
+        {{ profil.pays }}
+      </p>
     </ion-label>
   </ion-item>
 
@@ -60,32 +79,46 @@
   </ion-segment>
 
   <div>
-    <ion-card (click)="ouvrirPublication(publication)" *ngFor="let publication of publications">
+    <ion-card
+      (click)="ouvrirPublication(publication)"
+      *ngFor="let publication of publications"
+    >
       <ion-item lines="none">
         <ion-avatar slot="start">
-          <img [src]="publication.utilisateur ? publication.utilisateur.photoURL :'../../../assets/img/user.png'" />
+          <img
+            [src]="publication.utilisateur ? publication.utilisateur.photoURL :'../../../assets/img/user.png'"
+          />
         </ion-avatar>
         <ion-label>
           <h2>
             <b>
-              {{publication.utilisateur ? publication.utilisateur.displayName : 'Aucun utilisateur'}}
+              {{publication.utilisateur ? publication.utilisateur.displayName :
+              'Aucun utilisateur'}}
             </b>
           </h2>
           <p>
-            Le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date | date: 'HH:mm'}}
+            Le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date |
+            date: 'HH:mm'}}
           </p>
         </ion-label>
       </ion-item>
       <ion-item lines="none" class="tweet">
         <ion-label text-wrap (click)="ouvrirPublication(publication)">
-          <span [innerHTML]="urlify(publication.texte)">
-    
-          </span>
+          <span [innerHTML]="urlify(publication.texte)"> </span>
         </ion-label>
       </ion-item>
-      <img *ngIf="publication.cover" class="tweet-img" [src]="publication.cover" />
+      <img
+        *ngIf="publication.cover"
+        class="tweet-img"
+        [src]="publication.cover"
+      />
       <div style="margin-top: 10px; font-size: 1.2em;">
-        <ion-button color="danger" *ngIf="jaiLike" fill="clear" (click)="unlike()">
+        <ion-button
+          color="danger"
+          *ngIf="jaiLike"
+          fill="clear"
+          (click)="unlike()"
+        >
           <ion-icon slot="start" name="heart"></ion-icon>
           {{publication.likes}}
         </ion-button>
@@ -93,34 +126,41 @@
           <ion-icon slot="start" name="heart-outline"></ion-icon>
           {{publication.likes}}
         </ion-button>
-        <ion-button fill="clear" (click)="ouvrirPublication()">
+        <ion-button fill="clear" (click)="ouvrirPublication(publication)">
           <ion-icon slot="start" name="chatbubbles-outline"></ion-icon>
           {{publication.commentaires ? publication.commentaires.length : 0}}
         </ion-button>
       </div>
-    
+
       <!-- COMMENTAIRES -->
-      <hr *ngIf="commentaire">
+      <hr *ngIf="commentaire" />
       <ion-item *ngIf="commentaire">
         <ion-avatar slot="start">
-          <img class="image-muanza"
-            [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'" />
+          <img
+            class="image-muanza"
+            [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
         </ion-avatar>
-    
+
         <ion-label text-wrap>
           <h4>
-            {{commentaire.utilisateur ? commentaire.utilisateur.displayName : 'Aucun
-            utilisateur'}}
+            {{commentaire.utilisateur ? commentaire.utilisateur.displayName :
+            'Aucun utilisateur'}}
           </h4>
           <div>
             {{commentaire.texte}}
           </div>
           <small>
-            {{commentaire.date | date: 'dd-MM-yyyy'}} à {{commentaire.date | date:
-            'HH:mm'}}
+            {{commentaire.date | date: 'dd-MM-yyyy'}} à {{commentaire.date |
+            date: 'HH:mm'}}
           </small>
         </ion-label>
       </ion-item>
     </ion-card>
   </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="primary" (click)="chat()">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>

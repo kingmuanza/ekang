@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/services/user.service";
 import { Profil } from "src/app/models/profil.model";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from 'rxjs';
-import { AuthentificationService } from 'src/app/services/authentification.service';
-import { PublicationService } from 'src/app/services/publication.service';
-import { Publication } from 'src/app/models/publication.model';
-import { NotificationService } from 'src/app/services/notification.service';
+import { Subscription } from "rxjs";
+import { AuthentificationService } from "src/app/services/authentification.service";
+import { PublicationService } from "src/app/services/publication.service";
+import { Publication } from "src/app/models/publication.model";
+import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
   selector: "app-amis-view",
@@ -21,11 +21,13 @@ export class AmisViewPage implements OnInit {
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
   publications = new Array<Publication>();
-  
+  commentaire: any;
+  jaiLike: any;
+  amiId: any;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private publicationService: PublicationService, 
+    private publicationService: PublicationService,
     public auth: AuthentificationService,
     private router: Router,
     private pubService: PublicationService,
@@ -35,6 +37,7 @@ export class AmisViewPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const id = params.get("id");
+      this.amiId = id;
       if (id) {
         this.userService.getProfilByID(id).then(profil => {
           this.profil = profil;
@@ -43,7 +46,7 @@ export class AmisViewPage implements OnInit {
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
               this.utilisateur = utilisateur;
-              this.userService.getProfil(this.utilisateur).then((monProfil)=>{
+              this.userService.getProfil(this.utilisateur).then(monProfil => {
                 this.monProfil = monProfil;
                 this.sontAmis = this.sontIlsAmis();
               });
@@ -56,35 +59,33 @@ export class AmisViewPage implements OnInit {
   }
 
   sontIlsAmis() {
-    if(this.monProfil && this.profil) {
-      if(this.monProfil.abonnements) {
-        const resultats = this.monProfil.abonnements.find((index)=>{
+    if (this.monProfil && this.profil) {
+      if (this.monProfil.abonnements) {
+        const resultats = this.monProfil.abonnements.find(index => {
           return index === this.profil.utilisateur.uid;
         });
-        if(resultats) {
-          return true
+        if (resultats) {
+          return true;
         }
       }
     }
-    return false
+    return false;
   }
 
   getPublications() {
-    this.publicationService.getPublications().then((publications)=>{
-      this.publications = publications.filter((publication)=>{
+    this.publicationService.getPublications().then(publications => {
+      this.publications = publications.filter(publication => {
         return publication.utilisateur.uid === this.profil.utilisateur.uid;
       });
     });
   }
 
-  
-
   enregistrerTout() {
     // On met à jour les profils
-    this.userService.updateProfil(this.monProfil).then((pA)=>{
+    this.userService.updateProfil(this.monProfil).then(pA => {
       this.monProfil = pA;
       this.sontAmis = this.sontIlsAmis();
-      this.userService.updateProfil(this.profil).then((pB)=>{
+      this.userService.updateProfil(this.profil).then(pB => {
         this.profil = pB;
         this.sontAmis = this.sontIlsAmis();
       });
@@ -92,11 +93,11 @@ export class AmisViewPage implements OnInit {
   }
 
   suivre() {
-    if(!this.monProfil.abonnements) {
+    if (!this.monProfil.abonnements) {
       this.monProfil.abonnements = new Array<string>();
     }
     this.monProfil.abonnements.unshift(this.profil.utilisateur.uid);
-    if(!this.profil.abonnes){
+    if (!this.profil.abonnes) {
       this.profil.abonnes = new Array<string>();
     }
     this.profil.abonnes.unshift(this.monProfil.utilisateur.uid);
@@ -113,28 +114,27 @@ export class AmisViewPage implements OnInit {
     this.enregistrerTout();
   }
 
-
   // Permet d'extraire un lien d'une URL
   urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, (url) => {
-      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+    return text.replace(urlRegex, url => {
+      return '<a target="_blank" href="' + url + '">' + url + "</a>";
     });
     // or alternatively
     // return text.replace(urlRegex, '<a href="$1">$1</a>')
   }
 
-
-
   ouvrirPublication(publication) {
-    this.router.navigate([
-      "publications",
-      "publications-view",
-      publication.id
-    ]);
+    this.router.navigate(["publications", "publications-view", publication.id]);
   }
 
-  onClick() { }
+  onClick() {}
 
+  like() {}
+  unlike() {}
 
+  chat() {
+    console.log(this.amiId);
+    this.router.navigate(["messages", "chat", this.amiId]);
+  }
 }

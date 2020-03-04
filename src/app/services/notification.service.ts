@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import * as firebase from "firebase";
 import { NotificationEkang } from "../models/notification.model";
 import { resolve } from "url";
-import { Profil } from '../models/profil.model';
+import { Profil } from "../models/profil.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class NotificationService {
-  constructor() { }
+  constructor() {}
 
   purifier(element) {
     return JSON.parse(JSON.stringify(element));
@@ -61,10 +61,10 @@ export class NotificationService {
             const notification = resultat.data() as NotificationEkang;
             notifications.push(notification);
           });
-          notifications = notifications.filter((notification) => {
+          notifications = notifications.filter(notification => {
             if (profil.abonnements) {
               if (profil.abonnements.length > 0) {
-                const resultats = profil.abonnements.filter((index) => {
+                const resultats = profil.abonnements.filter(index => {
                   return index === notification.profil.utilisateur.uid;
                 });
                 if (resultats.length > 0) {
@@ -74,9 +74,9 @@ export class NotificationService {
             }
             return false;
           });
-          console.log('profil');
+          console.log("profil");
           console.log(profil);
-          console.log('notifications pour utilisateur');
+          console.log("notifications pour utilisateur");
           console.log(notifications);
           resolve(notifications);
         })

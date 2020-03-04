@@ -10,7 +10,7 @@ export class Profil {
 
   abonnements = new Array<string>();
   abonnes = new Array<string>();
-
+  sendersMessages = new Array<string>();
   constructor(utilisateur: firebase.User) {
     this.utilisateur = utilisateur;
   }

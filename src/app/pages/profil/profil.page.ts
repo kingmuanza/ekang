@@ -36,8 +36,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
     private userService: UserService,
     private villeService: VilleService
   ) {
-
-    console.log('onInit');
+    console.log("onInit");
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
@@ -49,9 +48,6 @@ export class ProfilPage implements OnInit, AfterViewInit {
               this.profil = profil;
               this.userPays = this.profil.pays;
               this.userProfession = this.profil.profession;
-              this.getCountry();
-              this.listProfession();
-              this.takeVille();
             }
           });
           if (utilisateur.displayName) {
@@ -63,6 +59,9 @@ export class ProfilPage implements OnInit, AfterViewInit {
         }
       }
     );
+    this.getCountry();
+    this.listProfession();
+    this.takeVille();
     this.auth.emettre();
   }
 
@@ -70,13 +69,10 @@ export class ProfilPage implements OnInit, AfterViewInit {
     this.auth.emettre();
   }
 
-
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
+    console.log("ngAfterViewInit");
     // this.auth.emettre();
   }
-
-
 
   createNotification(profil: Profil, type: string) {
     const notification = new NotificationEkang(profil, type);

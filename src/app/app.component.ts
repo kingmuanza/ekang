@@ -43,6 +43,11 @@ export class AppComponent implements OnInit {
       icon: "heart"
     },
     {
+      title: "Messages",
+      url: "messages",
+      icon: "chatbox-ellipses"
+    },
+    {
       title: "Rechercher",
       // url: '/folder/Archived',
       url: "recherche",
