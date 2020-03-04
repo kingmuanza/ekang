@@ -9,20 +9,20 @@
 
 <ion-content>
   <div class="stream" *ngIf="messages">
-    <ion-item lines="none" *ngFor="let message of messages">
+    <ion-item lines="none" *ngFor="let message of messagesChat">
       <ion-badge
         text-wrap
         slot="start"
         color="light"
-        *ngIf="message.userId != userId"
-        >{{ message.text }}</ion-badge
+        *ngIf="message.receiverID != senderId"
+        >{{ message.texte }}</ion-badge
       >
       <ion-badge
         text-wrap
         slot="end"
         color="primary"
-        *ngIf="message.userId == userId"
-        >{{ message.text }}</ion-badge
+        *ngIf="message.senderID == senderId"
+        >{{ message.texte }}</ion-badge
       >
     </ion-item>
   </div>

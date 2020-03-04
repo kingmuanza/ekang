@@ -5,6 +5,7 @@ export class Message {
   utilisateur: firebase.User;
   cover: string; // image de base
   images: Array<string>;
+  chats: Array<any>;
   video: string;
   texte: string;
   senderId: string;
@@ -14,7 +15,7 @@ export class Message {
     this.date = new Date();
 
     this.texte = texte;
-
+    // this.chats.push(this.texte);
     this.senderId = senderId;
     this.receiverId = receiverId;
   }
