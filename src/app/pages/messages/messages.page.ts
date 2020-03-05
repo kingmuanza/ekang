@@ -40,9 +40,9 @@ export class MessagesPage implements OnInit {
           this.router.navigate(["connexion"]);
         } else {
           this.userService.getProfils().then(profils => {
-            this.profils = profils.filter(profil => {
+            /* this.profils = profils.filter(profil => {
               return profil.utilisateur.uid !== this.utilisateur.uid;
-            });
+            }); */
             this.profilsResultats = profils.filter(profil => {
               return profil.utilisateur.uid !== this.utilisateur.uid;
             });
@@ -59,6 +59,8 @@ export class MessagesPage implements OnInit {
     this.amis = this.profilsResultats.filter(profil => {
       return this.sontIlsAmis(profil);
     });
+    console.log("mes amis", this.amis);
+
     this.propositions = this.profilsResultats.filter(profil => {
       return !this.sontIlsAmis(profil);
     });
@@ -76,6 +78,11 @@ export class MessagesPage implements OnInit {
       }
     }
     return false;
+  }
+
+  isOnline(user) {
+    //return this.chatService.isUserOnline(user);
+    return true;
   }
 
   voir() {

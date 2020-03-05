@@ -7,4 +7,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <ion-list>
+    <ion-item class="user-item" *ngFor="let user of amis">
+      <div class="user-avatar">
+        <img
+          [src]="user.utilisateur.photoURL ? user.utilisateur.photoURL: '../../../assets/img/user.png'"
+          alt=""
+        />
+      </div>
+      <ion-label class="user-name">
+        {{ user.utilisateur.displayName ? user.utilisateur.displayName:
+        'inconnu'}}
+      </ion-label>
+      <div class="user-presence">
+        <ion-icon
+          [class.user-online]="isOnline(user)"
+          name="radio-button-on"
+        ></ion-icon>
+      </div>
+      <div>
+        <ion-button
+          size="small"
+          [routerLink]="['/messages', 'chat', user.utilisateur.uid]"
+        >
+          <ion-icon name="chatbubbles"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

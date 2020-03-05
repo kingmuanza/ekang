@@ -11,6 +11,7 @@
   <div class="stream" *ngIf="messages">
     <ion-item lines="none" *ngFor="let message of messagesChat">
       <ion-badge
+        class="line-breaker"
         text-wrap
         slot="start"
         color="light"
@@ -18,6 +19,7 @@
         >{{ message.texte }}</ion-badge
       >
       <ion-badge
+        class="line-breaker"
         text-wrap
         slot="end"
         color="primary"
@@ -26,25 +28,20 @@
       >
     </ion-item>
   </div>
-  <ion-footer>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="10" class="input-col">
-          <ion-input
-            autocomplete="true"
-            spellcheck="true"
-            [(ngModel)]="messageText"
-            type="text"
-            placeholder="Entrez votre message"
-            name="message"
-          ></ion-input>
-        </ion-col>
-        <ion-col size="2" class="send-col">
-          <ion-button shape="full" (click)="sendMessage()">
-            <ion-icon name="paper-plane"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-footer no-border>
+    <div class="input-wrap">
+      <textarea
+        #messageInput
+        placeholder="Enter your message!"
+        [(ngModel)]="messageText"
+        (keyup.enter)="sendMessage()"
+      >
+      </textarea>
+
+      <button ion-button clear icon-only item-right (click)="sendMessage()">
+        SEND
+        <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+      </button>
+    </div>
   </ion-footer>
 </ion-content>

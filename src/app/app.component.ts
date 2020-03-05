@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: "Messages",
-      url: "amis",
+      url: "messages",
       icon: "chatbox-ellipses"
     },
     {
