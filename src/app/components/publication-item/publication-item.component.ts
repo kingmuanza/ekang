@@ -3,10 +3,10 @@ import { Publication } from "src/app/models/publication.model";
 import { PublicationService } from "src/app/services/publication.service";
 import * as firebase from "firebase";
 import { Router } from "@angular/router";
-import { Commentaire } from 'src/app/models/commentaire.model';
-import { Profil } from 'src/app/models/profil.model';
-import { NotificationEkang } from 'src/app/models/notification.model';
-import { NotificationService } from 'src/app/services/notification.service';
+import { Commentaire } from "src/app/models/commentaire.model";
+import { Profil } from "src/app/models/profil.model";
+import { NotificationEkang } from "src/app/models/notification.model";
+import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
   selector: "app-publication-item",
@@ -19,40 +19,46 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   jaiLike = false;
   commentaire: Commentaire;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private pubService: PublicationService,
-    private notifService: NotificationService) { }
+    private notifService: NotificationService
+  ) {}
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
       if (this.publication && this.publication.dernierCommentaire) {
-        this.commentaire = this.publication.dernierCommentaire
+        this.commentaire = this.publication.dernierCommentaire;
       }
     }
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     //  console.log("this.publication");
-    console.log(this.publication);
+    //  console.log(this.publication);
     // console.log("this.utilisateur");
     // console.log(this.utilisateur);
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
     }
     if (this.publication && this.publication.dernierCommentaire) {
-      this.commentaire = this.publication.dernierCommentaire
+      this.commentaire = this.publication.dernierCommentaire;
     }
   }
 
   voirAmi() {
-    this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
+    this.router.navigate([
+      "amis",
+      "amis-view",
+      this.publication.utilisateur.uid
+    ]);
   }
 
   // Permet d'extraire un lien d'une URL
   urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, (url) => {
-      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+    return text.replace(urlRegex, url => {
+      return '<a target="_blank" href="' + url + '">' + url + "</a>";
     });
     // or alternatively
     // return text.replace(urlRegex, '<a href="$1">$1</a>')
@@ -100,16 +106,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     ]);
   }
 
-  onClick() { }
-
+  onClick() {}
 
   // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
-    const notification = new NotificationEkang(profilFlou, 'LIKE');
+    const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then((t) => {
-
-    });
+    this.notifService.createNotification(notification).then(t => {});
   }
 }

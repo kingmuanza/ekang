@@ -40,9 +40,8 @@ export class MessagesPage implements OnInit {
           this.router.navigate(["connexion"]);
         } else {
           this.userService.getProfils().then(profils => {
-            /* this.profils = profils.filter(profil => {
-              return profil.utilisateur.uid !== this.utilisateur.uid;
-            }); */
+            console.log(profils);
+
             this.profilsResultats = profils.filter(profil => {
               return profil.utilisateur.uid !== this.utilisateur.uid;
             });
@@ -80,9 +79,21 @@ export class MessagesPage implements OnInit {
     return false;
   }
 
-  isOnline(user) {
+  isOnline(user: Profil) {
     //return this.chatService.isUserOnline(user);
-    return true;
+    let curentDate = new Date().getTime();
+    if (user.lastConnexionDate) {
+      let date = user.lastConnexionDate;
+      console.log(curentDate - date);
+
+      if (curentDate - date <= 60000) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   voir() {

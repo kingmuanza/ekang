@@ -8,6 +8,7 @@ import { PublicationService } from "src/app/services/publication.service";
 import { Publication } from "src/app/models/publication.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "app-accueil",
@@ -27,17 +28,18 @@ export class AccueilPage implements OnInit {
     private router: Router,
     private pubService: PublicationService,
     private notifService: NotificationService,
-    public auth: AuthentificationService
-  ) { }
+    public auth: AuthentificationService,
+    public userservice: UserService
+  ) {}
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
-        console.log(this.utilisateur);
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
+          this.utlisateurLastConnexion(utilisateur);
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
@@ -57,7 +59,7 @@ export class AccueilPage implements OnInit {
   nouveau() {
     this.router.navigate(["publications", "publications-edit"]);
   }
-  onClick() { }
+  onClick() {}
 
   getPublications() {
     this.pubService.getPublications().then(publications => {
@@ -65,7 +67,6 @@ export class AccueilPage implements OnInit {
         this.publications = publications;
         this.all = this.all.concat(this.publications);
         // console.log('this.publications');
-        console.log(this.publications);
         this.all = this.all.sort((a, b) => {
           return new Date(a.date).getTime() - new Date(b.date).getTime() > 0
             ? -1
@@ -78,6 +79,18 @@ export class AccueilPage implements OnInit {
   like(publication: Publication) {
     this.pubService.like(this.utilisateur, publication).then(p => {
       publication = p;
+    });
+  }
+  utlisateurLastConnexion(utilisateur: firebase.User) {
+    console.log(new Date(utilisateur.metadata.lastSignInTime).getTime());
+    this.userservice.getProfil(utilisateur).then(profil => {
+      profil.lastConnexionDate = new Date(
+        utilisateur.metadata.lastSignInTime
+      ).getTime();
+
+      this.userservice.updateProfil(profil).then(() => {
+        console.log("update!!");
+      });
     });
   }
 }

@@ -73,11 +73,11 @@ export class UserService {
     const profils = new Array<Profil>();
     const collection = db.collection("profils");
     let resultats;
-    
+
     if (ville) {
       resultats = collection.where("ville", "==", `${ville}`);
     }
-    
+
     return new Promise((resolve, reject) => {
       if (resultats) {
         resultats
@@ -140,7 +140,7 @@ export class UserService {
     });
   }
 
-  updateProfil(profil: Profil): Promise<Profil>{
+  updateProfil(profil: Profil): Promise<Profil> {
     const db = firebase.firestore();
     const element = this.purifier(profil);
     return new Promise((resolve, reject) => {

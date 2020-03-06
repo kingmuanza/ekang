@@ -7,7 +7,7 @@ export class Profil {
   profession: string;
   ville: string;
   utilisateur: firebase.User;
-
+  lastConnexionDate: number;
   abonnements = new Array<string>();
   abonnes = new Array<string>();
   sendersMessages = new Array<string>();
