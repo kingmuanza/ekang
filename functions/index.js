@@ -1,9 +1,11 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
-const cors = require("cors")({ origin: true });
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  //service: "gmail",
   auth: {
     user: "ekangafrique@gmail.com",
     pass: "ekang2020*"
@@ -26,7 +28,8 @@ exports.sendChatEmail = functions.https.onCall((data, context) => {
    
   </ul>
   <h4>Message</h4>
-  <p>${data.name || ""}</p>
+  <p>${data.name ||
+    ""} vous avez reçu un message! connecter vous a votre compte</p>
 </div>`;
   const mailOptions = {
     from: "no-reply@myemail.com",
@@ -35,14 +38,18 @@ exports.sendChatEmail = functions.https.onCall((data, context) => {
     text: text,
     html: text
   };
-  return transporter
+
+  return transporter.sendMail(mailOptions);
+  /* return transporter
     .sendMail(mailOptions)
-    .then(() => {
-      return "mail send!";
+    .then(data => {
+      console.log(data);
+
+      return data;
     })
     .catch(err => {
       return err;
-    });
+    });*/
   /*  return admin
     .auth()
     .getUserByEmail(data.email)

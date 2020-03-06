@@ -164,20 +164,23 @@ export class ChatPage implements OnInit {
       let date = profil.lastConnexionDate;
       if (curentDate - date > 120000) {
         //j'envoi le mail
+        console.log(profil);
+
         this.envoyeurEmail({
-          // email: profil.utilisateur.email,
-          // name: profil.utilisateur.displayName
-          email: "eric2mballa@gmail.com",
-          name: "erico erico"
+          email: profil.utilisateur.email,
+          name: profil.utilisateur.displayName
+          // email: "eric2mballa@gmail.com",
+          // name: "erico erico"
         });
         return;
       }
     } else if (!profil.lastConnexionDate) {
+      console.log(profil);
       this.envoyeurEmail({
-        // email: profil.utilisateur.email,
-        // name: profil.utilisateur.displayName
-        email: "eric2mballa@gmail.com",
-        name: "erico erico"
+        email: profil.utilisateur.email,
+        name: profil.utilisateur.displayName
+        // email: "eric2mballa@gmail.com",
+        // name: "erico erico"
       });
       return;
     } else {
