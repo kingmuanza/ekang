@@ -73,16 +73,22 @@ export class ChatPage implements OnInit {
         senderID: this.senderId,
         receiverID: this.receiverId,
         texte: this.messageText
+        // date: new Date(),
+        // user: this.utilisateur
       });
       message["chats"] = tab;
       this.saveMessageChat(message);
+      this.sendEmail(this.profil);
     } else {
       this.messages.chats.push({
         senderID: this.senderId,
         receiverID: this.receiverId,
         texte: this.messageText
+        // date: new Date(),
+        // user: this.utilisateur
       });
       this.saveMessageChat2(this.messages);
+      this.sendEmail(this.profil);
     }
 
     this.messageText = "";
@@ -148,6 +154,44 @@ export class ChatPage implements OnInit {
         if (this.messages["chats"].length) {
           this.messagesChat = this.messages["chats"];
         }
+      });
+  }
+  sendEmail(profil: Profil) {
+    console.log(profil);
+
+    let curentDate = new Date().getTime();
+    if (profil.lastConnexionDate) {
+      let date = profil.lastConnexionDate;
+      if (curentDate - date > 120000) {
+        //j'envoi le mail
+        this.envoyeurEmail({
+          // email: profil.utilisateur.email,
+          // name: profil.utilisateur.displayName
+          email: "eric2mballa@gmail.com",
+          name: "erico erico"
+        });
+        return;
+      }
+    } else if (!profil.lastConnexionDate) {
+      this.envoyeurEmail({
+        // email: profil.utilisateur.email,
+        // name: profil.utilisateur.displayName
+        email: "eric2mballa@gmail.com",
+        name: "erico erico"
+      });
+      return;
+    } else {
+      return false;
+    }
+  }
+  envoyeurEmail(data) {
+    const email = firebase.functions().httpsCallable("sendChatEmail");
+    email(data)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 }
