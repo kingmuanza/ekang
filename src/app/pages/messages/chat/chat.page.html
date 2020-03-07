@@ -11,7 +11,7 @@
   <div class="stream" *ngIf="messages">
     <ion-item lines="none" *ngFor="let message of messagesChat">
       <ion-badge
-        class="line-breaker"
+        class="line-breaker right-bubble"
         text-wrap
         slot="start"
         color="light"
@@ -19,7 +19,7 @@
         >{{ message.texte }}</ion-badge
       >
       <ion-badge
-        class="line-breaker"
+        class="line-breaker left-bubble"
         text-wrap
         slot="end"
         color="primary"
