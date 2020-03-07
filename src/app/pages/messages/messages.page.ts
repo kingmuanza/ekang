@@ -84,7 +84,7 @@ export class MessagesPage implements OnInit {
     let curentDate = new Date().getTime();
     if (user.lastConnexionDate) {
       let date = user.lastConnexionDate;
-      console.log(curentDate - date);
+      // console.log(curentDate - date);
 
       if (curentDate - date <= 60000) {
         return true;
