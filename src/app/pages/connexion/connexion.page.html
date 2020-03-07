@@ -1,126 +1,52 @@
 <ion-content>
-  <div class="padding">
-    <div class="logo">
-      <!--  <ion-icon color="light" name="sunny"></ion-icon> 
-       <ion-icon name="person-circle-outline"></ion-icon>-->
-
-      <img src="../../../assets/ekang.PNG" />
-
-      <!-- <ion-icon color="light" name="cloudy-night"></ion-icon>
-       -->
+  <div style="height: 100vh; width: 100vw; overflow: hidden;">
+    <div class="image-arriere">
     </div>
-    <form [formGroup]="connexionForm" (ngSubmit)="onConnexionFormSubmit()">
-      <ion-item>
-        <ion-label stacked class="my-label"> Email:</ion-label>
-        <ion-input
-          color="black"
-          type="mail"
-          formControlName="login"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked class="my-label"> Mot de passe:</ion-label>
-        <ion-input
-          color="black"
-          type="password"
-          formControlName="passe"
-        ></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-button color="black" slot="end" fill="clear"
-          >Mot de passe oublié ?</ion-button
-        >
-      </ion-item>
-
-      <ion-button
-        [disabled]="connexionForm.invalid || inactif"
-        (click)="onConnexionFormSubmit()"
-        color="black"
-        expand="block"
-        shape="round"
-        fill="outline"
-        >Connexion</ion-button
-      >
-      <br />
-      <ion-button
-        (click)="inscription()"
-        color="warning"
-        expand="block"
-        shape="round"
-        >Inscription</ion-button
-      >
-    </form>
-
-    <ion-item lines="none">
-      <ion-label color="light" text-center>Ou connectez-vous avec</ion-label>
-    </ion-item>
-
-    <div class="flex">
-      <div style="flex-grow: 1">
-        <ion-button color="primary" shape="round" size="default">
-          <ion-icon slot="start" name="logo-facebook"></ion-icon>
-          Facebook
-        </ion-button>
-      </div>
-      <div style="flex-grow: 1">
-        <ion-button color="danger" shape="round" size="default">
-          <ion-icon slot="start" name="logo-google"></ion-icon>
-          Google
-        </ion-button>
-      </div>
-    </div>
-  </div>
-</ion-content>
-
-<!--
-  <ion-header>
-  <ion-toolbar>
-    <ion-title>Francais</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-
-<ion-content>
-  <div class="image-arriere">
-    <div class="page">
-      <div>
-        <h1>
+    <div class="page filtre-noir">
+      <div class="titre">
+        <span>
           Ekang ôssu
-        </h1>
+        </span>
+        <br>
+        <span class="muanza-icone">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </span>
       </div>
-      <form [formGroup]="connexionForm" (ngSubmit)="onConnexionFormSubmit()">
-        <div>
-          <input formControlName="login" type="text" placeholder="Login" />
-          <input
-            style="margin-top: 10px;"
-            formControlName="passe"
-            type="password"
-            placeholder="Mot de passe"
-          />
+      <div class="contenu">
+        <form [formGroup]="connexionForm" (ngSubmit)="onConnexionFormSubmit()">
+          <div class="muanza-row">
+            <div class="icone">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+            <div class="champ">
+              <input formControlName="login" type="text" placeholder="Login" />
+            </div>
+          </div>
+          <div class="muanza-row">
+            <div class="icone">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
+            <div class="champ">
+              <input formControlName="passe" type="text" placeholder="Mot de passe" />
+            </div>
+          </div>
+
+          <div class="connexion">
+            <button [disabled]="connexionForm.invalid || inactif">
+              Connexion
+            </button>
+          </div>
+        </form>
+
+        <div class="infos-oubliees">
+          Mot de passe oublié
         </div>
-
-        <div class="connexion">
-          <button [disabled]="connexionForm.invalid" class="bg-primaire">
-            Connexion
-          </button>
-        </div>
-      </form>
-
-      <div class="infos-oubliees">
-        Informations de connexion oubliées ?
-        <br />
-        <b>
-          Obtenez de l'aide pour vous connecter
-        </b>
-      </div>
-
-      <div class="vague">
-        <img src="../../../assets/img/wave.png" style="width: 100%;" />
       </div>
 
       <div (click)="inscription()" class="inscription">
-        Vous n'avez pas de compte ?
+        <span class="color: #777">
+          Vous n'avez pas de compte ?
+        </span>
         <br />
         <b>
           Inscrivez vous
@@ -129,4 +55,3 @@
     </div>
   </div>
 </ion-content>
--->
