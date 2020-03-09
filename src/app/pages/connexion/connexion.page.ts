@@ -11,42 +11,44 @@ import { ToastController } from '@ionic/angular';
 })
 export class ConnexionPage implements OnInit {
 
+  connexionForm: FormGroup; // Formulaire de connexion
+  inactif = false; // Empeche l'utilisateur de cliquer deux fois sur le bouton SUBMIT
 
-  connexionForm: FormGroup;
-  inactif = false;
-
-  // tslint:disable-next-line:max-line-length
-  constructor(public auth: AuthentificationService, public toastController: ToastController, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(
+    public auth: AuthentificationService,
+    public toastController: ToastController,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.initConnexionForm();
   }
 
-  initConnexionForm() {
+  initConnexionForm(): void{
     this.connexionForm = this.formBuilder.group({
       login: ['', [Validators.required, Validators.email]],
       passe: ['', [Validators.required]]
     });
   }
 
-  onConnexionFormSubmit() {
-
-    this.inactif = true;
+  onConnexionFormSubmit(): void{
+    this.inactif = true; // bouton inactif
     console.log('onConnexionFormSubmit');
     const value = this.connexionForm.value;
     const login = value.login;
     const passe = value.passe;
     this.auth.connexion(login, passe).then(() => {
-      this.inactif = false;
+      this.inactif = false; // bouton actif
       this.connexion();
     });
   }
 
-  connexion() {
+  connexion(): void{
     this.router.navigate(['accueil']);
   }
 
-  inscription() {
+  inscription(): void{
     this.router.navigate(['inscription']);
   }
 
