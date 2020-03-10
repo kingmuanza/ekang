@@ -1,7 +1,7 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
-      <ion-content>
+      <ion-content style="padding-left: 0px!important;">
         <div style="height: 100vh; width: 100vw; overflow: hidden;">
           <div class="image-arriere">
           </div>
@@ -13,10 +13,10 @@
               </div>
             </div>
             <ion-list style="background: none;" id="inbox-list">
-              <ion-list-header *ngIf="utilisateur">
+              <ion-list-header *ngIf="utilisateur" style="font-size: 0.8; font-weight: 100; color: #eee;">
                 {{utilisateur.displayName ? utilisateur.displayName: defaultName(utilisateur)}}
               </ion-list-header>
-              <ion-note *ngIf="utilisateur">
+              <ion-note *ngIf="utilisateur" style="color: #bbb;">
                 {{utilisateur.email}}
               </ion-note>
 
@@ -27,13 +27,6 @@
                   <ion-label>{{ p.title }}</ion-label>
                 </ion-item>
               </ion-menu-toggle>
-            </ion-list>
-
-            <ion-list  style="margin:0; padding: 0; background: none;" id="labels-list">
-              <ion-item style="background-color: transparent !important;" *ngFor="let label of labels" lines="none">
-                <ion-icon slot="start" name="power"></ion-icon>
-                <ion-label>{{ label }}</ion-label>
-              </ion-item>
             </ion-list>
 
           </div>
