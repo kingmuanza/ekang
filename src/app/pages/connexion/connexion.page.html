@@ -1,15 +1,19 @@
 <ion-content>
+  <ion-progress-bar *ngIf="inactif" type="indeterminate"></ion-progress-bar>
   <div style="height: 100vh; width: 100vw; overflow: hidden;">
     <div class="image-arriere">
     </div>
     <div class="page filtre-noir">
       <div class="titre">
-        <span>
+        <span class="animated infinite bounce delay-2s">
           Ekang ôssu
         </span>
         <br>
-        <span class="muanza-icone">
-          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <span *ngIf="connexionReussie" class="muanza-icone">
+          <ion-icon color="primary" name="shield-checkmark-outline"></ion-icon>
+        </span>
+        <span *ngIf="mauvaisCredentials" class="muanza-icone">
+          <ion-icon name="close" color="danger"></ion-icon>
         </span>
       </div>
       <div class="contenu">
@@ -27,7 +31,7 @@
               <ion-icon name="lock-closed-outline"></ion-icon>
             </div>
             <div class="champ">
-              <input formControlName="passe" type="text" placeholder="Mot de passe" />
+              <input formControlName="passe" type="password" placeholder="Mot de passe" />
             </div>
           </div>
 
