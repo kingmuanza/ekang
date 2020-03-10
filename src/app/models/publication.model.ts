@@ -1,6 +1,7 @@
 
 import * as firebase from "firebase";
 import { Commentaire } from './commentaire.model';
+import { Profil } from './profil.model';
 export class Publication {
 
     id: string;
@@ -14,6 +15,7 @@ export class Publication {
     likeurs = new Array<string>();
     commentaires = new Array<string>();
     dernierCommentaire?: Commentaire;
+    profil: Profil;
 
     constructor(texte: string, utilisateur: firebase.User) {
         this.date = new Date();

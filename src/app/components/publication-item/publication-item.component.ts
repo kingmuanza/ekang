@@ -14,8 +14,9 @@ import { NotificationService } from "src/app/services/notification.service";
   styleUrls: ["./publication-item.component.scss"]
 })
 export class PublicationItemComponent implements OnInit, OnChanges {
-  @Input() publication: Publication;
-  @Input() utilisateur: firebase.User;
+  
+  @Input() public publication: Publication;
+  @Input() public utilisateur: firebase.User;
   jaiLike = false;
   commentaire: Commentaire;
 
@@ -23,7 +24,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     private router: Router,
     private pubService: PublicationService,
     private notifService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
@@ -43,6 +44,31 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     }
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
+    }
+  }
+
+
+  getLibelleDate(d: Date) {
+    const date = new Date(d);
+    const aujourdhui = new Date();
+    const milli = aujourdhui.getTime() - date.getTime();
+    const seconds = milli / 1000;
+    const minutes = seconds / 60;
+    const heures = minutes / 60;
+    const jours = heures / 24;
+
+    if (jours > 1) {
+      return '' + Math.floor(jours) + 'j';
+    } else {
+      if (heures > 1) {
+        return 'il y a ' + Math.floor(heures) + 'h';
+      } else {
+        if (minutes > 1) {
+          return 'il y a ' + Math.floor(minutes) + ' min';
+        } else {
+          return 'A l\'instant';
+        }
+      }
     }
   }
 
@@ -106,13 +132,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     ]);
   }
 
-  onClick() {}
+  onClick() { }
 
   // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then(t => {});
+    this.notifService.createNotification(notification).then(t => { });
   }
 }

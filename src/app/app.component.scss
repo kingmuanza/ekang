@@ -1,7 +1,170 @@
+@mixin muanza-padding() {
+  padding: 20px;
+}
+
+.bg-transparent {
+  background: transparent;
+}
+
+.item .item-content {
+  background-color: transparent !important;
+}
+
+.image-arriere {
+  background-image: url("../assets/img/masque.jpg");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  margin-top: -5vh;
+  filter: blur(25px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110vw;
+  margin-left: -5vw;
+  z-index: 0;
+}
+
+
+.filtre-noir {
+  background: linear-gradient(to bottom, rgba(#000, 0.4), rgba(#000, 0.95));
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100vh;
+}
+
+.contenu {
+  margin-top: 50vh;
+  transform: translateY(-50%);
+}
+
+.page {
+  @include muanza-padding();
+  height: 100vh;
+  margin-top: 0vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+
+  z-index: 155555;
+
+  button {
+    font-size: 0.95em;
+    font-weight: 100;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    background: none;
+    border: 1px solid #0f9b0f;
+    border-radius: 20px;
+    color: white;
+    background: #0f9b0f;
+
+    &:disabled {
+      color: white;
+      background: none;
+      border: 1px solid #eee;
+    }
+
+    &:active {
+      color: white;
+      background: darken(#0f9b0f, 20%);
+    }
+  }
+
+  textarea,
+  select,
+  input,
+  button {
+    outline: none;
+    border: 0px solid #fff;
+  }
+
+  input,
+  select {
+    width: 100%;
+    font-size: 1.2em;
+    font-weight: 100;
+    color: white;
+    background: none !important;
+    border: 0px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+    &:focus {
+      color: white;
+      background: none !important;
+      border-bottom: 1px solid #0f9b0f;
+    }
+  }
+
+  * {
+    font-family: "Ubuntu";
+  }
+
+  .titre {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-family: "Ubuntu";
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding-top: 2vh;
+
+    .muanza-icone {
+      font-size: 1.2em;
+    }
+  }
+
+  .connexion {
+    margin-top: 5vh;
+    margin-bottom: 20px;
+    color: #444;
+  }
+
+  .infos-oubliees {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fafafa;
+  }
+
+  .inscription {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #eee;
+    @include muanza-padding();
+    text-align: center;
+  }
+
+  .vague {
+    position: absolute;
+    display: none;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+
+
 .muanza-image {
-  height: 15vh; 
-  width: 15vh; 
-  background-color: green; 
+  height: 15vh;
+  width: 15vh;
+  background-color: green;
   border-radius: 50%;
   margin-left: 2.5vw;
   padding: 2px;
@@ -14,20 +177,32 @@
   border: 2px solid #fff;
 }
 
+ion-content {
+  --padding-start: 0px;
+  --padding-end: 0px
+}
+
+ion-list-header {}
+
+ion-note {
+  --color: #fafafa;
+  font-weight: 100;
+}
 
 ion-menu ion-content {
-  --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  --background: rgba(var(--ion-color-primary-rgb), 0.0);
 }
 
 ion-menu.md ion-content {
-  --padding-start: 8px;
+  --padding-start: 0px;
   --padding-end: 8px;
   --padding-top: 20px;
   --padding-bottom: 20px;
 }
 
 ion-menu.md ion-list {
-  padding: 20px 0;
+  padding-left: 0px;
+  margin-left: 0px;
 }
 
 ion-menu.md ion-note {
@@ -36,11 +211,12 @@ ion-menu.md ion-note {
 
 ion-menu.md ion-list-header,
 ion-menu.md ion-note {
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 ion-menu.md ion-list#inbox-list {
-  border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
+  margin-left: -20px;
+
 }
 
 ion-menu.md ion-list#inbox-list ion-list-header {
@@ -61,13 +237,22 @@ ion-menu.md ion-list#labels-list ion-list-header {
 }
 
 ion-menu.md ion-item {
-  --padding-start: 10px;
+  --padding-start: 20px;
   --padding-end: 10px;
   border-radius: 4px;
+  margin-left: 0px;
+}
+
+ion-menu.md ion-item {
+  --background: rgba(var(--ion-color-primary-rgb), 0.0);
 }
 
 ion-menu.md ion-item.selected {
-  --background: rgba(var(--ion-color-primary-rgb), 0.14);
+  --background: rgba(var(--ion-color-primary-rgb), 0.24);
+
+  ion-icon {
+    color: #fff;
+  }
 }
 
 ion-menu.md ion-item.selected ion-icon {
@@ -75,11 +260,12 @@ ion-menu.md ion-item.selected ion-icon {
 }
 
 ion-menu.md ion-item ion-icon {
-  color: #616e7e;
+  color: #aaa;
 }
 
 ion-menu.md ion-item ion-label {
   font-weight: 500;
+  color: #eee;
 }
 
 ion-menu.ios ion-content {
@@ -107,7 +293,7 @@ ion-menu.ios ion-item.selected ion-icon {
 
 ion-menu.ios ion-item ion-icon {
   font-size: 24px;
-  color: #73849a;
+  color: #aaa;
 }
 
 ion-menu.ios ion-list#labels-list ion-list-header {
@@ -131,6 +317,24 @@ ion-note {
   color: var(--ion-color-medium-shade);
 }
 
+ion-menu.ios ion-label {
+  font-weight: 500;
+  color: #eee;
+}
+
 ion-item.selected {
   --color: var(--ion-color-primary);
+}
+ion-menu.ios ion-item.selected ion-label {
+  --color: var(--ion-color-primary);
+}
+
+ion-menu.ios ion-item {
+  --background: rgba(var(--ion-color-primary-rgb), 0.0);
+}
+
+
+ion-menu.ios ion-item.selected {
+  --background: rgba(var(--ion-color-primary-rgb), 0.24);
+
 }

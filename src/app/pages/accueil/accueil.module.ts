@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AccueilPageRoutingModule } from './accueil-routing.module';
 
 import { AccueilPage } from './accueil.page';
+import { DisplayPageModule } from 'src/app/display/display.module';
 import { PublicationItemComponent } from 'src/app/components/publication-item/publication-item.component';
 
 @NgModule({
@@ -14,8 +15,9 @@ import { PublicationItemComponent } from 'src/app/components/publication-item/pu
     CommonModule,
     FormsModule,
     IonicModule,
+    DisplayPageModule,
     AccueilPageRoutingModule
   ],
-  declarations: [AccueilPage, PublicationItemComponent]
+  declarations: [AccueilPage]
 })
 export class AccueilPageModule {}

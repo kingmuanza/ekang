@@ -32,7 +32,9 @@ export class AuthentificationService {
           this.emettre();
           resolve(utilisateur);
         })
-        .catch(() => {});
+        .catch((e) => {
+          reject(e);
+        });
     });
   }
 

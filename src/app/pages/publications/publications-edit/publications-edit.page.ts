@@ -59,6 +59,7 @@ export class PublicationsEditPage implements OnInit {
     console.log('value');
     console.log(value);
     const publication = new Publication(value.texte, this.utilisateur);
+    publication.profil = this.profil;
     if (this.photoURL) {
       this.enregistrerImageFirebase().then((url)=>{
         publication.cover = url;
