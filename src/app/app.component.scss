@@ -9,6 +9,7 @@
 .item .item-content {
   background-color: transparent !important;
 }
+
 .image-arriere {
   background-image: url("../assets/img/masque.jpg");
   background-size: cover;
@@ -65,9 +66,10 @@
       background: none;
       border: 1px solid #eee;
     }
+
     &:active {
       color: white;
-      background: darken(#0f9b0f, 20%) ;
+      background: darken(#0f9b0f, 20%);
     }
   }
 
@@ -120,6 +122,7 @@
     left: 0;
     width: 100vw;
     padding-top: 2vh;
+
     .muanza-icone {
       font-size: 1.2em;
     }
@@ -159,9 +162,9 @@
 
 
 .muanza-image {
-  height: 15vh; 
-  width: 15vh; 
-  background-color: green; 
+  height: 15vh;
+  width: 15vh;
+  background-color: green;
   border-radius: 50%;
   margin-left: 2.5vw;
   padding: 2px;
@@ -179,8 +182,8 @@ ion-content {
   --padding-end: 0px
 }
 
-ion-list-header {
-}
+ion-list-header {}
+
 ion-note {
   --color: #fafafa;
   font-weight: 100;
@@ -243,6 +246,7 @@ ion-menu.md ion-item {
 ion-menu.md ion-item {
   --background: rgba(var(--ion-color-primary-rgb), 0.0);
 }
+
 ion-menu.md ion-item.selected {
   --background: rgba(var(--ion-color-primary-rgb), 0.24);
 
@@ -289,7 +293,7 @@ ion-menu.ios ion-item.selected ion-icon {
 
 ion-menu.ios ion-item ion-icon {
   font-size: 24px;
-  color: #fafafa;
+  color: #aaa;
 }
 
 ion-menu.ios ion-list#labels-list ion-list-header {
@@ -313,6 +317,24 @@ ion-note {
   color: var(--ion-color-medium-shade);
 }
 
+ion-menu.ios ion-label {
+  font-weight: 500;
+  color: #eee;
+}
+
 ion-item.selected {
   --color: var(--ion-color-primary);
+}
+ion-menu.ios ion-item.selected ion-label {
+  --color: var(--ion-color-primary);
+}
+
+ion-menu.ios ion-item {
+  --background: rgba(var(--ion-color-primary-rgb), 0.0);
+}
+
+
+ion-menu.ios ion-item.selected {
+  --background: rgba(var(--ion-color-primary-rgb), 0.24);
+
 }

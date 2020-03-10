@@ -60,10 +60,10 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       return '' + Math.floor(jours) + 'j';
     } else {
       if (heures > 1) {
-        return 'il y a' + Math.floor(heures) + 'h';
+        return 'il y a ' + Math.floor(heures) + 'h';
       } else {
         if (minutes > 1) {
-          return 'il y a ' + Math.floor(minutes) + 'min';
+          return 'il y a ' + Math.floor(minutes) + ' min';
         } else {
           return 'A l\'instant';
         }

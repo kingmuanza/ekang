@@ -32,5 +32,10 @@
     margin-bottom: 3vh;
     border: 1px solid #eee;
     border-radius: 4px;
+    background-color: #fefffe;
+  }
+
+  ion-item {
+    --background: rgba(var(--ion-color-primary-rgb), 0.0);
   }
   
