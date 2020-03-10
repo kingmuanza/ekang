@@ -9,10 +9,12 @@
           {{publication.utilisateur ? publication.utilisateur.displayName : 'Aucun utilisateur'}}
         </b>
       </h2>
-      <p>
-        Le {{publication.date | date: 'dd-MM-yyyy'}} à {{publication.date | date: 'HH:mm'}}
-      </p>
     </ion-label>
+    <p slot="end" style="margin-top: -5px;">
+      <small>
+        {{getLibelleDate(publication.date)}}
+      </small>
+    </p>
   </ion-item>
   <ion-item lines="none" class="tweet">
     <ion-label text-wrap (click)="ouvrirPublication()">

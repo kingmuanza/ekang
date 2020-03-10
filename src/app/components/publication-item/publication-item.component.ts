@@ -23,7 +23,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     private router: Router,
     private pubService: PublicationService,
     private notifService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
@@ -43,6 +43,21 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     }
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
+    }
+  }
+
+
+  getLibelleDate(d: Date) {
+    const date = new Date(d);
+    const aujourdhui = new Date();
+    const milli = aujourdhui.getTime() - date.getTime();
+    const seconds = milli / 1000;
+    const minutes = seconds / 60;
+    const heures = minutes / 60;
+    const jours = heures / 24;
+
+    if (jours > 1) {
+      return '' + Math.floor(jours) + 'j';
     }
   }
 
@@ -106,13 +121,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     ]);
   }
 
-  onClick() {}
+  onClick() { }
 
   // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then(t => {});
+    this.notifService.createNotification(notification).then(t => { });
   }
 }
