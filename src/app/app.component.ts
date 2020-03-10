@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Platform } from "@ionic/angular";
+import { Platform, MenuController } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
@@ -8,6 +8,7 @@ import * as firebase from "firebase";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AuthentificationService } from "./services/authentification.service";
 import { Subscription } from "rxjs";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-root",
@@ -67,7 +68,9 @@ export class AppComponent implements OnInit {
     public auth: AuthentificationService,
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private menu: MenuController,
+    private router: Router
   ) {
     this.initializeApp();
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -96,6 +99,11 @@ export class AppComponent implements OnInit {
         page => page.title.toLowerCase() === path.toLowerCase()
       );
     }
+  }
+
+  profil() {
+    this.router.navigate(['profil']);
+    this.menu.close();
   }
 
   defaultName(utilisateur: firebase.User) {

@@ -77,6 +77,9 @@ export class AmisViewPage implements OnInit {
       this.publications = publications.filter(publication => {
         return publication.utilisateur.uid === this.profil.utilisateur.uid;
       });
+      this.publications.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
+      });
     });
   }
 

@@ -65,7 +65,7 @@ export class AccueilPage implements OnInit {
     this.pubService.getPublications().then(publications => {
       if (publications) {
         this.publications = publications;
-        this.all = this.all.concat(this.publications);
+        this.all = this.publications;
         // console.log('this.publications');
         this.all = this.all.sort((a, b) => {
           return new Date(a.date).getTime() - new Date(b.date).getTime() > 0

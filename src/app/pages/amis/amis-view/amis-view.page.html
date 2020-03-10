@@ -26,14 +26,14 @@
       </div>
       <div class="date_box">
         <b>{{profil.abonnes ? profil.abonnes.length : 0}}</b>
-        <p>Abonnes</p>
+        <p>Abonnés</p>
       </div>
       <div class="date_box">
         <b>{{profil.abonnements ? profil.abonnements.length : 0}}</b>
         <p>Abonnements</p>
       </div>
     </div>
-    <div style="padding-right: 20px;">
+    <div style="padding-right: 6vw;">
       <ion-button (click)="unSuivre()" expand="full" *ngIf="sontAmis" shape="round" slot="end">Suivi</ion-button>
       <ion-button (click)="suivre()" expand="full" *ngIf="!sontAmis" shape="round" fill="outline" slot="end">Suivre
       </ion-button>

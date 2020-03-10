@@ -137,6 +137,7 @@ export class PublicationsViewPage implements OnInit {
         commentaire.publication = null;
         this.publication.dernierCommentaire = commentaire;
         this.publication.commentaires.push(commentaire.id);
+        
         this.pubService.savePublication(this.publication).then((publication)=>{
           this.publication = publication;
           // Création de la notification

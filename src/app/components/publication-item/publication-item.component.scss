@@ -30,7 +30,7 @@
     margin-right: 3vw;
     margin-top: 1vh;
     margin-bottom: 3vh;
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
     background-color: #fefffe;
     &.gauche-verte {
       border-left: 3px solid #008800;
@@ -39,5 +39,9 @@
 
   ion-item {
     --background: rgba(var(--ion-color-primary-rgb), 0.0);
+  }
+  
+  ion-item.commentaire {
+    --background: rgba(var(--ion-color-primary-rgb), 0.1);
   }
   

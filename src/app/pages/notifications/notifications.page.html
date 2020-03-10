@@ -40,7 +40,7 @@
           </b>
           vient de faire une publication :
           <i *ngIf="notification.publication">
-            "{{notification.publication.texte}}"
+            "{{couperTexte(notification.publication.texte)}}"
           </i>
           <div class="date">
             <small>
@@ -65,7 +65,7 @@
           <span> 
             :
             <i *ngIf="notification.publication">
-              "{{notification.publication.texte}}"
+              "{{couperTexte(notification.publication.texte)}}"
             </i>
           </span>
           <div class="date">

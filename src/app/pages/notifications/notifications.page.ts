@@ -63,6 +63,13 @@ export class NotificationsPage implements OnInit {
     });
   }
 
+  couperTexte(texte: string) {
+    if (texte.length > 50) {
+      return texte.substring(0, 48)+'...';
+    }
+    return texte;
+  }
+
   // Vérifier que la notification me concerne
   notificationIsForMe() {
 
