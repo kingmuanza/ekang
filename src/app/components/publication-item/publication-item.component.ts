@@ -14,8 +14,9 @@ import { NotificationService } from "src/app/services/notification.service";
   styleUrls: ["./publication-item.component.scss"]
 })
 export class PublicationItemComponent implements OnInit, OnChanges {
-  @Input() publication: Publication;
-  @Input() utilisateur: firebase.User;
+  
+  @Input() public publication: Publication;
+  @Input() public utilisateur: firebase.User;
   jaiLike = false;
   commentaire: Commentaire;
 

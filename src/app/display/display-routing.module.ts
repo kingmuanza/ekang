@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DisplayPage
+  },
+  {
+    path: 'publication-display',
+    loadChildren: () => import('./publication-display/publication-display.module').then( m => m.PublicationDisplayPageModule)
   }
 ];
 

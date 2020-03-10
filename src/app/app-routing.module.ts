@@ -64,17 +64,14 @@ const routes: Routes = [
       import("./pages/recherche/recherche.module").then(
         m => m.RecherchePageModule
       )
-  },  {
+  },
+  {
     path: 'publications',
     loadChildren: () => import('./pages/publications/publications.module').then( m => m.PublicationsPageModule)
   },
   {
     path: 'messages',
     loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule)
-  },
-  {
-    path: 'display',
-    loadChildren: () => import('./display/display.module').then( m => m.DisplayPageModule)
   }
 
 ];

@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
+import { PublicationItemComponent } from '../components/publication-item/publication-item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { DisplayPageRoutingModule } from './display-routing.module';
-
-import { DisplayPage } from './display.page';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    IonicModule,
-    DisplayPageRoutingModule
+    IonicModule
   ],
-  declarations: [DisplayPage]
+  declarations: [
+    PublicationItemComponent
+  ],
+  exports: [
+    PublicationItemComponent
+  ]
 })
-export class DisplayPageModule {}
+export class DisplayPageModule { }
