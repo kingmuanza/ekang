@@ -7,12 +7,14 @@ import { IonicModule } from "@ionic/angular";
 import { PublicationsPageRoutingModule } from "./publications-routing.module";
 
 import { PublicationsPage } from "./publications.page";
+import { DisplayPageModule } from 'src/app/display/display.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    DisplayPageModule,
     PublicationsPageRoutingModule
   ],
   declarations: [PublicationsPage]

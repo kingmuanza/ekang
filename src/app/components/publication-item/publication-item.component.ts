@@ -17,6 +17,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   
   @Input() public publication: Publication;
   @Input() public utilisateur: firebase.User;
+  @Input() public montrerLeDernierCommentaire?: boolean;
   jaiLike = false;
   commentaire: Commentaire;
 
@@ -45,6 +46,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
     }
+    console.log('this.montrerLeDernierCommentaire');
+    console.log(this.montrerLeDernierCommentaire);
   }
 
 

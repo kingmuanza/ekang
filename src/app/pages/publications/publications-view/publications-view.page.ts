@@ -53,6 +53,9 @@ export class PublicationsViewPage implements OnInit {
                 listeDesIndex.push(comment.id);
               });
               this.publication.commentaires = listeDesIndex;
+              this.pubService.savePublication(this.publication).then(()=>{
+
+              });
             });
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
@@ -133,6 +136,7 @@ export class PublicationsViewPage implements OnInit {
         this.commentaires.unshift(commentaire);
         commentaire.publication = null;
         this.publication.dernierCommentaire = commentaire;
+        this.publication.commentaires.push(commentaire.id);
         this.pubService.savePublication(this.publication).then((publication)=>{
           this.publication = publication;
           // Création de la notification

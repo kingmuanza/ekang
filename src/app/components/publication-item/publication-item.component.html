@@ -47,10 +47,11 @@
       <ion-icon name="share-social-outline"></ion-icon>
     </ion-button>
   </div>
+</div>
+
 
   <!-- COMMENTAIRES -->
-  <hr *ngIf="commentaire">
-  <ion-item *ngIf="commentaire" (click)="ouvrirPublication()">
+  <ion-item *ngIf="commentaire  && montrerLeDernierCommentaire" (click)="ouvrirPublication()">
     <ion-avatar slot="start">
       <img class="image-muanza"
         [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'" />
@@ -70,4 +71,3 @@
       </small>
     </ion-label>
   </ion-item>
-</div>

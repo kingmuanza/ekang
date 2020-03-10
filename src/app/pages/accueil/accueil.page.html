@@ -16,6 +16,7 @@
   <ng-container *ngFor="let publication of all">
     <ng-container *ngIf="publication.texte">
       <app-publication-item
+      [montrerLeDernierCommentaire]="true"
         [publication]="publication"
         [utilisateur]="utilisateur"
       >

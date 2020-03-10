@@ -13,3 +13,82 @@ button {
   left: -100em;
   display: none;
 }
+
+ion-content {
+  --background: #002200;
+}
+
+ion-toolbar {
+  --background: #002200;
+  --border-color: #002200;
+  --color: #fff;
+  --border-width: 0px;
+}
+
+ion-header {
+  &.header-md:after {
+    background: none;
+  }
+}
+
+.photo {
+  //margin-top: calc(50vh);
+  //transform: translateY(-50%);
+}
+
+.difference {
+  height: calc(50vh - 50vw);
+  padding-top: 10vw;
+}
+
+.image-arriere {
+  background-size: cover;
+  filter: blur(5px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.bouton-photo {
+  margin-left: 40vw;
+  width: 20vw; 
+  height: 20vw; 
+  border: 2px solid white; 
+  border-radius: 50%;
+}
+
+.conteneur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, rgba(#111, 0.7), rgba(#000, 0.95));
+
+}
+
+button {
+  font-size: 0.95em;
+  font-weight: 100;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  background: none;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  color: white;
+
+  &:disabled {
+    color: white;
+    background: none;
+    border: 1px solid #eee;
+  }
+
+  &:active {
+    color: white;
+    background: darken(#0f9b0f, 20%);
+  }
+}
