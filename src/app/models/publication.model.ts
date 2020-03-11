@@ -16,6 +16,7 @@ export class Publication {
     commentaires = new Array<string>();
     dernierCommentaire?: Commentaire;
     profil: Profil;
+    identifications: Array<Profil>;
 
     constructor(texte: string, utilisateur: firebase.User) {
         this.date = new Date();
@@ -23,6 +24,7 @@ export class Publication {
         this.texte = texte;
         this.utilisateur = utilisateur;
         this.likes = 0;
+        this.identifications = new Array<Profil>();
     }
 
     generateUID() {
