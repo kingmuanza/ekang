@@ -1,34 +1,23 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>photo de profil</ion-title>
-    <ion-buttons slot="end">
-      <ion-button *ngIf="file" (click)="save()">
-        save
-        <ion-icon slot="end" name="save-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div class="photo">
-    <img [src]="photoURL" style="width: 100%;" />
+  <div class="image-arriere" [ngStyle]="{'background-image': 'url('+ photoURL+')'}">
   </div>
+  <div class="conteneur">
+    <div class="difference">
+    </div>
+    <div class="photo">
+      <img [src]="photoURL" style="width: 100%;" />
+      <div *ngIf="file" style="padding: 30px;">
+        <button (click)="save()">
+          Terminer
+        </button>
+      </div>
+    </div>
 
-  <div style="position: fixed; bottom: 0; left: 0; width: 100%;">
-    <button (click)="galerie()" class="bg-primaire">
-      Galerie
-    </button>
+    <ion-fab vertical="top" horizontal="center" slot="fixed">
+      <ion-fab-button color="primary" (click)="galerie()">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
-  <input
-    id="uploadBtn"
-    type="file"
-    class="upload"
-    (change)="uploadFile($event)"
-    class="filebtn"
-    #fileButton
-  />
+  <input id="uploadBtn" type="file" class="upload" (change)="uploadFile($event)" class="filebtn" #fileButton />
 </ion-content>

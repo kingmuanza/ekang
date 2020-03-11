@@ -27,6 +27,8 @@ export class ProfilPage implements OnInit, AfterViewInit {
   listProfesion: any;
   profil: Profil;
   villes: any;
+
+
   constructor(
     public toastController: ToastController,
     private router: Router,
@@ -74,6 +76,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
     // this.auth.emettre();
   }
 
+  // Création d'une notification
   createNotification(profil: Profil, type: string) {
     const notification = new NotificationEkang(profil, type);
     this.notifService.createNotification(notification).then(() => {
@@ -81,6 +84,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
     });
   }
 
+  // Mettre à jour le profil dans l'authentification firebaseUsrer
   enregistrer() {
     this.utilisateur
       .updateProfile({
@@ -101,6 +105,27 @@ export class ProfilPage implements OnInit, AfterViewInit {
       });
   }
 
+  // Mettre à jour le profil dans FIRESTORE
+  suivant() {
+    console.log(this.utilisateur);
+    let profil = new Profil(this.utilisateur);
+    if(this.profil) {
+      profil = this.profil;
+    }
+    profil.pays = this.userPays;
+    profil.profession = this.userProfession;
+    if (this.userVille) {
+      profil.ville = this.userVille;
+    }
+    this.userService.createUser(this.utilisateur).then(data => {
+      this.userService.updateProfil(profil).then(() => {
+        this.enregistrer();
+        this.createNotification(profil, "UPDATE_PROFIL");
+      });
+    });
+  }
+
+  // Présenter un message à l'écran
   async notifier(texte: string) {
     const toast = await this.toastController.create({
       message: texte,
@@ -136,21 +161,8 @@ export class ProfilPage implements OnInit, AfterViewInit {
     this.userVille = ev.target["value"];
   }
 
-  suivant() {
-    console.log(this.utilisateur);
-    let profil = new Profil(this.utilisateur);
-    profil.pays = this.userPays;
-    profil.profession = this.userProfession;
-    if (this.userVille) {
-      profil.ville = this.userVille;
-    }
-    this.userService.createUser(this.utilisateur).then(data => {
-      this.userService.updateProfil(profil).then(() => {
-        this.enregistrer();
-        this.createNotification(profil, "UPDATE_PROFIL");
-      });
-    });
-  }
+
+  
 
   listProfession() {
     this.userService.read_ProfessionList().then(data => {

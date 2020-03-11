@@ -83,7 +83,12 @@ export class AmisPage implements OnInit {
     console.log(this.saisie);
     this.profilsResultats = this.profils
     this.profilsResultats = this.profilsResultats.filter((element) => {
-      return element.utilisateur.displayName.toLocaleLowerCase().indexOf(this.saisie.toLowerCase()) !== -1;
+      if(element.utilisateur.displayName) {
+        return element.utilisateur.displayName.toLocaleLowerCase().indexOf(this.saisie.toLowerCase()) !== -1;
+      }
+      if(element.utilisateur.email) {
+        return element.utilisateur.email.toLocaleLowerCase().indexOf(this.saisie.toLowerCase()) !== -1;
+      }
     });
     this.setAmis();
   }

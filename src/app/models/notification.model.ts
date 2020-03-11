@@ -9,6 +9,7 @@ export class NotificationEkang {
     type: string;
     publication?: Publication;
     texte?: string;
+    identifiee?: Profil;
 
     constructor(profil: Profil, type: string) {
 

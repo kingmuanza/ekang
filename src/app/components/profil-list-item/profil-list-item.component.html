@@ -5,7 +5,9 @@
   </ion-avatar>
   <ion-label (click)="ouvrir()">
     <h2>
-      <b>{{profil.utilisateur.displayName}}</b>, 
+      <b>
+        {{profil.utilisateur.displayName ? profil.utilisateur.displayName: profil.utilisateur.email}}
+      </b>,
       {{profil.profession}}
     </h2>
     <h3>
@@ -16,6 +18,14 @@
     </h3>
     <small></small>
   </ion-label>
-  <ion-button (click)="unSuivre()" *ngIf="sontAmis" slot="end">Suivi</ion-button>
-  <ion-button (click)="suivre()" *ngIf="!sontAmis" fill="outline" slot="end">Suivre</ion-button>
+  <ion-button (click)="unSuivre()" *ngIf="sontAmis" shape="round" slot="end">
+    &nbsp;
+    Suivi
+    &nbsp;
+  </ion-button>
+  <ion-button (click)="suivre()" *ngIf="!sontAmis" shape="round" fill="outline" slot="end">
+    &nbsp;
+    Suivre
+    &nbsp;
+  </ion-button>
 </ion-item>

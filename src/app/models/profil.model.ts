@@ -6,6 +6,8 @@ export class Profil {
   pays: string;
   profession: string;
   ville: string;
+  ekangName: string;
+  tel: string;
   utilisateur: firebase.User;
   lastConnexionDate: number;
   abonnements = new Array<string>();

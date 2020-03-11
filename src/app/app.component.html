@@ -7,9 +7,9 @@
           </div>
           <div class="page filtre-noir">
 
-            <div *ngIf="utilisateur" class="muanza-image" style="">
-              <div class="">
-                <img [src]="utilisateur.photoURL" class="muanza-photo">
+            <div *ngIf="utilisateur" class="muanza-image">
+              <div class="muanza-photo" menuClose (click)="profil()" [ngStyle]="{'background-image': 'url('+utilisateur.photoURL+')'}">
+
               </div>
             </div>
             <ion-list style="background: none;" id="inbox-list">

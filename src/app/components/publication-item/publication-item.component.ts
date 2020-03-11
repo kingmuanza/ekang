@@ -7,6 +7,7 @@ import { Commentaire } from "src/app/models/commentaire.model";
 import { Profil } from "src/app/models/profil.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
+import { element } from 'protractor';
 
 @Component({
   selector: "app-publication-item",
@@ -14,9 +15,10 @@ import { NotificationService } from "src/app/services/notification.service";
   styleUrls: ["./publication-item.component.scss"]
 })
 export class PublicationItemComponent implements OnInit, OnChanges {
-  
+
   @Input() public publication: Publication;
   @Input() public utilisateur: firebase.User;
+  @Input() public montrerLeDernierCommentaire?: boolean;
   jaiLike = false;
   commentaire: Commentaire;
 
@@ -45,6 +47,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
     }
+    console.log('this.montrerLeDernierCommentaire');
+    console.log(this.montrerLeDernierCommentaire);
   }
 
 
@@ -81,13 +85,55 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
 
   // Permet d'extraire un lien d'une URL
-  urlify(text) {
+  urlify(text): string {
+    const retour = this.getHashTag(text);
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, url => {
+    return retour.replace(urlRegex, url => {
       return '<a target="_blank" href="' + url + '">' + url + "</a>";
     });
-    // or alternatively
-    // return text.replace(urlRegex, '<a href="$1">$1</a>')
+  }
+
+  getNameFromEmailInIdentification(email: string) {
+    let profil: Profil;
+    if (this.publication) {
+      if (this.publication.identifications) {
+        this.publication.identifications.forEach(element => {
+          if (element.utilisateur.email === email) {
+            profil = element;
+          }
+        });
+      }
+    }
+    return profil;
+  }
+
+  getHashTag(text: string) {
+    let textDeRetour = ''
+    const mots = text.split(' ');
+    mots.forEach((mot) => {
+      if (mot[0] && mot[0] === "#") {
+        console.log('il ya un hashtag');
+        textDeRetour = textDeRetour + '<b class="vert">' + mot + '</b> '
+      } else {
+        if (mot[0] && mot[0] === "@") {
+          if (mot[1] && mot[1] === "@") {
+            const email = mot.split('@@')[1];
+            console.log('email');
+            console.log(email);
+            const profil = this.getNameFromEmailInIdentification(email);
+            textDeRetour = textDeRetour + '<a href="amis/amis-view/' + profil.utilisateur.uid + '" class="vert">' + profil.utilisateur.displayName + '</a> '
+          }
+        } else {
+          textDeRetour = textDeRetour + mot + ' ';
+        }
+      }
+    });
+    console.log(textDeRetour);
+    return textDeRetour;
+  }
+
+  voir(i) {
+    console.log(i)
   }
 
   aiJeLike() {

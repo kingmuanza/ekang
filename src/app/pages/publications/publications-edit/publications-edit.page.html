@@ -5,8 +5,9 @@
     </ion-buttons>
     <ion-title>Dites nous quelque chose</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="publicationForm.invalid || !utilisateur" color="primary" (click)="onSubmitPublicationForm()">
-        Publier 
+      <ion-button [disabled]="publicationForm.invalid || !utilisateur" color="primary"
+        (click)="onSubmitPublicationForm()">
+        Publier
         <ion-icon name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -31,23 +32,16 @@
     <span (click)="galerie()" style="margin-left: 5vh;">
       <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="videocam"></ion-icon>
     </span>
-    <span style="margin-left: 5vh;">
+    <span (click)="presentActionSheet()" style="margin-left: 5vh;">
       <ion-icon color="primary" style="font-size: 2.6em;" slot="icon-only" name="person-add"></ion-icon>
     </span>
   </div>
 
 
-  
-  <input
-    id="uploadBtn"
-    type="file"
-    class="upload"
-    (change)="uploadFile($event)"
-    class="filebtn"
-    #fileButton
-  />
 
-  
+  <input id="uploadBtn" type="file" class="upload" (change)="uploadFile($event)" class="filebtn" #fileButton />
+
+
   <div *ngIf="photoURL" class="photo" style="height: 50vh;">
     <div style="height: 50vh;">
       <img [src]="photoURL" style="width: 100%;" />
