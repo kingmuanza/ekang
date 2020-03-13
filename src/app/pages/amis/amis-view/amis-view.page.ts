@@ -7,6 +7,7 @@ import { AuthentificationService } from "src/app/services/authentification.servi
 import { PublicationService } from "src/app/services/publication.service";
 import { Publication } from "src/app/models/publication.model";
 import { NotificationService } from "src/app/services/notification.service";
+import { Commentaire } from 'src/app/models/commentaire.model';
 
 @Component({
   selector: "app-amis-view",
@@ -21,9 +22,13 @@ export class AmisViewPage implements OnInit {
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
   publications = new Array<Publication>();
+  likes = new Array<Publication>();
   commentaire: any;
   jaiLike: any;
   amiId: any;
+  segment = 'publications';
+  amis = new Array<Profil>();
+  commentaires = new Array<Commentaire>();
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
@@ -42,6 +47,9 @@ export class AmisViewPage implements OnInit {
         this.userService.getProfilByID(id).then(profil => {
           this.profil = profil;
           this.getPublications();
+          this.getCommentaires(this.profil.utilisateur);
+          this.getLikes(this.profil.utilisateur);
+          this.getAmis(this.profil.utilisateur);
           console.log(this.profil);
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
@@ -56,6 +64,12 @@ export class AmisViewPage implements OnInit {
         });
       }
     });
+  }
+
+  segmentChanged(ev) {
+    console.log('evxgfjchgvjhbklnlmkm,');
+    console.log(ev.detail.value);
+    this.segment = ev.detail.value;
   }
 
   sontIlsAmis() {
@@ -80,6 +94,22 @@ export class AmisViewPage implements OnInit {
       this.publications.sort((a, b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
       });
+    });
+  }
+  getCommentaires(utilisateur: firebase.User) {
+    this.publicationService.getCommentairesofUtilisateur(utilisateur).then((commentaires)=>{
+      this.commentaires = commentaires;
+    });
+  }
+  getLikes(utilisateur: firebase.User) {
+    this.publicationService.getLikesofUtilisateur(utilisateur).then((likes)=>{
+      this.likes = likes;
+    });
+  }
+  getAmis(utilisateur: firebase.User) {
+    console.log('getAmis fghj');
+    this.userService.getAmis(utilisateur).then((amis)=>{
+      this.amis = amis;
     });
   }
 
@@ -137,6 +167,11 @@ export class AmisViewPage implements OnInit {
   unlike() {}
 
   chat() {
+    console.log(this.amiId);
+    this.router.navigate(["messages", "chat", this.amiId]);
+  }
+
+  message(){
     console.log(this.amiId);
     this.router.navigate(["messages", "chat", this.amiId]);
   }

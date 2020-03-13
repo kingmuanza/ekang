@@ -3,6 +3,7 @@ import { PublicationItemComponent } from '../components/publication-item/publica
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { ProfilListItemComponent } from '../components/profil-list-item/profil-list-item.component';
 
 @NgModule({
   imports: [
@@ -10,10 +11,12 @@ import { IonicModule } from '@ionic/angular';
     IonicModule
   ],
   declarations: [
-    PublicationItemComponent
+    PublicationItemComponent,
+    ProfilListItemComponent
   ],
   exports: [
-    PublicationItemComponent
+    PublicationItemComponent,
+    ProfilListItemComponent
   ]
 })
 export class DisplayPageModule { }

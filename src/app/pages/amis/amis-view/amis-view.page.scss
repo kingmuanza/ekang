@@ -15,6 +15,17 @@
   border: 2px solid #fff;
 }
 
+.informations {
+  margin-top: 20px;
+  div.pubComm {
+    margin-bottom: 25px;
+    ion-item {
+      background-color: rgba(#00ff00, 0.1);
+      margin-top: -20px;
+    }
+  }
+}
+
 
 .muanza-header {
   background-color: #0062ff;
