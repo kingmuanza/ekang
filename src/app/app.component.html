@@ -3,32 +3,54 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content style="padding-left: 0px!important;">
         <div style="height: 100vh; width: 100vw; overflow: hidden;">
-          <div class="image-arriere">
-          </div>
+          <div class="image-arriere"></div>
           <div class="page filtre-noir">
-
             <div *ngIf="utilisateur" class="muanza-image">
-              <div class="muanza-photo" menuClose (click)="profil()" [ngStyle]="{'background-image': 'url('+utilisateur.photoURL+')'}">
-
-              </div>
+              <div
+                class="muanza-photo"
+                menuClose
+                (click)="profil()"
+                [ngStyle]="{
+                  'background-image': 'url(' + utilisateur.photoURL + ')'
+                }"
+              ></div>
             </div>
             <ion-list style="background: none;" id="inbox-list">
-              <ion-list-header *ngIf="utilisateur" style="font-size: 0.8; font-weight: 100; color: #eee;">
-                {{utilisateur.displayName ? utilisateur.displayName: defaultName(utilisateur)}}
+              <ion-list-header
+                *ngIf="utilisateur"
+                style="font-size: 0.8; font-weight: 100; color: #eee;"
+              >
+                {{
+                  utilisateur.displayName
+                    ? utilisateur.displayName
+                    : defaultName(utilisateur)
+                }}
               </ion-list-header>
               <ion-note *ngIf="utilisateur" style="color: #bbb;">
-                {{utilisateur.email}}
+                {{ utilisateur.email }}
               </ion-note>
 
-              <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
-                  detail="false" [class.selected]="selectedIndex == i">
-                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-menu-toggle
+                auto-hide="false"
+                *ngFor="let p of appPages; let i = index"
+              >
+                <ion-item
+                  (click)="selectedIndex = i"
+                  routerDirection="root"
+                  [routerLink]="[p.url]"
+                  lines="none"
+                  detail="false"
+                  [class.selected]="selectedIndex == i"
+                >
+                  <ion-icon
+                    slot="start"
+                    [ios]="p.icon + '-outline'"
+                    [md]="p.icon + '-sharp'"
+                  ></ion-icon>
                   <ion-label>{{ p.title }}</ion-label>
                 </ion-item>
               </ion-menu-toggle>
             </ion-list>
-
           </div>
         </div>
       </ion-content>

@@ -17,7 +17,7 @@ export class RecherchePage implements OnInit {
   public items2: any;
   pays: any;
   userPays: any;
-  userVille: string = "situation géographique";
+  userVille: string = "Localisation géographique";
   userProfession: any;
   listProfesion: any;
   profils = new Array<Profil>();

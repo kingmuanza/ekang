@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Platform, MenuController } from "@ionic/angular";
+import {
+  Platform,
+  MenuController,
+  ActionSheetController
+} from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
@@ -8,7 +12,7 @@ import * as firebase from "firebase";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AuthentificationService } from "./services/authentification.service";
 import { Subscription } from "rxjs";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -17,6 +21,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  public actionSheetController: ActionSheetController;
   public appPages = [
     {
       title: "Accueil",
@@ -102,7 +107,7 @@ export class AppComponent implements OnInit {
   }
 
   profil() {
-    this.router.navigate(['profil']);
+    this.router.navigate(["profil"]);
     this.menu.close();
   }
 

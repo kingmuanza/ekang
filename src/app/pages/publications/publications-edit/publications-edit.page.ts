@@ -56,7 +56,6 @@ export class PublicationsEditPage implements OnInit {
 
   getProfils() {
     console.log('this.getProfils');
-    console.log('this.getProfils');
     this.userService.getProfils().then((profils) => {
       this.profils = profils.filter((profil) => {
         return profil.utilisateur.uid !== this.utilisateur.uid

@@ -7,7 +7,7 @@ import { Commentaire } from "src/app/models/commentaire.model";
 import { Profil } from "src/app/models/profil.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
-import { element } from 'protractor';
+import { element } from "protractor";
 
 @Component({
   selector: "app-publication-item",
@@ -15,7 +15,6 @@ import { element } from 'protractor';
   styleUrls: ["./publication-item.component.scss"]
 })
 export class PublicationItemComponent implements OnInit, OnChanges {
-
   @Input() public publication: Publication;
   @Input() public utilisateur: firebase.User;
   @Input() public montrerLeDernierCommentaire?: boolean;
@@ -26,7 +25,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     private router: Router,
     private pubService: PublicationService,
     private notifService: NotificationService
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
@@ -47,10 +46,9 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
     }
-    console.log('this.montrerLeDernierCommentaire');
+    //   console.log('this.montrerLeDernierCommentaire');
     console.log(this.montrerLeDernierCommentaire);
   }
-
 
   getLibelleDate(d: Date) {
     const date = new Date(d);
@@ -62,13 +60,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     const jours = heures / 24;
 
     if (jours > 1) {
-      return '' + Math.floor(jours) + 'j';
+      return "" + Math.floor(jours) + "j";
     } else {
       if (heures > 1) {
-        return 'il y a ' + Math.floor(heures) + 'h';
+        return "il y a " + Math.floor(heures) + "h";
       } else {
         if (minutes > 1) {
-          return 'il y a ' + Math.floor(minutes) + ' min';
+          return "il y a " + Math.floor(minutes) + " min";
         } else {
           return 'A l\'instant';
         }
@@ -108,32 +106,38 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
 
   getHashTag(text: string) {
-    let textDeRetour = ''
-    const mots = text.split(' ');
-    mots.forEach((mot) => {
+    let textDeRetour = "";
+    const mots = text.split(" ");
+    mots.forEach(mot => {
       if (mot[0] && mot[0] === "#") {
-        console.log('il ya un hashtag');
-        textDeRetour = textDeRetour + '<b class="vert">' + mot + '</b> '
+        // console.log("il ya un hashtag");
+        textDeRetour = textDeRetour + '<b class="vert">' + mot + "</b> ";
       } else {
         if (mot[0] && mot[0] === "@") {
           if (mot[1] && mot[1] === "@") {
-            const email = mot.split('@@')[1];
-            console.log('email');
-            console.log(email);
+            const email = mot.split("@@")[1];
+            // console.log("email");
+            // console.log(email);
             const profil = this.getNameFromEmailInIdentification(email);
-            textDeRetour = textDeRetour + '<a href="amis/amis-view/' + profil.utilisateur.uid + '" class="vert">' + profil.utilisateur.displayName + '</a> '
+            textDeRetour =
+              textDeRetour +
+              '<a href="amis/amis-view/' +
+              profil.utilisateur.uid +
+              '" class="vert">' +
+              profil.utilisateur.displayName +
+              "</a> ";
           }
         } else {
-          textDeRetour = textDeRetour + mot + ' ';
+          textDeRetour = textDeRetour + mot + " ";
         }
       }
     });
-    console.log(textDeRetour);
+    // console.log(textDeRetour);
     return textDeRetour;
   }
 
   voir(i) {
-    console.log(i)
+    console.log(i);
   }
 
   aiJeLike() {
@@ -178,13 +182,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     ]);
   }
 
-  onClick() { }
+  onClick() {}
 
   // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then(t => { });
+    this.notifService.createNotification(notification).then(t => {});
   }
 }

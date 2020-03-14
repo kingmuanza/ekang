@@ -82,7 +82,7 @@ export class AccueilPage implements OnInit {
     });
   }
   utlisateurLastConnexion(utilisateur: firebase.User) {
-    console.log(new Date(utilisateur.metadata.lastSignInTime).getTime());
+    // console.log(new Date(utilisateur.metadata.lastSignInTime).getTime());
     this.userservice.getProfil(utilisateur).then(profil => {
       profil.lastConnexionDate = new Date(
         utilisateur.metadata.lastSignInTime
