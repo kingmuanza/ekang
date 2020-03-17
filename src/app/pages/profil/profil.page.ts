@@ -24,10 +24,11 @@ export class ProfilPage implements OnInit, AfterViewInit {
   userPays: any;
   userProfession: any;
   userVille: any;
+  userContinent: any;
   listProfesion: any;
   profil: Profil;
   villes: any;
-
+  continents: any;
 
   constructor(
     public toastController: ToastController,
@@ -64,6 +65,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
     this.getCountry();
     this.listProfession();
     this.takeVille();
+    this.takeContinent();
     this.auth.emettre();
   }
 
@@ -109,13 +111,16 @@ export class ProfilPage implements OnInit, AfterViewInit {
   suivant() {
     console.log(this.utilisateur);
     let profil = new Profil(this.utilisateur);
-    if(this.profil) {
+    if (this.profil) {
       profil = this.profil;
     }
     profil.pays = this.userPays;
     profil.profession = this.userProfession;
     if (this.userVille) {
       profil.ville = this.userVille;
+    }
+    if (this.userContinent) {
+      profil.continent = this.userContinent;
     }
     this.userService.createUser(this.utilisateur).then(data => {
       this.userService.updateProfil(profil).then(() => {
@@ -148,6 +153,9 @@ export class ProfilPage implements OnInit, AfterViewInit {
         this.pays = data;
       });
   }
+  chooseContinent(ev: Event) {
+    this.userContinent = ev.target["value"];
+  }
 
   chooseCountry(ev: Event) {
     this.userPays = ev.target["value"];
@@ -161,9 +169,6 @@ export class ProfilPage implements OnInit, AfterViewInit {
     this.userVille = ev.target["value"];
   }
 
-
-  
-
   listProfession() {
     this.userService.read_ProfessionList().then(data => {
       this.listProfesion = data;
@@ -173,8 +178,13 @@ export class ProfilPage implements OnInit, AfterViewInit {
 
   takeVille() {
     this.villeService.getVilles().then(data => {
-      // console.log(data);
       this.villes = data;
+    });
+  }
+  takeContinent() {
+    this.villeService.getContinent().then(data => {
+      // console.log(data);
+      this.continents = data;
     });
   }
 

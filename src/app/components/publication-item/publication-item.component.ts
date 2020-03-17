@@ -110,13 +110,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     const mots = text.split(" ");
     mots.forEach(mot => {
       if (mot[0] && mot[0] === "#") {
-        // console.log("il ya un hashtag");
+        // console.log('il ya un hashtag');
         textDeRetour = textDeRetour + '<b class="vert">' + mot + "</b> ";
       } else {
         if (mot[0] && mot[0] === "@") {
           if (mot[1] && mot[1] === "@") {
             const email = mot.split("@@")[1];
-            // console.log("email");
+            // console.log('email');
             // console.log(email);
             const profil = this.getNameFromEmailInIdentification(email);
             textDeRetour =

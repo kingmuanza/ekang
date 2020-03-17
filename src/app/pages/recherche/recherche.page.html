@@ -10,9 +10,10 @@
 <ion-content>
   <ion-card>
     <ion-card-header (click)="expandItem()" class="image-card-header">
-      <ion-card-title>{{userVille}}</ion-card-title>
+      <ion-card-title
+        ><div class="recherche">{{userVille}}</div></ion-card-title
+      >
     </ion-card-header>
-
     <ion-card-content>
       <app-accordion expandHeight="100%" [expanded]="items.expanded">
         <ion-list>

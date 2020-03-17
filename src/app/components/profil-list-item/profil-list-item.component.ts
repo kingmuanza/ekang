@@ -1,44 +1,49 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Profil } from 'src/app/models/profil.model';
-import { UserService } from 'src/app/services/user.service';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges
+} from "@angular/core";
+import { Profil } from "src/app/models/profil.model";
+import { UserService } from "src/app/services/user.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-profil-list-item',
-  templateUrl: './profil-list-item.component.html',
-  styleUrls: ['./profil-list-item.component.scss'],
+  selector: "app-profil-list-item",
+  templateUrl: "./profil-list-item.component.html",
+  styleUrls: ["./profil-list-item.component.scss"]
 })
 export class ProfilListItemComponent implements OnInit, OnChanges {
-
   @Input() profil: Profil; // profil de la personn qu'on regarde
   @Input() monProfil: Profil;
   sontAmis = false;
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.sontAmis = this.sontIlsAmis();
   }
 
   ouvrir() {
-    this.router.navigate(['amis', 'amis-view', this.profil.utilisateur.uid]);
+    this.router.navigate(["amis", "amis-view", this.profil.utilisateur.uid]);
+    console.log(this.profil);
   }
 
   sontIlsAmis() {
-    if(this.monProfil && this.profil) {
-      if(this.monProfil.abonnements) {
+    if (this.monProfil && this.profil) {
+      if (this.monProfil.abonnements) {
         // Si l'index du profil se retrouve dans mes abonnements alors on est amis
-        const resultats = this.monProfil.abonnements.find((index)=>{
+        const resultats = this.monProfil.abonnements.find(index => {
           return index === this.profil.utilisateur.uid;
         });
-        if(resultats) {
-          return true
+        if (resultats) {
+          return true;
         }
       }
     }
-    return false
+    return false;
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
@@ -47,10 +52,10 @@ export class ProfilListItemComponent implements OnInit, OnChanges {
 
   enregistrerTout() {
     // On met à jour les profils
-    this.userService.updateProfil(this.monProfil).then((pA)=>{
+    this.userService.updateProfil(this.monProfil).then(pA => {
       this.monProfil = pA;
       this.sontAmis = this.sontIlsAmis();
-      this.userService.updateProfil(this.profil).then((pB)=>{
+      this.userService.updateProfil(this.profil).then(pB => {
         this.profil = pB;
         this.sontAmis = this.sontIlsAmis();
       });
@@ -58,11 +63,11 @@ export class ProfilListItemComponent implements OnInit, OnChanges {
   }
 
   suivre() {
-    if(!this.monProfil.abonnements) {
+    if (!this.monProfil.abonnements) {
       this.monProfil.abonnements = new Array<string>();
     }
     this.monProfil.abonnements.unshift(this.profil.utilisateur.uid);
-    if(!this.profil.abonnes){
+    if (!this.profil.abonnes) {
       this.profil.abonnes = new Array<string>();
     }
     this.profil.abonnes.unshift(this.monProfil.utilisateur.uid);
@@ -78,5 +83,4 @@ export class ProfilListItemComponent implements OnInit, OnChanges {
     });
     this.enregistrerTout();
   }
-
 }

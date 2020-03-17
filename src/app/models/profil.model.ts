@@ -6,6 +6,7 @@ export class Profil {
   pays: string;
   profession: string;
   ville: string;
+  continent: string;
   ekangName: string;
   tel: string;
   utilisateur: firebase.User;

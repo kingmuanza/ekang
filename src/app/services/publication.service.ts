@@ -195,4 +195,46 @@ export class PublicationService {
         });
     });
   }
+  getCommentairesofUtilisateur(utilisateur: firebase.User): Promise<Array<Commentaire>> {
+    const db = firebase.firestore();
+    const commentaires = new Array<Commentaire>();
+    return new Promise((resolve, reject) => {
+      db.collection("commentaires")
+        .where("utilisateur.uid", "==", utilisateur.uid)
+        .get()
+        .then(resutats => {
+          resutats.forEach(resutat => {
+            const commentaire = resutat.data() as Commentaire;
+            commentaires.push(commentaire);
+          });
+          commentaires.sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime()
+              ? -1
+              : 1;
+          });
+          resolve(commentaires);
+        });
+    });
+  }
+  getLikesofUtilisateur(utilisateur: firebase.User): Promise<Array<Publication>> {
+    const db = firebase.firestore();
+    const publications = new Array<Publication>();
+    return new Promise((resolve, reject) => {
+      db.collection("publications")
+        .where("likeurs", "array-contains", utilisateur.uid)
+        .get()
+        .then(resutats => {
+          resutats.forEach(resutat => {
+            const publication = resutat.data() as Publication;
+            publications.push(publication);
+          });
+          publications.sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime()
+              ? -1
+              : 1;
+          });
+          resolve(publications);
+        });
+    });
+  }
 }

@@ -14,6 +14,8 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
+import { DisplayPageModule } from "./display/display.module";
+import { ShareModule } from "./share.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +29,9 @@ import { FIREBASE_CONFIG } from "./app.firebase.config";
     HttpClientModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    DisplayPageModule,
+    ShareModule
   ],
   providers: [
     StatusBar,

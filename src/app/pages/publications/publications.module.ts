@@ -7,14 +7,16 @@ import { IonicModule } from "@ionic/angular";
 import { PublicationsPageRoutingModule } from "./publications-routing.module";
 
 import { PublicationsPage } from "./publications.page";
-import { DisplayPageModule } from 'src/app/display/display.module';
+import { DisplayPageModule } from "src/app/display/display.module";
+import { ShareModule } from "src/app/share.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DisplayPageModule,
+    // DisplayPageModule,
+    ShareModule,
     PublicationsPageRoutingModule
   ],
   declarations: [PublicationsPage]

@@ -1,23 +1,42 @@
 <ion-content>
-  <div class="image-arriere" [ngStyle]="{'background-image': 'url('+ photoURL+')'}">
+  <div
+    class="image-arriere"
+    [ngStyle]="{'background-image': 'url('+ photoURL+')'}"
+  ></div>
+  <div *ngIf="file" style="padding: 30px;">
+    <button (click)="save()">
+      Terminer
+    </button>
   </div>
   <div class="conteneur">
-    <div class="difference">
-    </div>
+    <div class="difference"></div>
     <div class="photo">
       <img [src]="photoURL" style="width: 100%;" />
-      <div *ngIf="file" style="padding: 30px;">
+      <!--
+        <div *ngIf="file" style="padding: 30px;">
         <button (click)="save()">
           Terminer
         </button>
       </div>
+     -->
     </div>
 
-    <ion-fab vertical="top" horizontal="center" slot="fixed">
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
       <ion-fab-button color="primary" (click)="galerie()">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-fab-button>
+
+      <ion-fab-button *ngIf="file" color="primary" (click)="save()">
+        Save
+      </ion-fab-button>
     </ion-fab>
   </div>
-  <input id="uploadBtn" type="file" class="upload" (change)="uploadFile($event)" class="filebtn" #fileButton />
+  <input
+    id="uploadBtn"
+    type="file"
+    class="upload"
+    (change)="uploadFile($event)"
+    class="filebtn"
+    #fileButton
+  />
 </ion-content>

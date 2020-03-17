@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthentificationService } from 'src/app/services/authentification.service';
-import { ToastController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AuthentificationService } from "src/app/services/authentification.service";
+import { ToastController } from "@ionic/angular";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
-  selector: 'app-connexion',
-  templateUrl: './connexion.page.html',
-  styleUrls: ['./connexion.page.scss'],
+  selector: "app-connexion",
+  templateUrl: "./connexion.page.html",
+  styleUrls: ["./connexion.page.scss"]
 })
 export class ConnexionPage implements OnInit {
-
   connexionForm: FormGroup; // Formulaire de connexion
   inactif = false; // Empeche l'utilisateur de cliquer deux fois sur le bouton SUBMIT
   mauvaisCredentials = false;
@@ -23,7 +22,7 @@ export class ConnexionPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     public userservice: UserService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initConnexionForm();
@@ -31,32 +30,35 @@ export class ConnexionPage implements OnInit {
 
   initConnexionForm(): void {
     this.connexionForm = this.formBuilder.group({
-      login: ['', [Validators.required, Validators.email]],
-      passe: ['', [Validators.required]]
+      login: ["", [Validators.required, Validators.email]],
+      passe: ["", [Validators.required]]
     });
   }
 
   onConnexionFormSubmit(): void {
     this.inactif = true; // bouton inactif
-    console.log('onConnexionFormSubmit');
+    console.log("onConnexionFormSubmit");
     const value = this.connexionForm.value;
     const login = value.login;
     const passe = value.passe;
-    this.auth.connexion(login, passe).then((utilisateur) => {
-      this.inactif = false; // bouton actif
-      this.mauvaisCredentials = false;
-      this.connexionReussie = true;
-      if (utilisateur) {
-        this.chercherUtilisateur(utilisateur);
-      } else {
-        console.log('Login ou mot de passe incorrect');
-      }
-    }).catch((e) => {
-      this.inactif = false;
-      console.log('Login ou mot de passe incorrect');
-      this.mauvaisCredentials = true;
-      this.notifier('Login ou mot de passe incorrect');
-    });
+    this.auth
+      .connexion(login, passe)
+      .then(utilisateur => {
+        this.inactif = false; // bouton actif
+        this.mauvaisCredentials = false;
+        this.connexionReussie = true;
+        if (utilisateur) {
+          this.chercherUtilisateur(utilisateur);
+        } else {
+          console.log("Login ou mot de passe incorrect");
+        }
+      })
+      .catch(e => {
+        this.inactif = false;
+        console.log("Login ou mot de passe incorrect");
+        this.mauvaisCredentials = true;
+        this.notifier("Login ou mot de passe incorrect");
+      });
   }
 
   async notifier(texte: string) {
@@ -70,19 +72,21 @@ export class ConnexionPage implements OnInit {
   }
 
   chercherUtilisateur(utilisateur: firebase.User) {
-    this.userservice.getProfil(utilisateur).then((profil) => {
-      if (profil) {
-        this.router.navigate(['accueil']);
-      } else {
-        this.router.navigate(['profil']);
-      }
-    }).catch((e) => {
-      this.notifier('Problème de connexion');
-    });
+    this.userservice
+      .getProfil(utilisateur)
+      .then(profil => {
+        if (profil) {
+          this.router.navigate(["accueil"]);
+        } else {
+          this.router.navigate(["profil"]);
+        }
+      })
+      .catch(e => {
+        this.notifier("Problème de connexion");
+      });
   }
 
   inscription(): void {
-    this.router.navigate(['inscription']);
+    this.router.navigate(["inscription"]);
   }
-
 }

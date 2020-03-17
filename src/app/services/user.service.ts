@@ -7,7 +7,7 @@ import { Profil } from "../models/profil.model";
   providedIn: "root"
 })
 export class UserService {
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore) { }
 
   // Cette fonction permet de mettre une classe en format JSON pour firebase
   purifier(element) {
@@ -54,6 +54,26 @@ export class UserService {
     const profils = new Array<Profil>();
     return new Promise((resolve, reject) => {
       db.collection("profils")
+        .get()
+        .then(resultats => {
+          resultats.forEach(resultat => {
+            const profil = resultat.data() as Profil;
+            profils.push(profil);
+          });
+          resolve(profils);
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
+  }
+
+  getAmis(utilisateur: firebase.User): Promise<Array<Profil>> {
+    const db = firebase.firestore();
+    const profils = new Array<Profil>();
+    return new Promise((resolve, reject) => {
+      db.collection("profils")
+        .where("abonnes", "array-contains", utilisateur.uid)
         .get()
         .then(resultats => {
           resultats.forEach(resultat => {

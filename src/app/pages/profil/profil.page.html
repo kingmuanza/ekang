@@ -54,6 +54,16 @@
           <small>Ce nom sera visible par tous les utilisateurs</small>
         </div>
         <ion-select
+          [value]="profil ? profil.continent : ''"
+          (ionChange)="chooseContinent($event)"
+          interface="popover"
+          placeholder="Continent de residence"
+        >
+          <ion-select-option *ngFor="let c of continents" [value]="c.name">
+            {{ c.name }}
+          </ion-select-option>
+        </ion-select>
+        <ion-select
           [value]="profil ? profil.pays : ''"
           (ionChange)="chooseCountry($event)"
           interface="popover"
@@ -64,16 +74,6 @@
           </ion-select-option>
         </ion-select>
         <ion-select
-          [value]="profil ? profil.profession : ''"
-          (ionChange)="chooseProfession($event)"
-          interface="popover"
-          placeholder="Profession "
-        >
-          <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.nom"
-            >{{ pro.nom | titlecase }}</ion-select-option
-          >
-        </ion-select>
-        <ion-select
           [value]="profil ? profil.ville : ''"
           (ionChange)="chooseVille($event)"
           interface="popover"
@@ -81,6 +81,16 @@
         >
           <ion-select-option *ngFor="let v of villes" [value]="v.nom"
             >{{ v.nom | titlecase}}</ion-select-option
+          >
+        </ion-select>
+        <ion-select
+          [value]="profil ? profil.profession : ''"
+          (ionChange)="chooseProfession($event)"
+          interface="popover"
+          placeholder="Profession "
+        >
+          <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.nom"
+            >{{ pro.nom | titlecase }}</ion-select-option
           >
         </ion-select>
       </div>
