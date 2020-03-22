@@ -53,4 +53,18 @@ export class VilleService {
         });
     });
   }
+  addPays(data): Promise<any> {
+    const db = firebase.firestore();
+    //const villes = [];
+    return new Promise((resolve, reject) => {
+      db.collection("pays")
+        .add(data)
+        .then(res => {
+          resolve(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
+  }
 }

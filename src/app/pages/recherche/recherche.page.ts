@@ -72,21 +72,26 @@ export class RecherchePage implements OnInit {
       }
     );
     this.auth.emettre();
-    this.getCountry();
+    // this.getCountry();
     this.getProfession();
     //this.takeVille();
   }
   getCountry() {
     this.http
-      .get("https://restcountries.eu/rest/v2/region/africa")
+      .get("https://restcountries.eu/rest/v2/region/europe")
       .subscribe(data => {
-        // console.log(data);
+        console.log(data);
         this.pays = data;
-        /* this.pays.forEach(p => {
-          if (p.name === "Cameroon") {
-            p["ville"] = this.userVille;
-          }
-        }); */
+        this.pays.forEach(p => {
+          this.villeService
+            .addPays(p)
+            .then(res => {
+              console.log(res);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        });
         this.takeVille();
       });
   }

@@ -66,14 +66,24 @@ const routes: Routes = [
       )
   },
   {
-    path: 'publications',
-    loadChildren: () => import('./pages/publications/publications.module').then( m => m.PublicationsPageModule)
+    path: "publications",
+    loadChildren: () =>
+      import("./pages/publications/publications.module").then(
+        m => m.PublicationsPageModule
+      )
   },
   {
-    path: 'messages',
-    loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule)
+    path: "messages",
+    loadChildren: () =>
+      import("./pages/messages/messages.module").then(m => m.MessagesPageModule)
+  },
+  {
+    path: "monprofil/:id",
+    loadChildren: () =>
+      import("./pages/monprofil/monprofil.module").then(
+        m => m.MonprofilPageModule
+      )
   }
-
 ];
 
 @NgModule({

@@ -40,7 +40,7 @@ export class NotificationService {
             const notification = resultat.data() as NotificationEkang;
             notifications.push(notification);
           });
-          console.log(notifications);
+          // console.log(notifications);
 
           resolve(notifications);
         })
@@ -75,9 +75,9 @@ export class NotificationService {
             return false;
           });
           console.log("profil");
-          console.log(profil);
-          console.log("notifications pour utilisateur");
-          console.log(notifications);
+          // console.log(profil);
+          // console.log("notifications pour utilisateur");
+          //console.log(notifications);
           resolve(notifications);
         })
         .catch(e => {

@@ -58,12 +58,12 @@ export class AppComponent implements OnInit {
       // url: '/folder/Archived',
       url: "recherche",
       icon: "search"
-    },
-    {
+    }
+    /* {
       title: "Mon profil",
       url: "profil",
       icon: "person"
-    }
+    } */
   ];
   public labels = ["Déconnexion"];
 
@@ -113,5 +113,17 @@ export class AppComponent implements OnInit {
 
   defaultName(utilisateur: firebase.User) {
     return utilisateur.email.split("@")[0];
+  }
+  seDeconnecter() {
+    this.auth.deconnexion().then(data => {
+      console.log(data);
+
+      this.router.navigate(["connexion"]);
+    });
+  }
+
+  ouvrir() {
+    this.router.navigate(["monprofil", this.utilisateur.uid]);
+    // console.log(this.profil);
   }
 }

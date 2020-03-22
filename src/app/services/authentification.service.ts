@@ -32,7 +32,21 @@ export class AuthentificationService {
           this.emettre();
           resolve(utilisateur);
         })
-        .catch((e) => {
+        .catch(e => {
+          reject(e);
+        });
+    });
+  }
+
+  deconnexion(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      firebsase
+        .auth()
+        .signOut()
+        .then(data => {
+          resolve(data);
+        })
+        .catch(e => {
           reject(e);
         });
     });

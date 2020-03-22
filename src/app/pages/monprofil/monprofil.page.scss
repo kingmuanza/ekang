@@ -1,0 +1,108 @@
+.muanza-image {
+  height: 30vw;
+  width: 30vw;
+  background-color: green;
+  border-radius: 50%;
+  margin-left: 2.5vw;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.muanza-photo {
+  width: 30vw;
+  height: 30vw;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.informations {
+  margin-top: 20px;
+  div.pubComm {
+    margin-bottom: 25px;
+    ion-item {
+      background-color: rgba(#00ff00, 0.1);
+      margin-top: -20px;
+    }
+  }
+}
+
+.muanza-header {
+  background-color: #0062ff;
+  height: 70vw;
+  padding-top: 10vw;
+  padding-left: 25vw;
+
+  .muanza-image {
+    height: 50vw;
+    width: 50vw;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+ion-toolbar {
+  --border-color: #0062ff;
+}
+
+h1 {
+  font-size: 30px;
+}
+.info_box {
+  float: right;
+  width: 60vw;
+  display: inline-block;
+  white-space: nowrap;
+}
+.date_box {
+  margin: 1vw;
+  text-align: center;
+  display: inline-block;
+  width: 16vw;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+.date_box b {
+  font-size: 20px;
+}
+.date_box p {
+  margin: 2px;
+  font-size: 12px;
+  color: grey;
+  font-weight: 500;
+}
+.text_button {
+  margin-left: 10px;
+  text-transform: initial;
+  --padding-start: 17px;
+  --padding-end: 17px;
+}
+.icon_button {
+  margin-left: 10px;
+  --padding-start: 7px;
+  --padding-end: 7px;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.img_box {
+  border: 1px solid white;
+  width: 33.3%;
+  padding-bottom: 31%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.tweet {
+  margin-top: -10px !important;
+}
+
+.tweet-img {
+  border-radius: 10px;
+  width: 95%;
+  margin-left: 2.5%;
+}

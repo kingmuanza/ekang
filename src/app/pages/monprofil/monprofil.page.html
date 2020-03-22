@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title *ngIf="profil">
+      {{profil.utilisateur ? profil.utilisateur.displayName: 'Veuillez
+      patienter...'}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="profil" class="muanza-image" style="">
+    <div class="">
+      <img
+        [src]="profil.utilisateur ? profil.utilisateur.photoURL: '../../../../assets/img/user.png'"
+        class="muanza-photo"
+      />
+    </div>
+  </div>
+  <div class="info_box">
+    <div *ngIf="profil">
+      <div class="date_box">
+        <b>
+          {{publications ? publications.length : 0}}
+        </b>
+        <p>Posts</p>
+      </div>
+      <div class="date_box">
+        <b>{{profil.abonnes ? profil.abonnes.length : 0}}</b>
+        <p>Abonnés</p>
+      </div>
+      <div class="date_box">
+        <b>{{profil.abonnements ? profil.abonnements.length : 0}}</b>
+        <p>Abonnements</p>
+      </div>
+    </div>
+    <div style="padding-right: 6vw;">
+      <ion-button
+        (click)="modifier()"
+        expand="full"
+        shape="round"
+        fill="outline"
+        slot="end"
+        >Modifier
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-item lines="none">
+    <ion-label>
+      <p *ngIf="profil">
+        {{ profil.profession }}<br />
+        {{ profil.pays }}
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-segment
+    color="primary"
+    [value]="segment"
+    (ionChange)="segmentChanged($event)"
+  >
+    <ion-segment-button value="publications">
+      <ion-icon name="paper-plane"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="commentaires">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="likes">
+      <ion-icon name="heart"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="amis">
+      <ion-icon name="people"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+  <div class="informations" *ngIf="segment === 'publications'">
+    <ng-container *ngFor="let publication of publications">
+      <ng-container *ngIf="publication.texte">
+        <app-publication-item
+          [publication]="publication"
+          [utilisateur]="utilisateur"
+        >
+        </app-publication-item>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="informations" *ngIf="segment === 'commentaires'">
+    <div class="pubComm" *ngFor="let commentaire of commentaires">
+      <app-publication-item
+        [publication]="commentaire.publication"
+        [utilisateur]="utilisateur"
+      ></app-publication-item>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img
+            class="image-muanza"
+            [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'"
+          />
+        </ion-avatar>
+
+        <ion-label text-wrap>
+          <h4>
+            {{commentaire.utilisateur ? commentaire.utilisateur.displayName :
+            'Aucun utilisateur'}}
+          </h4>
+          <div>
+            {{commentaire.texte}}
+          </div>
+          <small>
+            {{commentaire.date | date: 'dd-MM-yyyy'}} à {{commentaire.date |
+            date: 'HH:mm'}}
+          </small>
+        </ion-label>
+      </ion-item>
+    </div>
+  </div>
+  <div class="informations" *ngIf="segment === 'likes'">
+    <ng-container *ngFor="let publication of likes">
+      <ng-container *ngIf="publication.texte">
+        <app-publication-item
+          [publication]="publication"
+          [utilisateur]="utilisateur"
+        >
+        </app-publication-item>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="informations" *ngIf="segment === 'amis'">
+    <ng-container *ngFor="let profil of amis">
+      <app-profil-list-item
+        [profil]="profil"
+        [monProfil]="monProfil"
+      ></app-profil-list-item>
+    </ng-container>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="message()">
+      <ion-icon name="mail"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
