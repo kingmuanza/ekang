@@ -100,4 +100,9 @@ export class MessagesPage implements OnInit {
     //this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
     this.router.navigate(["messages", "chat"]);
   }
+
+  chat(user: Profil) {
+    //this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
+    this.router.navigate(["messages", "chat", user.utilisateur.uid]);
+  }
 }

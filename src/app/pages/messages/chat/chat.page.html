@@ -1,4 +1,23 @@
-<ion-header>
+<ion-header *ngIf="profil">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ profil.utilisateur.displayName ? profil.utilisateur.displayName:
+      'inconnu'}}<br />
+      <div class="status">En ligne</div></ion-title
+    >
+    <ion-avatar slot="end">
+      <img
+        [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'"
+        alt=""
+      />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+<!--
+  <ion-header>
   <ion-toolbar>
     <ion-title>chat</ion-title>
     <ion-buttons slot="start">
@@ -6,9 +25,31 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+-->
 
 <ion-content>
-  <div class="stream" *ngIf="messages">
+  <ion-grid *ngIf="messages">
+    <ion-row *ngFor="let message of messagesChat">
+      <ion-col
+        size="9"
+        *ngIf="message.senderID != senderId"
+        class="message other-message"
+      >
+        <span>{{ message.texte }}</span>
+      </ion-col>
+      <ion-col
+        offset="3"
+        size="9"
+        *ngIf="message.senderID == senderId"
+        class="message my-message"
+      >
+        <span>{{ message.texte }}</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--
+    <div class="stream" *ngIf="messages">
     <ion-item lines="none" *ngFor="let message of messagesChat">
       <ion-badge
         class="line-breaker right-bubble"
@@ -27,8 +68,9 @@
         >{{ message.texte }}</ion-badge
       >
     </ion-item>
+    
   </div>
-  <ion-footer no-border>
+    <ion-footer no-border>
     <div class="input-wrap">
       <textarea
         #messageInput
@@ -44,4 +86,33 @@
       </button>
     </div>
   </ion-footer>
+ -->
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row align-items-center no-padding>
+      <ion-col size="10">
+        <ion-textarea
+          class="msg-input"
+          autosize
+          maxRows="3"
+          [(ngModel)]="messageText"
+          (keyup.enter)="sendMessage()"
+        ></ion-textarea>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button
+          expand="block"
+          fill="clear"
+          color="success"
+          [disabled]="messageText === ''"
+          class="msg-btn"
+          (click)="sendMessage()"
+        >
+          <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

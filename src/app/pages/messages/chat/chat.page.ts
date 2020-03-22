@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { UserService } from "src/app/services/user.service";
 import { Profil } from "src/app/models/profil.model";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -7,6 +7,7 @@ import { MessagerieService } from "src/app/services/messagerie.service";
 import { Message } from "src/app/models/message.model";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import * as firebase from "firebase";
+import { IonContent } from "@ionic/angular";
 
 @Component({
   selector: "app-chat",
@@ -14,6 +15,7 @@ import * as firebase from "firebase";
   styleUrls: ["./chat.page.scss"]
 })
 export class ChatPage implements OnInit {
+  @ViewChild(IonContent, { static: true }) content: IonContent;
   profil: Profil;
   monProfil: Profil;
   user: boolean = false;
@@ -31,7 +33,11 @@ export class ChatPage implements OnInit {
     public auth: AuthentificationService,
     private router: Router,
     private messagerie: MessagerieService
-  ) {}
+  ) {
+    setTimeout(() => {
+      this.content.scrollToBottom(200);
+    }, 2000);
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -41,6 +47,8 @@ export class ChatPage implements OnInit {
       if (id) {
         this.userService.getProfilByID(id).then(profil => {
           this.profil = profil;
+          console.log("leprofil");
+          console.log(profil);
           this.receiverId = this.profil.utilisateur.uid;
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
@@ -90,6 +98,10 @@ export class ChatPage implements OnInit {
       this.saveMessageChat2(this.messages);
       this.sendEmail(this.profil);
     }
+
+    setTimeout(() => {
+      this.content.scrollToBottom(200);
+    });
 
     this.messageText = "";
   }
