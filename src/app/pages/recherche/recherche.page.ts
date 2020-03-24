@@ -72,17 +72,17 @@ export class RecherchePage implements OnInit {
       }
     );
     this.auth.emettre();
-    // this.getCountry();
+    this.getCountry();
     this.getProfession();
     //this.takeVille();
   }
   getCountry() {
     this.http
-      .get("https://restcountries.eu/rest/v2/region/europe")
+      .get("https://restcountries.eu/rest/v2/region/africa")
       .subscribe(data => {
         console.log(data);
         this.pays = data;
-        this.pays.forEach(p => {
+        /* this.pays.forEach(p => {
           this.villeService
             .addPays(p)
             .then(res => {
@@ -91,7 +91,7 @@ export class RecherchePage implements OnInit {
             .catch(err => {
               console.log(err);
             });
-        });
+        }); */
         this.takeVille();
       });
   }
