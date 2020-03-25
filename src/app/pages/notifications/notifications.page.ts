@@ -43,11 +43,16 @@ export class NotificationsPage implements OnInit {
     this.router.navigate(['amis', 'amis-view', notification.profil.utilisateur.uid]);
   }
   voirPublication(notification: NotificationEkang) {
-    if(notification.publication) {
+    if (notification.publication) {
       this.router.navigate(['publications', 'publications-view', notification.publication.id]);
     } else {
-      
+
     }
+  }
+
+  async getProfilUpdate(notification: NotificationEkang): Promise<Profil> {
+    const profil = await this.userService.getProfilByID(notification.profil.utilisateur.uid);
+    return profil;
   }
 
   getNotifications() {
@@ -59,13 +64,21 @@ export class NotificationsPage implements OnInit {
         return new Date(a.date).getTime() - new Date(b.date).getTime() > 0
           ? -1
           : 1;
-      });;
+      });
+      this.updateNotification();
     });
+  }
+
+  async updateNotification() {
+    for (let i = 0; i < this.notifications.length; i++) {
+      const notification = this.notifications[i];
+      notification.profil = await this.getProfilUpdate(notification);
+    }
   }
 
   couperTexte(texte: string) {
     if (texte.length > 50) {
-      return texte.substring(0, 48)+'...';
+      return texte.substring(0, 48) + '...';
     }
     return texte;
   }

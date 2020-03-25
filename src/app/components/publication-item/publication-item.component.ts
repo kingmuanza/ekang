@@ -8,6 +8,7 @@ import { Profil } from "src/app/models/profil.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { element } from "protractor";
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: "app-publication-item",
@@ -24,8 +25,9 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private pubService: PublicationService,
+    private userService: UserService,
     private notifService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
@@ -42,6 +44,12 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     // console.log(this.utilisateur);
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
+      if (this.publication.profil && this.publication.profil.utilisateur) {
+        this.userService.getProfilByID(this.publication.profil.utilisateur.uid).then((profil) => {
+          console.log('Mise à jour du profil');
+          this.publication.profil = profil;
+        });
+      }
     }
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
@@ -182,13 +190,13 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     ]);
   }
 
-  onClick() {}
+  onClick() { }
 
   // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then(t => {});
+    this.notifService.createNotification(notification).then(t => { });
   }
 }
