@@ -87,45 +87,54 @@ export class ProfilPage implements OnInit, AfterViewInit {
   }
 
   // Mettre à jour le profil dans l'authentification firebaseUsrer
-  enregistrer() {
-    this.utilisateur
-      .updateProfile({
-        displayName: this.displayName,
-        photoURL: this.photoURL
-      })
-      .then(resultat => {
-        console.log(resultat);
-        this.notifier("Votre profil a été mis à jour");
-        if (this.utilisateur.photoURL) {
-          this.router.navigate(["accueil"]);
-        } else {
-          this.photo();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  enregistrer(): Promise<firebase.User> {
+    return new Promise((resolve, reject) => {
+      this.utilisateur
+        .updateProfile({
+          displayName: this.displayName,
+          photoURL: this.photoURL
+        })
+        .then((resultat) => {
+          console.log('resultat nouveau profil');
+          console.log(resultat);
+          console.log(this.utilisateur);
+          this.notifier("Votre profil a été mis à jour");
+          resolve(this.utilisateur);
+        })
+        .catch(err => {
+          console.log(err);
+          reject(err);
+        });
+    });
   }
 
   // Mettre à jour le profil dans FIRESTORE
   suivant() {
-    console.log(this.utilisateur);
-    let profil = new Profil(this.utilisateur);
-    if (this.profil) {
-      profil = this.profil;
-    }
-    profil.pays = this.userPays;
-    profil.profession = this.userProfession;
-    if (this.userVille) {
-      profil.ville = this.userVille;
-    }
-    if (this.userContinent) {
-      profil.continent = this.userContinent;
-    }
-    this.userService.createUser(this.utilisateur).then(data => {
-      this.userService.updateProfil(profil).then(() => {
-        this.enregistrer();
-        this.createNotification(profil, "UPDATE_PROFIL");
+
+    this.enregistrer().then((utilisateur) => {
+      console.log(utilisateur);
+      let profil = new Profil(utilisateur);
+      if (this.profil) {
+        profil = this.profil;
+      }
+      profil.pays = this.userPays;
+      profil.profession = this.userProfession;
+      if (this.userVille) {
+        profil.ville = this.userVille;
+      }
+      if (this.userContinent) {
+        profil.continent = this.userContinent;
+      }
+      profil.utilisateur = utilisateur;
+      this.userService.createUser(this.utilisateur).then(data => {
+        this.userService.updateProfil(profil).then(() => {
+          this.createNotification(profil, "UPDATE_PROFIL");
+          if (this.utilisateur.photoURL) {
+            this.router.navigate(["accueil"]);
+          } else {
+            this.photo();
+          }
+        });
       });
     });
   }

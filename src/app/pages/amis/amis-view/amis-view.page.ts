@@ -46,11 +46,13 @@ export class AmisViewPage implements OnInit {
       if (id) {
         this.userService.getProfilByID(id).then(profil => {
           this.profil = profil;
+          
           this.getPublications();
           this.getCommentaires(this.profil.utilisateur);
           this.getLikes(this.profil.utilisateur);
           this.getAmis(this.profil.utilisateur);
           console.log(this.profil);
+
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
               this.utilisateur = utilisateur;
