@@ -34,14 +34,15 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       this.aiJeLike();
       if (this.publication && this.publication.dernierCommentaire) {
         this.commentaire = this.publication.dernierCommentaire;
+        this.userService.getProfilByID(this.commentaire.utilisateur.uid).then((profil) => {
+          console.log('Mise à jour du profil');
+          this.commentaire.utilisateur = profil.utilisateur;
+        });
       }
     }
   }
+
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    //  console.log("this.publication");
-    //  console.log(this.publication);
-    // console.log("this.utilisateur");
-    // console.log(this.utilisateur);
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
       if (this.publication.profil && this.publication.profil.utilisateur) {
@@ -189,8 +190,6 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       this.publication.id
     ]);
   }
-
-  onClick() { }
 
   // Prévenir l'utilisateur qu'on l'a mentionné
   createNotificationLike() {
