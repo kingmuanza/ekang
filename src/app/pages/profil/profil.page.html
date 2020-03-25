@@ -23,8 +23,8 @@
       <div class="photo" *ngIf="!photoURL">
         <img src="../../../assets/img/user.png" style="width: 100%;" />
       </div>
-      <div class="photo" *ngIf="photoURL">
-        <img [src]="photoURL" style="width: 100%;" />
+      <div [ngStyle]="{'background-image': 'url('+ photoURL +')'}" class="photo" *ngIf="photoURL">
+        
       </div>
       <div class="photo moins" (click)="photo()">
         <small>

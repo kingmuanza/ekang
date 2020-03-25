@@ -4,6 +4,8 @@ import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { ToastController } from "@ionic/angular";
 import * as firebase from "firebase";
+import { Profil } from 'src/app/models/profil.model';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: "app-photo",
   templateUrl: "./photo.page.html",
@@ -16,9 +18,11 @@ export class PhotoPage implements OnInit {
   //photoURL: string;
   photoURL = "../../../../assets/img/user.png";
   file: any;
+  profil: Profil;
   constructor(
     public toastController: ToastController,
     private router: Router,
+    private userService: UserService,
     public auth: AuthentificationService
   ) { }
 
@@ -26,6 +30,9 @@ export class PhotoPage implements OnInit {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
+        this.userService.getProfil(utilisateur).then((profil) => {
+          this.profil = profil;
+        });
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
@@ -73,7 +80,12 @@ export class PhotoPage implements OnInit {
           .then(() => {
             this.auth.updateUser(this.utilisateur);
             this.notifier("Votre profil a été mis à jour");
-            this.router.navigate(["profil"]);
+            if(this.profil) {
+              this.profil.utilisateur = this.utilisateur;
+              this.userService.updateProfil(this.profil).then(()=>{
+                this.router.navigate(["profil"]);
+              });
+            }
           })
           .catch(err => {
             console.log("erreur");

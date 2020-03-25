@@ -7,7 +7,10 @@
   .photo {
     margin-left: 10vw;
     margin-right: 10vw;
+    height: 40vw;
     border-radius: 50%;
+    background-size: cover;
+    background-position: center center;
     overflow: hidden;
     &.moins {
       margin-top: -40vw;
