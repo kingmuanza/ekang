@@ -30,10 +30,12 @@
                           expandHeight="100%"
                           [expanded]="p.expandedVille"
                         >
-                          <ion-list>
-                            <ion-item *ngFor="let v of p.ville">
+                          <ion-list *ngIf="lesVilles">
+                            <ion-item *ngFor="let v of lesVilles">
                               <ion-label color="success">
-                                <p (click)="closeExpand(v.nom, p)">{{v.nom}}</p>
+                                <p (click)="closeExpand(v.ville, p)">
+                                  {{v.ville}}
+                                </p>
                               </ion-label>
                             </ion-item>
                           </ion-list>
@@ -68,7 +70,7 @@
     <ion-select
       (ionChange)="chooseProfession($event)"
       interface="popover"
-      placeholder="centre d'intérêt"
+      placeholder="point d'intérêt"
     >
       <ion-select-option *ngFor="let pro of listProfesion" [value]="pro.nom"
         >{{ pro.nom }}</ion-select-option

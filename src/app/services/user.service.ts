@@ -7,6 +7,8 @@ import { Profil } from "../models/profil.model";
   providedIn: "root"
 })
 export class UserService {
+  utilisateur: firebase.User;
+
   constructor(private firestore: AngularFirestore) { }
 
   // Cette fonction permet de mettre une classe en format JSON pour firebase
@@ -162,6 +164,7 @@ export class UserService {
 
   updateProfil(profil: Profil): Promise<Profil> {
     const db = firebase.firestore();
+    
     const element = this.purifier(profil);
     return new Promise((resolve, reject) => {
       if (profil.utilisateur) {

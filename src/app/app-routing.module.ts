@@ -83,6 +83,18 @@ const routes: Routes = [
       import("./pages/monprofil/monprofil.module").then(
         m => m.MonprofilPageModule
       )
+  },
+  {
+    path: "tabs",
+    loadChildren: () =>
+      import("./pages/tabs/tabs.module").then(m => m.TabsPageModule)
+  },
+  {
+    path: "dashboard",
+    loadChildren: () =>
+      import("./pages/dashboard/dashboard.module").then(
+        m => m.DashboardPageModule
+      )
   }
 ];
 

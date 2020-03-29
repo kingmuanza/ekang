@@ -58,12 +58,12 @@ export class AppComponent implements OnInit {
       // url: '/folder/Archived',
       url: "recherche",
       icon: "search"
-    }
-    /* {
-      title: "Mon profil",
-      url: "profil",
-      icon: "person"
-    } */
+    },
+     {
+      title: "Admin",
+      url: "dashboard",
+      icon: "today"  
+    } 
   ];
   public labels = ["Déconnexion"];
 

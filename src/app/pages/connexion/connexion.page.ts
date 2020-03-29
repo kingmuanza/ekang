@@ -76,7 +76,8 @@ export class ConnexionPage implements OnInit {
       .getProfil(utilisateur)
       .then(profil => {
         if (profil) {
-          this.router.navigate(["accueil"]);
+          // this.router.navigate(["accueil"]);
+          this.router.navigate(["tabs"]);
         } else {
           this.router.navigate(["profil"]);
         }

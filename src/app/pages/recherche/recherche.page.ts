@@ -15,7 +15,8 @@ import { AuthentificationService } from "src/app/services/authentification.servi
 export class RecherchePage implements OnInit {
   public items: any;
   public items2: any;
-  pays: any;
+  pays = [];
+  afrique: any;
   userPays: any;
   userVille: string = "Localisation géographique";
   userProfession: any;
@@ -23,6 +24,7 @@ export class RecherchePage implements OnInit {
   profils = new Array<Profil>();
   profil: Profil;
   villes: any;
+  lesVilles: any;
   expandedVille: boolean = false;
   profilsResultats = new Array<Profil>();
   profilsVilles = new Array<Profil>();
@@ -77,23 +79,30 @@ export class RecherchePage implements OnInit {
     //this.takeVille();
   }
   getCountry() {
-    this.http
-      .get("https://restcountries.eu/rest/v2/region/africa")
+    let tab = [];
+    /*   this.http
+      .get("https://restcountries.eu/rest/v2/region/oceania")
       .subscribe(data => {
         console.log(data);
         this.pays = data;
-        /* this.pays.forEach(p => {
-          this.villeService
-            .addPays(p)
-            .then(res => {
-              console.log(res);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }); */
+        this.pays.forEach(p => {
+          
+          tab.push(p.name);
+        });
+       
         this.takeVille();
+      }); */
+    this.villeService.getPays().then(data => {
+      data.forEach(elt => {
+        if (elt["continent"] == "Afrique") {
+          this.afrique = elt["pays"];
+          this.afrique.forEach(elt => {
+            this.pays.push({ name: elt });
+          });
+        }
       });
+      this.takeVille();
+    });
   }
 
   getProfession() {
@@ -131,7 +140,6 @@ export class RecherchePage implements OnInit {
   }
   takeVille() {
     this.villeService.getVilles().then(data => {
-      console.log(data);
       data.forEach(v => {
         v["expanded"] = false;
       });
@@ -150,6 +158,12 @@ export class RecherchePage implements OnInit {
           ];
         }
       });
+    });
+  }
+
+  prendreLesVilles() {
+    this.villeService.getVilles().then(data => {
+      console.log(data);
     });
   }
 
@@ -176,6 +190,11 @@ export class RecherchePage implements OnInit {
         return listItem;
       });
     }
+    this.villeService.getVillePays({ pays: p.name }).then(data => {
+      console.log(data);
+      // this.listVilles = data;
+      this.lesVilles = data;
+    });
   }
 
   closeExpand(ville, p) {
