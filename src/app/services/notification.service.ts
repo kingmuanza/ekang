@@ -85,4 +85,14 @@ export class NotificationService {
         });
     });
   }
+  envoyeurEmail(data, name, auteur) {
+    const email = firebase.functions().httpsCallable("sendCommentaireEmail");
+    email({ tabMails: data, nom: name, auteur: auteur })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 }

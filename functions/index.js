@@ -32,7 +32,7 @@ exports.sendChatEmail = functions.https.onCall((data, context) => {
     ""} vous avez reçu un message! connecter vous a votre compte</p>
 </div>`;
   const mailOptions = {
-    from: "no-reply@myemail.com",
+    from: "no-reply@ekangAfrique@gmail.com",
     to: data.email,
     subject: `${data.name} sent you a new chat notification`,
     text: text,
@@ -40,48 +40,30 @@ exports.sendChatEmail = functions.https.onCall((data, context) => {
   };
 
   return transporter.sendMail(mailOptions);
-  /* return transporter
-    .sendMail(mailOptions)
-    .then(data => {
-      console.log(data);
+});
 
-      return data;
-    })
-    .catch(err => {
-      return err;
-    });*/
-  /*  return admin
-    .auth()
-    .getUserByEmail(data.email)
-    .then(user => {
-      var text = `<div>
-        <h4>EKANG CHAT NOTIFICATION</h4>
-        <ul>
-          <li>
-            Name - ${data.name || ""}
-          </li>
-          <li>
-            Email - ${data.email || ""}
-          </li>
-         
-        </ul>
-        <h4>Message</h4>
-        <p>${message || ""}</p>
-      </div>`;
-      const mailOptions = {
-        bcc: data.email,
-        from: "no-reply@myemail.com",
-        subject: `${data.name} sent you a new chat notification`,
-        text: text,
-        html: text
-      };
-      transporter
-        .sendMail(mailOptions)
-        .then(() => {
-          return { message: "mail send!" };
-        })
-        .catch(err => {
-          return err;
-        });
-    });*/
+exports.sendCommentaireEmail = functions.https.onCall((data, context) => {
+  console.log(data.tabMails.join());
+
+  if (data.auteur == data.nom) {
+    console.log("auteur commentateur");
+  } else {
+  }
+  var text = `<div>
+  <h4>EKANG COMMENTAIRES NOTIFICATION</h4>
+ 
+  <h4>Message</h4>
+  <p>${data.nom || ""} a repondu a votre commentaire sur la publication ${
+    data.auteur
+  }</p>
+</div>`;
+  const mailOptions = {
+    from: "no-reply@ekangAfrique@gmail.com",
+    to: data.tabMails.join(),
+    subject: `${data.nom} nouveau commentaire`,
+    text: text,
+    html: text
+  };
+
+  return transporter.sendMail(mailOptions);
 });

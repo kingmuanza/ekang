@@ -8,7 +8,7 @@ import { Profil } from "src/app/models/profil.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { element } from "protractor";
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "app-publication-item",
@@ -27,24 +27,27 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     private pubService: PublicationService,
     private userService: UserService,
     private notifService: NotificationService
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
       if (this.publication && this.publication.dernierCommentaire) {
-
-        this.userService.getProfilByID(this.publication.profil.utilisateur.uid).then((profil) => {
-          console.log('Mise à jour du profil');
-          this.publication.profil = profil;
-          this.publication.utilisateur = profil.utilisateur;
-        });
+        this.userService
+          .getProfilByID(this.publication.profil.utilisateur.uid)
+          .then(profil => {
+            // console.log('Mise à jour du profil');
+            this.publication.profil = profil;
+            this.publication.utilisateur = profil.utilisateur;
+          });
 
         this.commentaire = this.publication.dernierCommentaire;
-        this.userService.getProfilByID(this.commentaire.utilisateur.uid).then((profil) => {
-          console.log('Mise à jour du profil');
-          this.commentaire.utilisateur = profil.utilisateur;
-        });
+        this.userService
+          .getProfilByID(this.commentaire.utilisateur.uid)
+          .then(profil => {
+            // console.log('Mise à jour du profil');
+            this.commentaire.utilisateur = profil.utilisateur;
+          });
       }
     }
   }
@@ -53,18 +56,20 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     if (this.publication && this.utilisateur) {
       this.aiJeLike();
       if (this.publication.profil && this.publication.profil.utilisateur) {
-        this.userService.getProfilByID(this.publication.profil.utilisateur.uid).then((profil) => {
-          console.log('Mise à jour du profil');
-          this.publication.profil = profil;
-          this.publication.utilisateur = profil.utilisateur;
-        });
+        this.userService
+          .getProfilByID(this.publication.profil.utilisateur.uid)
+          .then(profil => {
+            // console.log('Mise à jour du profil');
+            this.publication.profil = profil;
+            this.publication.utilisateur = profil.utilisateur;
+          });
       }
     }
     if (this.publication && this.publication.dernierCommentaire) {
       this.commentaire = this.publication.dernierCommentaire;
     }
     //   console.log('this.montrerLeDernierCommentaire');
-    console.log(this.montrerLeDernierCommentaire);
+    // console.log(this.montrerLeDernierCommentaire);
   }
 
   getLibelleDate(d: Date) {
@@ -154,7 +159,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
 
   voir(i) {
-    console.log(i);
+    // console.log(i);
   }
 
   aiJeLike() {
@@ -204,6 +209,6 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then(t => { });
+    this.notifService.createNotification(notification).then(t => {});
   }
 }

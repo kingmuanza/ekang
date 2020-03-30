@@ -49,7 +49,35 @@
           </ion-item>
           <ion-item>
             <ion-label color="primary">
-              <p>Amerique</p>
+              <p (click)="expandItemAmerique()">Amerique</p>
+              <ng-container>
+                <app-accordion
+                  expandHeight="100%"
+                  [expanded]="itemsAmerique.expanded"
+                >
+                  <ion-list>
+                    <ion-item *ngFor="let p of paysAmerique">
+                      <ion-label color="danger">
+                        <p (click)="expandItem3(p)">{{p.name}}</p>
+                        <app-accordionpays
+                          expandHeight="100%"
+                          [expanded]="p.expandedVille"
+                        >
+                          <ion-list *ngIf="lesVilles">
+                            <ion-item *ngFor="let v of lesVilles">
+                              <ion-label color="success">
+                                <p (click)="closeExpand(v.ville, p)">
+                                  {{v.ville}}
+                                </p>
+                              </ion-label>
+                            </ion-item>
+                          </ion-list>
+                        </app-accordionpays>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </app-accordion>
+              </ng-container>
             </ion-label>
           </ion-item>
           <ion-item>
@@ -59,7 +87,35 @@
           </ion-item>
           <ion-item>
             <ion-label color="primary">
-              <p>Europe</p>
+              <p (click)="expandItemEurope()">Europe</p>
+              <ng-container>
+                <app-accordion
+                  expandHeight="100%"
+                  [expanded]="itemsEurope.expanded"
+                >
+                  <ion-list>
+                    <ion-item *ngFor="let p of paysEurope">
+                      <ion-label color="danger">
+                        <p (click)="expandItem3(p)">{{p.name}}</p>
+                        <app-accordionpays
+                          expandHeight="100%"
+                          [expanded]="p.expandedVille"
+                        >
+                          <ion-list *ngIf="lesVilles">
+                            <ion-item *ngFor="let v of lesVilles">
+                              <ion-label color="success">
+                                <p (click)="closeExpand(v.ville, p)">
+                                  {{v.ville}}
+                                </p>
+                              </ion-label>
+                            </ion-item>
+                          </ion-list>
+                        </app-accordionpays>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </app-accordion>
+              </ng-container>
             </ion-label>
           </ion-item>
         </ion-list>

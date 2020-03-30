@@ -15,8 +15,16 @@ import { AuthentificationService } from "src/app/services/authentification.servi
 export class RecherchePage implements OnInit {
   public items: any;
   public items2: any;
+  public itemsAmerique: any;
+  public itemsEurope: any;
   pays = [];
+  paysEurope = [];
+  paysAmerique = [];
+  paysAsie = [];
   afrique: any;
+  europe: any;
+  amerique: any;
+  asie: any;
   userPays: any;
   userVille: string = "Localisation géographique";
   userProfession: any;
@@ -52,6 +60,8 @@ export class RecherchePage implements OnInit {
     ]; */
     this.items = { expanded: false, name: "situation geographique" };
     this.items2 = { expanded: false, name: "situation geographique" };
+    this.itemsAmerique = { expanded: false, name: "situation geographique" };
+    this.itemsEurope = { expanded: false, name: "situation geographique" };
   }
 
   ngOnInit() {
@@ -93,11 +103,31 @@ export class RecherchePage implements OnInit {
         this.takeVille();
       }); */
     this.villeService.getPays().then(data => {
+      console.log(data);
+
       data.forEach(elt => {
         if (elt["continent"] == "Afrique") {
           this.afrique = elt["pays"];
           this.afrique.forEach(elt => {
             this.pays.push({ name: elt });
+          });
+        }
+        if (elt["continent"] == "Europe") {
+          this.europe = elt["pays"];
+          this.europe.forEach(elt => {
+            this.paysEurope.push({ name: elt });
+          });
+        }
+        if (elt["continent"] == "Amerique") {
+          this.amerique = elt["pays"];
+          this.amerique.forEach(elt => {
+            this.paysAmerique.push({ name: elt });
+          });
+        }
+        if (elt["continent"] == "Oceanie") {
+          this.asie = elt["pays"];
+          this.asie.forEach(elt => {
+            this.paysAsie.push({ name: elt });
           });
         }
       });
@@ -172,6 +202,12 @@ export class RecherchePage implements OnInit {
   }
   expandItem2(): void {
     this.items2.expanded = !this.items2.expanded;
+  }
+  expandItemAmerique(): void {
+    this.itemsAmerique.expanded = !this.itemsAmerique.expanded;
+  }
+  expandItemEurope(): void {
+    this.itemsEurope.expanded = !this.itemsEurope.expanded;
   }
 
   expandItem3(p): void {
