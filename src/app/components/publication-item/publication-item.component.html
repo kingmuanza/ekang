@@ -32,7 +32,7 @@
   </ion-item>
   <div (click)="ouvrirPublication()">
     <div
-      style="margin: 15px; margin-top: 10px;font-size: 1.2em;"
+      style="margin: 15px; margin-top: 10px;font-size: 1em;"
       [innerHTML]="urlify(publication.texte)"
     ></div>
   </div>
@@ -50,6 +50,7 @@
       controls
       #videoPlayer
       height="200"
+      width="100%"
       (click)="toggleVideo()"
     >
       <source [src]="publication.cover" type="video/mp4" />
