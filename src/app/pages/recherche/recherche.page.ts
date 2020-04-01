@@ -230,6 +230,11 @@ export class RecherchePage implements OnInit {
       console.log(data);
       // this.listVilles = data;
       this.lesVilles = data;
+    /*  this.lesVilles = [
+        { ville: "yaounde" },
+        { ville: "douala" },
+        { ville: "maroua" }
+      ];*/
     });
   }
 

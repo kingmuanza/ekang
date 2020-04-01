@@ -1,80 +1,147 @@
 <div class="muanza-card">
   <ion-item (click)="voirAmi()" lines="none">
     <ion-avatar slot="start">
-      <img [src]="publication.utilisateur ? publication.utilisateur.photoURL :'../../../assets/img/user.png'" />
+      <img
+        [src]="
+          publication.utilisateur
+            ? publication.utilisateur.photoURL
+            : '../../../assets/img/user.png'
+        "
+      />
     </ion-avatar>
     <div>
       <span>
-        {{publication.utilisateur ? publication.utilisateur.displayName : 'Aucun utilisateur'}}
+        {{
+          publication.utilisateur
+            ? publication.utilisateur.displayName
+            : "Aucun utilisateur"
+        }}
       </span>
       <div *ngIf="publication.profil" style="margin-top: -5px; color: #aaa;">
         <small>
-          {{publication.profil ? publication.profil.ville : ''}},
-          {{publication.profil ? publication.profil.pays : ''}}
+          {{ publication.profil ? publication.profil.ville : "" }},
+          {{ publication.profil ? publication.profil.pays : "" }}
         </small>
       </div>
     </div>
     <p slot="end" style="margin-top: -3px;">
       <small>
-        {{getLibelleDate(publication.date)}}
+        {{ getLibelleDate(publication.date) }}
       </small>
     </p>
   </ion-item>
   <div (click)="ouvrirPublication()">
-    <div style="margin: 15px; margin-top: 10px;font-size: 1.2em;" [innerHTML]="urlify(publication.texte)">
-
-    </div>
+    <div
+      style="margin: 15px; margin-top: 10px;font-size: 1.2em;"
+      [innerHTML]="urlify(publication.texte)"
+    ></div>
   </div>
-  <img class="imageRadius" style="width: 100%;" *ngIf="publication.cover" [src]="publication.cover" />
+  <div *ngIf="!publication.le_type">
+    <img
+      class="imageRadius"
+      style="width: 100%;"
+      *ngIf="publication.cover"
+      [src]="publication.cover"
+    />
+  </div>
+  <div class="video" *ngIf="publication.le_type">
+    <video
+      id="video-style"
+      controls
+      #videoPlayer
+      height="200"
+      (click)="toggleVideo()"
+    >
+      <source [src]="publication.cover" type="video/mp4" />
+      Browser not supported
+    </video>
+  </div>
   <div style="margin-top: 0px; font-size: 1.2em; border-top: 1px solid #eee;">
-
-    <ion-button style="border-right: 1px solid #eee;" size="large" color="danger" *ngIf="jaiLike" fill="clear"
-      (click)="unlike()">
+    <ion-button
+      style="border-right: 1px solid #eee;"
+      size="large"
+      color="danger"
+      *ngIf="jaiLike"
+      fill="clear"
+      (click)="unlike()"
+    >
       <ion-icon slot="start" name="heart"></ion-icon>
       &nbsp;
-      {{publication.likes}}
+      {{ publication.likes }}
     </ion-button>
-    <ion-button style="border-right: 1px solid #eee;" size="large" color="medium" *ngIf="!jaiLike" fill="clear"
-      (click)="like()">
+    <ion-button
+      style="border-right: 1px solid #eee;"
+      size="large"
+      color="medium"
+      *ngIf="!jaiLike"
+      fill="clear"
+      (click)="like()"
+    >
       <ion-icon slot="start" name="heart-outline"></ion-icon>
       &nbsp;
-      {{publication.likes}}
+      {{ publication.likes }}
     </ion-button>
-    <ion-button style="border-right: 1px solid #eee;" size="large" color="medium" fill="clear"
-      (click)="ouvrirPublication()">
+    <ion-button
+      style="border-right: 1px solid #eee;"
+      size="large"
+      color="medium"
+      fill="clear"
+      (click)="ouvrirPublication()"
+    >
       <ion-icon slot="start" name="chatbubbles-outline"></ion-icon>
       &nbsp;
-      {{publication.commentaires ? publication.commentaires.length : 0}}
+      {{ publication.commentaires ? publication.commentaires.length : 0 }}
     </ion-button>
-    <ion-button style="border-right: 1px solid #eee;" size="large" color="medium" fill="clear"
-      (click)="ouvrirPublication()">
+    <ion-button
+      style="border-right: 1px solid #eee;"
+      size="large"
+      color="medium"
+      fill="clear"
+      (click)="ouvrirPublication()"
+    >
       <ion-icon name="share-social-outline"></ion-icon>
     </ion-button>
   </div>
   <!-- COMMENTAIRES -->
-  <div *ngIf="commentaire  && montrerLeDernierCommentaire" style="background-color: #eee; height: 1px;">
-  </div>
-  <ion-item class="commentaire" lines="none" *ngIf="commentaire  && montrerLeDernierCommentaire"
-    (click)="ouvrirPublication()">
+  <div
+    *ngIf="commentaire && montrerLeDernierCommentaire"
+    style="background-color: #eee; height: 1px;"
+  ></div>
+  <ion-item
+    class="commentaire"
+    lines="none"
+    *ngIf="commentaire && montrerLeDernierCommentaire"
+    (click)="ouvrirPublication()"
+  >
     <ion-avatar slot="start">
-      <img class="image-muanza"
-        [src]="commentaire.utilisateur.photoURL ? commentaire.utilisateur.photoURL: '../../../assets/img/user.png'" />
+      <img
+        class="image-muanza"
+        [src]="
+          commentaire.utilisateur.photoURL
+            ? commentaire.utilisateur.photoURL
+            : '../../../assets/img/user.png'
+        "
+      />
     </ion-avatar>
 
     <ion-label text-wrap>
       <span>
-        {{commentaire.utilisateur ? commentaire.utilisateur.displayName : 'Aucun
-          utilisateur'}}
+        {{
+          commentaire.utilisateur
+            ? commentaire.utilisateur.displayName
+            : "Aucun
+          utilisateur"
+        }}
       </span>
       <div style="line-height: 1; color: #444; margin-top: -3px;">
         <small>
-          {{commentaire.texte}}
+          {{ commentaire.texte }}
         </small>
       </div>
     </ion-label>
     <div slot="end">
       <small style="margin-top: -5px; vertical-align: top;">
-        {{getLibelleDate(commentaire.date)}}
+        {{ getLibelleDate(commentaire.date) }}
       </small>
     </div>
   </ion-item>

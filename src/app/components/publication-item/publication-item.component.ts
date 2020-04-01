@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  ElementRef,
+  ViewChild
+} from "@angular/core";
 import { Publication } from "src/app/models/publication.model";
 import { PublicationService } from "src/app/services/publication.service";
 import * as firebase from "firebase";
@@ -19,6 +26,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   @Input() public publication: Publication;
   @Input() public utilisateur: firebase.User;
   @Input() public montrerLeDernierCommentaire?: boolean;
+  @ViewChild("videoPlayer", { static: false }) videoplayer: ElementRef;
+  isPlay: boolean = false;
   jaiLike = false;
   commentaire: Commentaire;
 
@@ -111,6 +120,12 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     return retour.replace(urlRegex, url => {
       return '<a target="_blank" href="' + url + '">' + url + "</a>";
     });
+  }
+
+  checkImage(urlImage) {
+    console.log("voici", urlImage);
+
+    return urlImage;
   }
 
   getNameFromEmailInIdentification(email: string) {
@@ -210,5 +225,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
     this.notifService.createNotification(notification).then(t => {});
+  }
+  toggleVideo() {
+    this.videoplayer.nativeElement.play();
   }
 }

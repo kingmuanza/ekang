@@ -23,9 +23,11 @@
       <div class="photo" *ngIf="!photoURL">
         <img src="../../../assets/img/user.png" style="width: 100%;" />
       </div>
-      <div [ngStyle]="{'background-image': 'url('+ photoURL +')'}" class="photo" *ngIf="photoURL">
-        
-      </div>
+      <div
+        [ngStyle]="{'background-image': 'url('+ photoURL +')'}"
+        class="photo"
+        *ngIf="photoURL"
+      ></div>
       <div class="photo moins" (click)="photo()">
         <small>
           Appuyer ici pour modifier
@@ -52,6 +54,11 @@
         />
         <div>
           <small>Ce nom sera visible par tous les utilisateurs</small>
+        </div>
+
+        <input [(ngModel)]="phoneNumber" type="text" placeholder="Téléphone" />
+        <div>
+          <small>votre numéro de telephone</small>
         </div>
         <ion-select
           [value]="profil ? profil.continent : ''"

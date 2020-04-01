@@ -30,6 +30,7 @@
                           expandHeight="100%"
                           [expanded]="p.expandedVille"
                         >
+                        <app-loading *ngIf="!lesVilles"></app-loading>
                           <ion-list *ngIf="lesVilles">
                             <ion-item *ngFor="let v of lesVilles">
                               <ion-label color="success">

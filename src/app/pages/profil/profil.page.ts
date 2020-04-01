@@ -20,6 +20,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
   utilisateurSubscription: Subscription;
   displayName: string;
   photoURL: string;
+  phoneNumber: number;
   pays: any;
   userPays: any;
   userProfession: any;
@@ -59,6 +60,11 @@ export class ProfilPage implements OnInit, AfterViewInit {
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
+          if (utilisateur.phoneNumber) {
+            this.phoneNumber = parseInt(utilisateur.phoneNumber);
+          } else {
+            this.phoneNumber = 237;
+          }
         }
       }
     );
@@ -94,8 +100,8 @@ export class ProfilPage implements OnInit, AfterViewInit {
           displayName: this.displayName,
           photoURL: this.photoURL
         })
-        .then((resultat) => {
-          console.log('resultat nouveau profil');
+        .then(resultat => {
+          console.log("resultat nouveau profil");
           console.log(resultat);
           console.log(this.utilisateur);
           this.notifier("Votre profil a été mis à jour");
@@ -110,8 +116,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
 
   // Mettre à jour le profil dans FIRESTORE
   suivant() {
-
-    this.enregistrer().then((utilisateur) => {
+    this.enregistrer().then(utilisateur => {
       console.log(utilisateur);
       let profil = new Profil(utilisateur);
       if (this.profil) {
