@@ -56,5 +56,19 @@ ion-item.commentaire {
 }
 .nbrLike {
   height: 5%;
-  font-size: 100%;
+  font-size: 80%;
+  color: #aaa;
+}
+.nbrcommentaire {
+  height: 5%;
+  font-size: 80%;
+  color: #aaa;
+}
+.lesBoutons {
+  display: flex;
+  justify-content: space-between;
+}
+.nbrcommentaireLike {
+  display: flex;
+  justify-content: space-between;
 }
