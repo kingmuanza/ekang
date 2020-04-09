@@ -24,6 +24,11 @@ export class AccueilPage implements OnInit {
   publications = new Array<Publication>();
   notifications = new Array<NotificationEkang>();
   all = new Array<Publication | NotificationEkang>();
+  sliderConfig = {
+    //slidesPerView: 1.6,
+    //spaceBetween: 10,
+    centeredSlides: true
+  };
   constructor(
     private router: Router,
     private pubService: PublicationService,
@@ -35,6 +40,8 @@ export class AccueilPage implements OnInit {
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
+        console.log(utilisateur);
+
         this.utilisateur = utilisateur;
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
@@ -92,5 +99,9 @@ export class AccueilPage implements OnInit {
         console.log("update!!");
       });
     });
+  }
+
+  goToProfile() {
+    this.router.navigate(["profil"]);
   }
 }

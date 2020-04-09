@@ -16,6 +16,8 @@ import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { element } from "protractor";
 import { UserService } from "src/app/services/user.service";
+import { ModalController } from "@ionic/angular";
+import { LikeursPage } from "src/app/pages/likeurs/likeurs.page";
 
 @Component({
   selector: "app-publication-item",
@@ -35,7 +37,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     private router: Router,
     private pubService: PublicationService,
     private userService: UserService,
-    private notifService: NotificationService
+    private notifService: NotificationService,
+    public modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -173,8 +176,18 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     return textDeRetour;
   }
 
-  voir(i) {
-    // console.log(i);
+  async voir() {
+    console.log(this.publication.likeurs);
+    if (this.publication.likeurs.length) {
+      const modal = await this.modalController.create({
+        component: LikeursPage,
+        componentProps: {
+          likeurs: this.publication.likeurs
+        }
+      });
+      return await modal.present();
+    }
+    /* */
   }
 
   aiJeLike() {

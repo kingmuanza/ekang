@@ -13,19 +13,58 @@
 </ion-header>
 
 <ion-content *ngIf="utilisateur">
-  <ng-container *ngFor="let publication of all">
-    <ng-container *ngIf="publication.texte">
-      <app-publication-item
-        [montrerLeDernierCommentaire]="true"
-        [publication]="publication"
-        [utilisateur]="utilisateur"
-      >
-      </app-publication-item>
+  <ion-slides [options]="sliderConfig" pager="true">
+    <ion-slide *ngIf="!utilisateur.phoneNumber">
+      <ion-list>
+        <ion-icon class="iconClose" slot="start" name="close"></ion-icon>
+        <ion-item lines="none">
+          <ion-icon class="myicon" slot="start" name="call-outline"></ion-icon>
+          <ion-label class="ion-text-wrap">
+            <h3>
+              Ajouter votre numéro de telephone
+            </h3>
+            <ion-text color="secondary">
+              <p>
+                {{utilisateur.displayName}} Paragraph line 2 secondary
+                bénéficier de nombreux avantages offertes sur la plateforme
+              </p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-button fill="clear" expand="full" (click)="goToProfile()"
+          >Ajouter telephone</ion-button
+        >
+      </ion-list>
+    </ion-slide>
+    <ion-slide class="slider">
+      <ion-list>
+        <ion-item lines="none">
+          <ion-icon class="myicon" slot="start" name="call-outline"></ion-icon>
+          <ion-label class="ion-text-wrap">
+            <h3>
+              Ajouter votre numéro de telephone et bénéficier de nombreux
+              avantages
+            </h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+  <div class="divcontent">
+    <ng-container class="firstContainer" *ngFor="let publication of all">
+      <ng-container *ngIf="publication.texte">
+        <app-publication-item
+          [montrerLeDernierCommentaire]="true"
+          [publication]="publication"
+          [utilisateur]="utilisateur"
+        >
+        </app-publication-item>
+      </ng-container>
     </ng-container>
-  </ng-container>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="nouveau()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="primary" (click)="nouveau()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
 </ion-content>

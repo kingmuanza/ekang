@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>likeurs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="tabLikeurs.length">
+    <ion-item *ngFor="let profil of tabLikeurs">
+      <ion-avatar slot="start">
+        <img
+          class="image-muanza"
+          [src]="profil.photoURL ? profil.photoURL: '../../../assets/img/user.png'"
+        />
+      </ion-avatar>
+      <ion-label (click)="ouvrir()">
+        <h2>
+          <b>
+            {{profil.displayName ? profil.displayName: profil.email}}
+          </b>
+        </h2>
+        <small></small>
+      </ion-label>
+
+      <ion-icon slot="end" color="primary" name="heart"></ion-icon>
+    </ion-item>
+  </div>
+</ion-content>

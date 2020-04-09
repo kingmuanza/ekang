@@ -16,6 +16,7 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { DisplayPageModule } from "./display/display.module";
 import { ShareModule } from "./share.module";
+import { LikeursPageModule } from './pages/likeurs/likeurs.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +32,8 @@ import { ShareModule } from "./share.module";
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     DisplayPageModule,
-    ShareModule
+    ShareModule,
+    LikeursPageModule
   ],
   providers: [
     StatusBar,

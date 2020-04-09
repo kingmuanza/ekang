@@ -31,10 +31,10 @@
     </p>
   </ion-item>
   <div (click)="ouvrirPublication()">
-    <div
-      style="margin: 15px; margin-top: 10px;font-size: 1em;"
+    <small
+      style="margin: 15px; margin-top: 10px; font-size: 13px;"
       [innerHTML]="urlify(publication.texte)"
-    ></div>
+    ></small>
   </div>
   <div *ngIf="!publication.le_type">
     <img
@@ -57,7 +57,15 @@
       Browser not supported
     </video>
   </div>
+  <!--
+   
+  -->
   <div style="margin-top: 0px; font-size: 1.2em; border-top: 1px solid #eee;">
+    <div class="nbrLike" (click)="voir()">
+      <ion-icon color="primary" slot="start" name="heart"></ion-icon> &nbsp;{{
+        publication.likes
+      }}
+    </div>
     <ion-button
       style="border-right: 1px solid #eee;"
       size="large"
@@ -68,7 +76,6 @@
     >
       <ion-icon slot="start" name="heart"></ion-icon>
       &nbsp;
-      {{ publication.likes }}
     </ion-button>
     <ion-button
       style="border-right: 1px solid #eee;"
@@ -79,8 +86,6 @@
       (click)="like()"
     >
       <ion-icon slot="start" name="heart-outline"></ion-icon>
-      &nbsp;
-      {{ publication.likes }}
     </ion-button>
     <ion-button
       style="border-right: 1px solid #eee;"

@@ -95,7 +95,11 @@ const routes: Routes = [
       import("./pages/dashboard/dashboard.module").then(
         m => m.DashboardPageModule
       )
+  },  {
+    path: 'likeurs',
+    loadChildren: () => import('./pages/likeurs/likeurs.module').then( m => m.LikeursPageModule)
   }
+
 ];
 
 @NgModule({

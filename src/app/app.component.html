@@ -30,6 +30,17 @@
                 {{ utilisateur.email }}
               </ion-note>
 
+              <ion-menu-toggle>
+                <ion-item routerLink="tabs/accueil">
+                  <ion-icon
+                    slot="start"
+                    [ios]="'home' + '-outline'"
+                    [md]="'home' + '-sharp'"
+                  ></ion-icon>
+                  <ion-label>Accueil</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+
               <ion-menu-toggle
                 auto-hide="false"
                 *ngFor="let p of appPages; let i = index"

@@ -44,6 +44,8 @@ export class ConnexionPage implements OnInit {
     this.auth
       .connexion(login, passe)
       .then(utilisateur => {
+        // console.log(utilisateur);
+
         this.inactif = false; // bouton actif
         this.mauvaisCredentials = false;
         this.connexionReussie = true;

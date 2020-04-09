@@ -9,6 +9,7 @@ import { Profil } from "src/app/models/profil.model";
 import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { VilleService } from "src/app/services/ville.service";
+import * as firebase from "firebase";
 
 @Component({
   selector: "app-profil",
@@ -20,7 +21,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
   utilisateurSubscription: Subscription;
   displayName: string;
   photoURL: string;
-  phoneNumber: number;
+  phoneNumber: any;
   pays: any;
   userPays: any;
   userProfession: any;
@@ -30,7 +31,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
   profil: Profil;
   villes: any;
   continents: any;
-
+  id: any;
   constructor(
     public toastController: ToastController,
     private router: Router,
@@ -44,6 +45,9 @@ export class ProfilPage implements OnInit, AfterViewInit {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
+        console.log(utilisateur.uid);
+        this.id = utilisateur.uid;
+
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
@@ -61,9 +65,9 @@ export class ProfilPage implements OnInit, AfterViewInit {
             this.photoURL = utilisateur.photoURL;
           }
           if (utilisateur.phoneNumber) {
-            this.phoneNumber = parseInt(utilisateur.phoneNumber);
+            this.phoneNumber = utilisateur.phoneNumber;
           } else {
-            this.phoneNumber = 237;
+            // this.phoneNumber = +237;
           }
         }
       }
@@ -94,6 +98,13 @@ export class ProfilPage implements OnInit, AfterViewInit {
 
   // Mettre à jour le profil dans l'authentification firebaseUsrer
   enregistrer(): Promise<firebase.User> {
+    if (this.phoneNumber) {
+      // let num= parseInt(this.phoneNumber)
+      /*  this.utilisateur.updatePhoneNumber(this.phoneNumber).then(() => {
+        console.log("phone update");
+      }); */
+      this.verification(this.phoneNumber);
+    }
     return new Promise((resolve, reject) => {
       this.utilisateur
         .updateProfile({
@@ -129,6 +140,9 @@ export class ProfilPage implements OnInit, AfterViewInit {
       }
       if (this.userContinent) {
         profil.continent = this.userContinent;
+      }
+      if (this.phoneNumber) {
+        profil.tel = this.phoneNumber;
       }
       profil.utilisateur = utilisateur;
       this.userService.createUser(this.utilisateur).then(data => {
@@ -205,4 +219,27 @@ export class ProfilPage implements OnInit, AfterViewInit {
   compareWithFn = (o1, o2) => {
     return o1 && o2 ? o1.name === o2.name : o1 === o2;
   };
+  verification(phoneNumber) {
+    var applicationVerifier = new firebase.auth.RecaptchaVerifier(
+      "recaptcha-container"
+    );
+    var provider = new firebase.auth.PhoneAuthProvider();
+    provider
+      .verifyPhoneNumber(phoneNumber, applicationVerifier)
+      .then(function(verificationId) {
+        var verificationCode = window.prompt(
+          "Please enter the verification " +
+            "code that was sent to your mobile device."
+        );
+        return firebase.auth.PhoneAuthProvider.credential(
+          verificationId,
+          verificationCode
+        );
+      })
+      .then(phoneCredential => {
+        this.utilisateur.updatePhoneNumber(phoneCredential).then(data => {
+          console.log(data);
+        });
+      });
+  }
 }

@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public actionSheetController: ActionSheetController;
   public appPages = [
-    {
+    /* {
       title: "Accueil",
       url: "accueil",
       icon: "home"
-    },
+    },*/
     {
       title: "Notifications",
       url: "notifications",
@@ -59,11 +59,11 @@ export class AppComponent implements OnInit {
       url: "recherche",
       icon: "search"
     },
-     {
+    {
       title: "Admin",
       url: "dashboard",
-      icon: "today"  
-    } 
+      icon: "today"
+    }
   ];
   public labels = ["Déconnexion"];
 
