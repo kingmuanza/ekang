@@ -2,10 +2,11 @@
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
+        <ion-icon slot="start" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>likeurs</ion-title>
+    <ion-title *ngIf="tabLikeurs.length > 1">Personnes qui aiment ça</ion-title>
+    <ion-title *ngIf="tabLikeurs.length === 1">Personne qui aime ça</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +19,7 @@
           [src]="profil.photoURL ? profil.photoURL: '../../../assets/img/user.png'"
         />
       </ion-avatar>
-      <ion-label (click)="ouvrir()">
+      <ion-label (click)="ouvrir(profil)">
         <h2>
           <b>
             {{profil.displayName ? profil.displayName: profil.email}}

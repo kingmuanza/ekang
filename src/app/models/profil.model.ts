@@ -8,7 +8,7 @@ export class Profil {
   ville: string;
   continent: string;
   ekangName: string;
-  tel: Number;
+  tel: string;
   utilisateur: firebase.User;
   lastConnexionDate: number;
   abonnements = new Array<string>();

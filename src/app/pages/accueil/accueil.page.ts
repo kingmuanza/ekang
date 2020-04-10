@@ -20,10 +20,12 @@ export class AccueilPage implements OnInit {
   utilisateurSubscription: Subscription;
   photoURL: string;
   displayName: string;
+  pubs: boolean = false;
   profil: Profil;
   publications = new Array<Publication>();
   notifications = new Array<NotificationEkang>();
   all = new Array<Publication | NotificationEkang>();
+  phoneNumber: any;
   sliderConfig = {
     //slidesPerView: 1.6,
     //spaceBetween: 10,
@@ -40,13 +42,14 @@ export class AccueilPage implements OnInit {
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
-        console.log(utilisateur);
+        // console.log(utilisateur);
 
         this.utilisateur = utilisateur;
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
           this.utlisateurLastConnexion(utilisateur);
+          this.takeUserProfil(utilisateur.uid);
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
@@ -71,6 +74,7 @@ export class AccueilPage implements OnInit {
   getPublications() {
     this.pubService.getPublications().then(publications => {
       if (publications) {
+        this.pubs = true;
         this.publications = publications;
         this.all = this.publications;
         // console.log('this.publications');
@@ -96,12 +100,20 @@ export class AccueilPage implements OnInit {
       ).getTime();
 
       this.userservice.updateProfil(profil).then(() => {
-        console.log("update!!");
+        //console.log("update!!");
       });
     });
   }
 
   goToProfile() {
     this.router.navigate(["profil"]);
+  }
+  takeUserProfil(uid) {
+    this.userservice
+      .getProfilByID(this.utilisateur.uid)
+      .then(profil => {
+        this.phoneNumber = profil["tel"];
+      })
+      .catch(err => {});
   }
 }

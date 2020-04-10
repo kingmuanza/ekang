@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { NavParams, ModalController } from "@ionic/angular";
 import { Publication } from "src/app/models/publication.model";
 import { UserService } from "src/app/services/user.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-likeurs",
@@ -16,15 +17,16 @@ export class LikeursPage implements OnInit {
   constructor(
     navParams: NavParams,
     public modalController: ModalController,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
-    console.log(navParams.get("likeurs"));
+    // console.log(navParams.get("likeurs"));
     this.tab = navParams.get("likeurs");
     this.tab.forEach(likeur => {
       this.userService.getProfilByID(likeur).then(data => {
         console.log(data);
         this.tabLikeurs.push(data["utilisateur"]);
-        console.log(this.tabLikeurs);
+        // console.log(this.tabLikeurs);
       });
       // console.log(this.tabLikeurs);
     });
@@ -38,5 +40,12 @@ export class LikeursPage implements OnInit {
       dismissed: true
     });
   }
-  ouvrir(){}
+  ouvrir(data) {
+    // console.log(data);
+    // console.log(data["uid"]);
+    this.modalController.dismiss({
+      dismissed: true
+    });
+    this.router.navigate(["amis", "amis-view", data["uid"]]);
+  }
 }

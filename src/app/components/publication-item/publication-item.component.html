@@ -58,20 +58,26 @@
     </video>
   </div>
   <!--
-   
+  
   -->
   <div style="margin-top: 0px; font-size: 1.2em; border-top: 1px solid #eee;">
     <div class="nbrcommentaireLike">
       <div class="nbrLike" (click)="voir()">
-        <ion-icon color="primary" slot="start" name="heart"></ion-icon
-        >{{ publication.likes }}
+        <ion-icon color="primary" slot="start" name="happy-outline"></ion-icon>
+        {{ publication.likes }}
       </div>
-      <div class="nbrcommentaire" *ngIf="publication.commentaires.length <= 1">
+      <div
+        class="nbrcommentaire"
+        *ngIf="publication.commentaires && publication.commentaires.length <= 1"
+      >
         {{ publication.commentaires ? publication.commentaires.length : 0 }}
 
         <span><small>commentaire</small></span>
       </div>
-      <div *ngIf="publication.commentaires.length > 1" class="nbrcommentaire">
+      <div
+        *ngIf="publication.commentaires && publication.commentaires.length > 1"
+        class="nbrcommentaire"
+      >
         {{ publication.commentaires ? publication.commentaires.length : 0 }}
 
         <span><small>commentaires</small></span>

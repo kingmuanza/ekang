@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Accueil</ion-title>
+    <ion-title color="primary"> Ekang ôssu</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary">
         <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
@@ -13,19 +13,19 @@
 </ion-header>
 
 <ion-content *ngIf="utilisateur">
-  <ion-slides [options]="sliderConfig" pager="true">
-    <ion-slide *ngIf="!utilisateur.phoneNumber">
+  <ion-slides [options]="sliderConfig" pager="true" *ngIf="!phoneNumber">
+    <ion-slide>
       <ion-list>
         <ion-icon class="iconClose" slot="start" name="close"></ion-icon>
         <ion-item lines="none">
           <ion-icon class="myicon" slot="start" name="call-outline"></ion-icon>
           <ion-label class="ion-text-wrap">
             <h3>
-              Ajouter votre numéro de telephone
+              Ajouter votre numéro de téléphone
             </h3>
             <ion-text color="secondary">
               <p>
-                {{utilisateur.displayName}} Paragraph line 2 secondary
+                {{utilisateur.displayName}} Ajouter un numéro de téléphone et
                 bénéficier de nombreux avantages offertes sur la plateforme
               </p>
             </ion-text>
@@ -51,6 +51,15 @@
     </ion-slide>
   </ion-slides>
   <div class="divcontent">
+    <ion-button
+      class="firstBtn"
+      expand="block"
+      fill="clear"
+      (click)="nouveau()"
+    >
+      <ion-icon slot="start" name="share-outline"></ion-icon>
+      Partagez votre avis</ion-button
+    >
     <ng-container class="firstContainer" *ngFor="let publication of all">
       <ng-container *ngIf="publication.texte">
         <app-publication-item
@@ -61,6 +70,73 @@
         </app-publication-item>
       </ng-container>
     </ng-container>
+  </div>
+  <div *ngIf="!pubs">
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </div>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-skeleton-text
+          animated
+          style="width: 27px; height: 27px"
+          slot="start"
+        ></ion-skeleton-text>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="primary" (click)="nouveau()">

@@ -126,7 +126,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
 
   checkImage(urlImage) {
-    console.log("voici", urlImage);
+    // console.log("voici", urlImage);
 
     return urlImage;
   }

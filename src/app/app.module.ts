@@ -17,6 +17,8 @@ import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { DisplayPageModule } from "./display/display.module";
 import { ShareModule } from "./share.module";
 import { LikeursPageModule } from './pages/likeurs/likeurs.module';
+//import { HttpClientModule, HttpClient } from "@angular/common/http";
+
 
 @NgModule({
   declarations: [AppComponent],

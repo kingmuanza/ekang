@@ -10,6 +10,7 @@ import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { VilleService } from "src/app/services/ville.service";
 import * as firebase from "firebase";
+import { SmsService } from "src/app/services/sms.service";
 
 @Component({
   selector: "app-profil",
@@ -31,6 +32,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
   profil: Profil;
   villes: any;
   continents: any;
+  utilisateurEmail: any;
   id: any;
   constructor(
     public toastController: ToastController,
@@ -39,7 +41,8 @@ export class ProfilPage implements OnInit, AfterViewInit {
     public notifService: NotificationService,
     private http: HttpClient,
     private userService: UserService,
-    private villeService: VilleService
+    private villeService: VilleService,
+    private smsService: SmsService
   ) {
     console.log("onInit");
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -52,6 +55,11 @@ export class ProfilPage implements OnInit, AfterViewInit {
           this.router.navigate(["connexion"]);
         } else {
           this.userService.getProfil(this.utilisateur).then(profil => {
+            console.log("le prof", profil);
+            console.log(profil["tel"]);
+            if (profil["tel"]) {
+              this.phoneNumber = profil["tel"];
+            }
             if (profil) {
               this.profil = profil;
               this.userPays = this.profil.pays;
@@ -64,10 +72,11 @@ export class ProfilPage implements OnInit, AfterViewInit {
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
-          if (utilisateur.phoneNumber) {
-            this.phoneNumber = utilisateur.phoneNumber;
-          } else {
-            // this.phoneNumber = +237;
+          if (this.profil.tel) {
+            // this.phoneNumber = this.profil.tel;
+          }
+          if (utilisateur.email) {
+            this.utilisateurEmail = utilisateur.email;
           }
         }
       }
@@ -103,7 +112,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
       /*  this.utilisateur.updatePhoneNumber(this.phoneNumber).then(() => {
         console.log("phone update");
       }); */
-      this.verification(this.phoneNumber);
+      // this.verification(this.phoneNumber);
     }
     return new Promise((resolve, reject) => {
       this.utilisateur
@@ -113,8 +122,8 @@ export class ProfilPage implements OnInit, AfterViewInit {
         })
         .then(resultat => {
           console.log("resultat nouveau profil");
-          console.log(resultat);
-          console.log(this.utilisateur);
+          //console.log(resultat);
+          // console.log(this.utilisateur);
           this.notifier("Votre profil a été mis à jour");
           resolve(this.utilisateur);
         })
@@ -128,7 +137,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
   // Mettre à jour le profil dans FIRESTORE
   suivant() {
     this.enregistrer().then(utilisateur => {
-      console.log(utilisateur);
+      // console.log(utilisateur);
       let profil = new Profil(utilisateur);
       if (this.profil) {
         profil = this.profil;
@@ -148,6 +157,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
       this.userService.createUser(this.utilisateur).then(data => {
         this.userService.updateProfil(profil).then(() => {
           this.createNotification(profil, "UPDATE_PROFIL");
+          this.envoyerSms(this.phoneNumber, this.displayName);
           if (this.utilisateur.photoURL) {
             this.router.navigate(["accueil"]);
           } else {
@@ -241,5 +251,12 @@ export class ProfilPage implements OnInit, AfterViewInit {
           console.log(data);
         });
       });
+  }
+  envoyerSms(telephone, userName) {
+    console.log("jenvoi sms");
+    let Numbero = parseInt(`${telephone}`);
+    this.smsService.sendSms(Numbero, userName).subscribe(data => {
+      console.log(data);
+    });
   }
 }

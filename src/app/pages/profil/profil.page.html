@@ -8,7 +8,7 @@
       <ion-button
         color="primary"
         *ngIf="userPays && userProfession"
-        (click)="enregistrer()"
+        (click)="suivant()"
       >
         Enregistrer
       </ion-button>
@@ -17,6 +17,61 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-list-header>
+      Vos Paramétres
+    </ion-list-header>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img
+          [src]="
+              utilisateur
+                ? utilisateur.photoURL
+                : '../../../assets/img/user.png'
+            "
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>Photo de profile</h2>
+        <h3>
+          {{utilisateur.displayName ? utilisateur.displayName : displayName ?
+          displayName : 'Nom d\'utilisateur'}}
+        </h3>
+        <p (click)="photo()">
+          Appuyer ici pour modifier
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="pencil-outline"></ion-icon>
+      <ion-label position="floating">
+        <h2>Nom utilisateur</h2>
+        <p>
+          {{utilisateur.displayName ? utilisateur.displayName : displayName ?
+          displayName : 'Nom d\'utilisateur'}}
+        </p>
+      </ion-label>
+      <ion-input [(ngModel)]="displayName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="call-outline"></ion-icon>
+      <ion-label position="floating" class="ion-text-wrap">
+        <h2>Telephone</h2>
+        <p>pas de signe +, EX: 237691087025</p>
+      </ion-label>
+      <ion-input [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-label position="floating" class="ion-text-wrap">
+        <h2>E-mail</h2>
+        <p></p>
+      </ion-label>
+      <ion-input [(ngModel)]="utilisateurEmail "></ion-input>
+    </ion-item>
+  </ion-list>
+
   <div class="page">
     <!--
       <div class="div--photo">
@@ -102,55 +157,6 @@
       </div>
     </div>
   </div>
-  <ion-list>
-    <ion-list-header>
-      Vos Paramétres
-    </ion-list-header>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img
-          [src]="
-              utilisateur
-                ? utilisateur.photoURL
-                : '../../../assets/img/user.png'
-            "
-        />
-      </ion-avatar>
-      <ion-label>
-        <h2>Photo de profile</h2>
-        <h3>
-          {{utilisateur.displayName ? utilisateur.displayName : displayName ?
-          displayName : 'Nom d\'utilisateur'}}
-        </h3>
-        <p (click)="photo()">
-          Appuyer ici pour modifier
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-icon slot="start" name="pencil-outline"></ion-icon>
-      <ion-label position="floating">
-        <h2>Nom utilisateur</h2>
-        <p>
-          {{utilisateur.displayName ? utilisateur.displayName : displayName ?
-          displayName : 'Nom d\'utilisateur'}}
-        </p>
-      </ion-label>
-      <ion-input [(ngModel)]="displayName"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon slot="start" name="call-outline"></ion-icon>
-      <ion-label position="floating">
-        <h2>Telephone</h2>
-        <p>
-          pour vous aider a vous tenir informé et a garder le controle de vos
-          données
-        </p>
-      </ion-label>
-      <ion-input [(ngModel)]="phoneNumber"></ion-input>
-    </ion-item>
-  </ion-list>
 </ion-content>
 
 <!--
