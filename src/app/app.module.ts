@@ -17,6 +17,7 @@ import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { DisplayPageModule } from "./display/display.module";
 import { ShareModule } from "./share.module";
 import { LikeursPageModule } from './pages/likeurs/likeurs.module';
+import { DisplayvillePageModule } from './pages/displayville/displayville.module';
 //import { HttpClientModule, HttpClient } from "@angular/common/http";
 
 
@@ -35,7 +36,8 @@ import { LikeursPageModule } from './pages/likeurs/likeurs.module';
     AngularFireDatabaseModule,
     DisplayPageModule,
     ShareModule,
-    LikeursPageModule
+    LikeursPageModule,
+    DisplayvillePageModule
   ],
   providers: [
     StatusBar,

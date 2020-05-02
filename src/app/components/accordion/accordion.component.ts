@@ -2,6 +2,8 @@ import {
   Component,
   AfterViewInit,
   Input,
+  EventEmitter,
+  Output,
   ViewChild,
   ElementRef,
   Renderer2
@@ -12,17 +14,17 @@ import {
   templateUrl: "./accordion.component.html",
   styleUrls: ["./accordion.component.scss"]
 })
-export class AccordionComponent implements AfterViewInit {
-  @ViewChild("expandWrapper", { static: true }) expandWrapper: ElementRef;
-  @Input("expanded") expanded: boolean = false;
-  @Input("expandHeight") expandHeight: string = "250px";
+export class AccordionComponent {
+  @Input("product") product: any;
+  @Output() valueChange = new EventEmitter();
   constructor(public renderer: Renderer2) {}
 
-  ngAfterViewInit() {
-    this.renderer.setStyle(
-      this.expandWrapper.nativeElement,
-      "max-height",
-      this.expandHeight
-    );
+  valueChanged(product) {
+    // You can give any function name
+
+    this.valueChange.emit(product);
+  }
+  selectItem(product) {
+    this.valueChanged(product);
   }
 }

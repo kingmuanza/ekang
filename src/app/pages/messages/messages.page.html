@@ -24,11 +24,26 @@
           {{ user.utilisateur.displayName ? user.utilisateur.displayName:
           'inconnu'}}
         </h3>
-        <ion-note slot="end">12:54</ion-note>
+        <ion-note *ngIf="!user.ladate" slot="end"
+          >{{user.lastConnexionDate | date}}</ion-note
+        >
+        <ion-note *ngIf="user.ladate" slot="end"
+          >{{user.ladate.toDate() | date}}</ion-note
+        >
       </div>
       <p>
-        <ion-icon class="text-icon" color="primary" name="done-all"></ion-icon>
-        Listen, I've had a pretty messed up day...
+        <ion-icon
+          *ngIf="user.enligne && user.lastMessage"
+          color="primary"
+          name="radio-button-on-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!user.enligne"
+          color="danger"
+          name="radio-button-on-outline"
+        ></ion-icon>
+
+        {{user.lastMessage}}
       </p>
     </ion-label>
   </ion-item>

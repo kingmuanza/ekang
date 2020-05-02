@@ -35,7 +35,9 @@
         *ngIf="message.senderID != senderId"
         class="message other-message"
       >
-        <span>{{ message.texte }}</span>
+        <div class="flex_box">
+          {{ message.texte }}
+        </div>
       </ion-col>
       <ion-col
         offset="3"
@@ -43,7 +45,9 @@
         *ngIf="message.senderID == senderId"
         class="message my-message"
       >
-        <span>{{ message.texte }}</span>
+        <div class="flex_box">
+          {{ message.texte }}
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

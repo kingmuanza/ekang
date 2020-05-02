@@ -95,9 +95,21 @@ const routes: Routes = [
       import("./pages/dashboard/dashboard.module").then(
         m => m.DashboardPageModule
       )
+  },
+  {
+    path: "likeurs",
+    loadChildren: () =>
+      import("./pages/likeurs/likeurs.module").then(m => m.LikeursPageModule)
+  },
+  {
+    path: "programme/:id",
+    loadChildren: () =>
+      import("./pages/programme/programme.module").then(
+        m => m.ProgrammePageModule
+      )
   },  {
-    path: 'likeurs',
-    loadChildren: () => import('./pages/likeurs/likeurs.module').then( m => m.LikeursPageModule)
+    path: 'displayville',
+    loadChildren: () => import('./pages/displayville/displayville.module').then( m => m.DisplayvillePageModule)
   }
 
 ];

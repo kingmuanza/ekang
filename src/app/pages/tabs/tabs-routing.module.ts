@@ -26,6 +26,11 @@ const routes: Routes = [
           import("../messages/messages.module").then(m => m.MessagesPageModule)
       },
       {
+        path: "amis",
+        loadChildren: () =>
+          import("../amis/amis.module").then(m => m.AmisPageModule)
+      },
+      {
         path: "notifications",
         loadChildren: () =>
           import("../notifications/notifications.module").then(
@@ -40,11 +45,28 @@ const routes: Routes = [
           )
       },
       {
+        path: "amis",
+        loadChildren: () =>
+          import("../amis/amis.module").then(m => m.AmisPageModule)
+      },
+      {
+        path: "programme/:id",
+        loadChildren: () =>
+          import("../programme/programme.module").then(
+            m => m.ProgrammePageModule
+          )
+      },
+      {
         path: "",
         loadChildren: () =>
           import("../accueil/accueil.module").then(m => m.AccueilPageModule)
       }
     ]
+  },
+  {
+    path: "",
+    redirectTo: "/tabs/accueil",
+    pathMatch: "full"
   }
 ];
 

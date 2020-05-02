@@ -135,8 +135,8 @@ export class PublicationsEditPage implements OnInit {
 
   onSubmitPublicationForm() {
     const value = this.publicationForm.value;
-    console.log("value");
-    console.log(value);
+    // console.log("value");
+    // console.log(value);
     const publication = new Publication(value.texte, this.utilisateur);
     publication.profil = this.profil;
     publication.identifications = this.identifications;
@@ -147,8 +147,8 @@ export class PublicationsEditPage implements OnInit {
       });
     } else if (this.videoURL) {
       this.enregistrerImageFirebase().then(url => {
-        console.log("url", url);
-        console.log("je save");
+        // console.log("url", url);
+        // console.log("je save");
 
         publication.cover = url;
         publication.le_type = "video";
@@ -166,6 +166,7 @@ export class PublicationsEditPage implements OnInit {
       const notification = new NotificationEkang(this.profil, "IDENTIFICATION");
       notification.publication = publication;
       notification.identifiee = ami;
+      //ici je vais envoyé un mail de notification//
       await this.notifService.createNotification(notification);
     }
   }

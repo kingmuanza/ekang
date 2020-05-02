@@ -36,12 +36,12 @@ export class PublicationsViewPage implements OnInit {
       if (id) {
         this.pubService.getPublication(id).then(publication => {
           this.publication = publication;
-          console.log(this.publication);
+          // console.log(this.publication);
 
           this.pubService
             .getCommentaires(this.publication)
             .then(commentaires => {
-              console.log("comment", commentaires);
+              // console.log("comment", commentaires);
 
               this.commentaires = commentaires;
               this.commentaires.sort((a, b) => {
@@ -60,7 +60,7 @@ export class PublicationsViewPage implements OnInit {
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
               this.utilisateur = utilisateur;
-              console.log(this.utilisateur);
+              // console.log(this.utilisateur);
               if (!utilisateur) {
                 this.router.navigate(["connexion"]);
               } else {
@@ -157,7 +157,7 @@ export class PublicationsViewPage implements OnInit {
             tab.push(elt.utilisateur.email);
           }
         });
-        console.log(tab);
+        // console.log(tab);
         this.notifService.envoyeurEmail(
           tab,
           this.utilisateur.displayName,

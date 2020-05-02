@@ -1,0 +1,33 @@
+.fileInput {
+  // width: 0.1px;
+  // height: 0.1px;
+  // opacity: 0;
+  overflow: hidden;
+  //  position: absolute;
+  // z-index: -1;
+}
+.fileInput label {
+  color: #717171;
+  background-color: white;
+  // display: inline-block;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.inpute {
+  width: 100%;
+  font-size: 1.2em;
+  font-weight: 100;
+
+  padding: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+ion-label {
+}

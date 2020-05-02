@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 
 import {
   Platform,
@@ -13,7 +13,7 @@ import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { AuthentificationService } from "./services/authentification.service";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
-
+import { ScreensizeService } from "./services/screensize.service";
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     },*/
     {
       title: "Notifications",
-      url: "notifications",
+      url: "tabs/notifications",
       icon: "notifications"
     },
     {
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: "Mes amis",
-      url: "amis",
+      url: "tabs/amis",
       icon: "people"
     },
     {
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
     }
   ];
   public labels = ["Déconnexion"];
-
+  verificateur = true;
   utilisateur: firebase.User;
   utilisateurSubscription = new Subscription();
   constructor(
@@ -75,7 +75,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private menu: MenuController,
-    private router: Router
+    private router: Router,
+    private screensizeService: ScreensizeService
   ) {
     this.initializeApp();
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
@@ -94,6 +95,13 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.screensizeService.onResize(this.platform.width());
+      this.screensizeService.checkConnexionPage().subscribe(data => {
+        console.log(data);
+        if (data === "connexionPage") {
+          // this.verificateur = true;
+        }
+      });
     });
   }
 
@@ -125,5 +133,11 @@ export class AppComponent implements OnInit {
   ouvrir() {
     this.router.navigate(["monprofil", this.utilisateur.uid]);
     // console.log(this.profil);
+  }
+  @HostListener("window:resize", ["$event"])
+  public onResize(event) {
+    // console.log(event.target.innerWidth);
+
+    this.screensizeService.onResize(event.target.innerWidth);
   }
 }

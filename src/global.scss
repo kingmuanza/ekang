@@ -38,7 +38,7 @@ ion-header {
 
 ion-fab-button {
   margin-bottom: 5vw;
-  margin-right: 5vw
+  margin-right: 5vw;
 }
 
 * {
@@ -46,7 +46,7 @@ ion-fab-button {
 }
 
 $primaire: #0f9b0f;
-input,
+//input,
 select {
   width: 100%;
   font-size: 1.2em;
@@ -162,4 +162,27 @@ ion-select {
   margin-top: 10px;
   margin-bottom: 5px;
   // overflow: scroll;
+}
+
+ion-tabs {
+  // font-size: 32px !important;
+  ion-tab-button {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  ion-icon {
+    //  font-size: 32px !important;
+  }
+}
+.desktop-wrapper {
+  ion-toolbar {
+    text-align: center;
+  }
+
+  ion-header {
+    &.header-md:after {
+      background: none;
+    }
+  }
 }

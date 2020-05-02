@@ -1,30 +1,24 @@
-import { Profil } from './profil.model';
-import { Publication } from './publication.model';
+import { Profil } from "./profil.model";
+import { Publication } from "./publication.model";
 
 export class NotificationEkang {
+  id: string;
+  profil: Profil;
+  date = new Date();
+  type: string;
+  publication?: Publication;
+  texte?: string;
+  identifiee?: Profil;
+  vuPar: Array<string>;
+  constructor(profil: Profil, type: string) {
+    this.id = this.generateUID();
+    this.profil = profil;
+    this.type = type;
+  }
 
-    id: string;
-    profil: Profil;
-    date = new Date();
-    type: string;
-    publication?: Publication;
-    texte?: string;
-    identifiee?: Profil;
-
-    constructor(profil: Profil, type: string) {
-
-        this.id = this.generateUID();
-        this.profil = profil;
-        this.type = type;
-
-    }
-
-    generateUID() {
-        const date = new Date();
-        const dateString = date.toISOString().split('T')[0]
-        return dateString + Math.ceil(Math.random()*1000000)
-    }
-
-
-
+  generateUID() {
+    const date = new Date();
+    const dateString = date.toISOString().split("T")[0];
+    return dateString + Math.ceil(Math.random() * 1000000);
+  }
 }

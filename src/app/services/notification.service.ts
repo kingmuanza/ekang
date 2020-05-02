@@ -74,10 +74,6 @@ export class NotificationService {
             }
             return false;
           });
-          console.log("profil");
-          // console.log(profil);
-          // console.log("notifications pour utilisateur");
-          //console.log(notifications);
           resolve(notifications);
         })
         .catch(e => {
