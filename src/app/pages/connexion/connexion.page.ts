@@ -26,6 +26,7 @@ export class ConnexionPage implements OnInit {
 
   ngOnInit() {
     this.initConnexionForm();
+    console.log("onConnexionFormSubmit");
   }
 
   initConnexionForm(): void {
@@ -37,7 +38,7 @@ export class ConnexionPage implements OnInit {
 
   onConnexionFormSubmit(): void {
     this.inactif = true; // bouton inactif
-    console.log("onConnexionFormSubmit");
+
     const value = this.connexionForm.value;
     const login = value.login;
     const passe = value.passe;

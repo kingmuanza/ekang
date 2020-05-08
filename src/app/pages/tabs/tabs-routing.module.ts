@@ -21,6 +21,13 @@ const routes: Routes = [
           import("../accueil/accueil.module").then(m => m.AccueilPageModule)
       },
       {
+        path: "connexion",
+        loadChildren: () =>
+          import("../connexion/connexion.module").then(
+            m => m.ConnexionPageModule
+          )
+      },
+      {
         path: "messages",
         loadChildren: () =>
           import("../messages/messages.module").then(m => m.MessagesPageModule)
@@ -59,14 +66,11 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: () =>
-          import("../accueil/accueil.module").then(m => m.AccueilPageModule)
+          import("../connexion/connexion.module").then(
+            m => m.ConnexionPageModule
+          )
       }
     ]
-  },
-  {
-    path: "",
-    redirectTo: "/tabs/accueil",
-    pathMatch: "full"
   }
 ];
 

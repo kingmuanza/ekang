@@ -50,6 +50,8 @@ export class AccueilPage implements OnInit {
         this.utilisateur = utilisateur;
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
+          console.log("utilisateur");
+          //* this.router.navigate(["tabs"]);
         } else {
           this.utlisateurLastConnexion(utilisateur);
           this.takeUserProfil(utilisateur.uid);

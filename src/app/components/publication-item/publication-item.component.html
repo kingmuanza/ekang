@@ -1,5 +1,5 @@
-<div class="muanza-card">
-  <ion-item (click)="voirAmi()" lines="none">
+<div class="muanza-card" *ngIf="isShown">
+  <ion-item lines="none">
     <ion-avatar slot="start">
       <img
         [src]="
@@ -10,7 +10,7 @@
       />
     </ion-avatar>
     <div>
-      <span>
+      <span (click)="voirAmi()">
         {{
           publication.utilisateur
             ? publication.utilisateur.displayName
@@ -29,6 +29,12 @@
         {{ getLibelleDate(publication.date) }}
       </small>
     </p>
+    <ion-icon
+      slot="end"
+      name="ellipsis-vertical-outline"
+      (click)="presentActionSheet()"
+      *ngIf="auteur"
+    ></ion-icon>
   </ion-item>
   <div (click)="ouvrirPublication()">
     <small
@@ -58,8 +64,9 @@
     </video>
   </div>
   <!--
- 
+  
   -->
+
   <div style="margin-top: 0px; font-size: 1.2em; border-top: 1px solid #eee;">
     <div class="nbrcommentaireLike">
       <div class="nbrLike" (click)="voir()">

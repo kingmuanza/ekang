@@ -16,7 +16,7 @@ import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { element } from "protractor";
 import { UserService } from "src/app/services/user.service";
-import { ModalController } from "@ionic/angular";
+import { ModalController, ActionSheetController } from "@ionic/angular";
 import { LikeursPage } from "src/app/pages/likeurs/likeurs.page";
 
 @Component({
@@ -32,17 +32,28 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   isPlay: boolean = false;
   jaiLike = false;
   commentaire: Commentaire;
-
+  auteur: boolean;
+  isShown: boolean = true;
   constructor(
     private router: Router,
     private pubService: PublicationService,
     private userService: UserService,
     private notifService: NotificationService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public actionSheetController: ActionSheetController
   ) {}
 
   ngOnInit() {
     if (this.publication && this.utilisateur) {
+      if (
+        this.publication.profil &&
+        this.publication.profil.utilisateur &&
+        this.publication.profil.utilisateur.uid == this.utilisateur.uid
+      ) {
+        this.auteur = true;
+      } else {
+        this.auteur = false;
+      }
       this.aiJeLike();
       if (this.publication && this.publication.dernierCommentaire) {
         this.userService
@@ -241,5 +252,47 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
   toggleVideo() {
     this.videoplayer.nativeElement.play();
+  }
+
+  Delete() {
+    console.log(this.publication.profil.utilisateur.uid);
+    console.log(this.utilisateur.uid);
+    this.pubService.deletePublication(this.publication.id).then(data => {
+      console.log(data);
+      this.isShown = false;
+    });
+  }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "ôssu",
+      buttons: [
+        {
+          text: "Supprimer",
+          role: "destructive",
+          icon: "trash",
+          handler: () => {
+            this.Delete();
+            // console.log(this.publication);
+          }
+        },
+        {
+          text: "Modifier",
+          icon: "share",
+          handler: () => {
+            console.log("Share clicked");
+          }
+        },
+
+        {
+          text: "Cancel",
+          icon: "close",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 }

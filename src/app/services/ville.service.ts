@@ -74,6 +74,28 @@ export class VilleService {
     });
   }
 
+  getVilleParPays(pays): Promise<any> {
+    const db = firebase.firestore();
+    const villes = [];
+    return new Promise((resolve, reject) => {
+      db.collection("lesvilles")
+        .where("pays", "==", `${pays}`)
+        .orderBy("ville")
+        .get()
+        .then(resultats => {
+          resultats.forEach(resultat => {
+            let ville = resultat.data();
+            ville["id"] = resultat.id;
+            villes.push(ville);
+          });
+          resolve(villes);
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
+  }
+
   addVille(data): Promise<any> {
     const db = firebase.firestore();
     return new Promise((resolve, reject) => {

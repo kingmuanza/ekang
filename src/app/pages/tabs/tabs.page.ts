@@ -45,6 +45,8 @@ export class TabsPage implements OnInit {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
+        if (!utilisateur) {
+        }
         if (utilisateur) {
           this.userService.getProfil(this.utilisateur).then(profil => {
             this.profil = profil;
@@ -59,13 +61,28 @@ export class TabsPage implements OnInit {
     );
     this.auth.emettre();
     setTimeout(() => {
-      console.log(this.tabsRef);
+      // console.log(this.tabsRef);
     }, 2000);
   }
 
   ionViewDidEnter() {
-    console.log(this.tabsRef);
-    this.tabsRef.select("accueil");
+    // console.log(this.tabsRef);
+    //this.tabsRef.select("accueil");
+    if (!this.utilisateur) {
+      this.router.navigate(["connexion"]);
+    } else {
+      this.tabsRef.select("accueil");
+    }
+    /*  this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
+      utilisateur => {
+        this.utilisateur = utilisateur;
+        if (!utilisateur) {
+          this.router.navigate(["connexion"]);
+        } else {
+          this.tabsRef.select("accueil");
+        }
+      }
+    ); */
   }
 
   choistab() {

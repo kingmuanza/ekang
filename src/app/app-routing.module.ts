@@ -107,11 +107,15 @@ const routes: Routes = [
       import("./pages/programme/programme.module").then(
         m => m.ProgrammePageModule
       )
-  },  {
-    path: 'displayville',
-    loadChildren: () => import('./pages/displayville/displayville.module').then( m => m.DisplayvillePageModule)
-  }
-
+  },
+  {
+    path: "displayville",
+    loadChildren: () =>
+      import("./pages/displayville/displayville.module").then(
+        m => m.DisplayvillePageModule
+      )
+  },
+  { path: "", redirectTo: "connexion", pathMatch: "full" }
 ];
 
 @NgModule({

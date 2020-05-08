@@ -7,7 +7,7 @@ import { VilleService } from "src/app/services/ville.service";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { ModalController } from "@ionic/angular";
-import { DisplayvillePage } from "../displayville/displayville.page";
+//import { DisplayvillePage } from "../displayville/displayville.page";
 
 @Component({
   selector: "app-recherche",
@@ -47,6 +47,7 @@ export class RecherchePage implements OnInit {
   closeIndex: any;
   closeChildIndex: any;
   checkPays: boolean = false;
+  temporaire: any;
   constructor(
     private http: HttpClient,
     private userService: UserService,
@@ -149,7 +150,7 @@ export class RecherchePage implements OnInit {
         }
       });
 
-      console.log(this.continent);
+      //  console.log(this.continent);
 
       this.takeVille();
     });
@@ -197,11 +198,10 @@ export class RecherchePage implements OnInit {
       });
       this.villes = data;
       this.pays.forEach(p => {
-        p["expanded"] = false;
-        p["expandedVille"] = false;
         if (p.name === "Cameroon") {
           p["ville"] = this.villes;
         } else {
+          // this.takeVilleParPays(p.name);
           p["ville"] = [
             { nom: "ville1" },
             { nom: "ville2" },
@@ -212,8 +212,6 @@ export class RecherchePage implements OnInit {
       });
 
       this.paysEurope.forEach(p => {
-        p["expanded"] = false;
-        p["expandedVille"] = false;
         if (p.name === "Cameroon") {
           p["ville"] = this.villes;
         } else {
@@ -227,8 +225,6 @@ export class RecherchePage implements OnInit {
       });
 
       this.paysAmerique.forEach(p => {
-        p["expanded"] = false;
-        p["expandedVille"] = false;
         if (p.name === "Cameroon") {
           p["ville"] = this.villes;
         } else {
@@ -245,7 +241,7 @@ export class RecherchePage implements OnInit {
 
   prendreLesVilles() {
     this.villeService.getVilles().then(data => {
-      console.log(data);
+      // console.log(data);
     });
   }
 
@@ -296,18 +292,23 @@ export class RecherchePage implements OnInit {
     console.log("pays", pays);
     this.closeIndex = index;
     this.closeChildIndex = childIndex;
-    this.villeService.getVillePays({ pays: pays.name }).then(data => {
-      console.log(data);
-      // this.listVilles = data;
-      pays["ville"] = data;
-    });
+    if (this.temporaire && this.temporaire === pays.name) {
+      console.log("rien");
+    } else {
+      this.villeService.getVillePays({ pays: pays.name }).then(data => {
+        // console.log(data);
+        this.temporaire = pays.name;
+        // this.listVilles = data;
+        pays["ville"] = data;
+      });
+    }
 
     this.continent[index].children[childIndex].open = !this.continent[index]
       .children[childIndex].open;
   }
 
   displayVille($event) {
-    console.log($event);
+    //  console.log($event);
 
     this.userPays = $event["pays"];
     this.userVille = $event["ville"];
@@ -318,5 +319,10 @@ export class RecherchePage implements OnInit {
       .open;
 
     this.checkPays = false;
+  }
+  takeVilleParPays(pays) {
+    this.villeService.getVilleParPays(pays).then(data => {
+      // console.log(data);
+    });
   }
 }

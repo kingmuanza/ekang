@@ -26,7 +26,7 @@ export class ProfilPage implements OnInit, AfterViewInit {
   pays: any;
   userPays: any;
   userProfession: any;
-  userVille: any;
+  // userVille: any;
   userContinent: any;
   listProfesion: any;
   profil: Profil;
@@ -34,6 +34,21 @@ export class ProfilPage implements OnInit, AfterViewInit {
   continents: any;
   utilisateurEmail: any;
   id: any;
+  paysAfrique = [];
+  paysEurope = [];
+  paysAmerique = [];
+  paysAsie = [];
+  afrique: any;
+  europe: any;
+  amerique: any;
+  asie: any;
+  automaticClose = false;
+  continent: any[];
+  closeIndex: any;
+  closeChildIndex: any;
+  checkPays: boolean = false;
+  userVille: string = "Localisation géographique";
+  temporaire: any;
   constructor(
     public toastController: ToastController,
     private router: Router,
@@ -45,6 +60,15 @@ export class ProfilPage implements OnInit, AfterViewInit {
     private smsService: SmsService
   ) {
     console.log("onInit");
+    this.continent = [
+      { name: "Afrique", children: [] },
+      { name: "Asie", children: [] },
+      { name: "Amerique", children: [] },
+      { name: "Europe", children: [] },
+      { name: "Oceanie", children: [] }
+    ];
+    this.continent[0].open = false;
+    this.getCountry();
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
         this.utilisateur = utilisateur;
@@ -81,10 +105,8 @@ export class ProfilPage implements OnInit, AfterViewInit {
         }
       }
     );
-    this.getCountry();
+
     this.listProfession();
-    this.takeVille();
-    this.takeContinent();
     this.auth.emettre();
   }
 
@@ -184,19 +206,61 @@ export class ProfilPage implements OnInit, AfterViewInit {
   }
 
   getCountry() {
-    this.http
+    /*  this.http
       .get("https://restcountries.eu/rest/v2/region/africa")
       .subscribe(data => {
         console.log(data);
         this.pays = data;
-      });
-  }
-  chooseContinent(ev: Event) {
-    this.userContinent = ev.target["value"];
-  }
+      }); */
 
-  chooseCountry(ev: Event) {
-    this.userPays = ev.target["value"];
+    this.villeService.getPays().then(data => {
+      console.log(data);
+
+      data.forEach(elt => {
+        if (elt["continent"] == "Afrique") {
+          this.afrique = elt["pays"];
+          this.afrique.forEach(elt => {
+            this.paysAfrique.push({ name: elt });
+          });
+
+          const indice = this.continent.findIndex(
+            elt => elt.name === "Afrique"
+          );
+          this.continent[indice]["children"] = this.paysAfrique;
+        }
+        if (elt["continent"] == "Europe") {
+          this.europe = elt["pays"];
+          this.europe.forEach(elt => {
+            this.paysEurope.push({ name: elt });
+          });
+          const indice = this.continent.findIndex(elt => elt.name === "Europe");
+          this.continent[indice]["children"] = this.paysEurope;
+        }
+        if (elt["continent"] == "Amerique") {
+          this.amerique = elt["pays"];
+          this.amerique.forEach(elt => {
+            this.paysAmerique.push({ name: elt });
+          });
+          const indice = this.continent.findIndex(
+            elt => elt.name === "Amerique"
+          );
+          this.continent[indice]["children"] = this.paysAmerique;
+        }
+        if (elt["continent"] == "Oceanie") {
+          this.asie = elt["pays"];
+          this.asie.forEach(elt => {
+            this.paysAsie.push({ name: elt });
+          });
+
+          const indice = this.continent.findIndex(
+            elt => elt.name === "Oceanie"
+          );
+          this.continent[indice]["children"] = this.paysAsie;
+        }
+      });
+
+      this.takeVille();
+    });
   }
 
   chooseProfession(ev: Event) {
@@ -216,7 +280,48 @@ export class ProfilPage implements OnInit, AfterViewInit {
 
   takeVille() {
     this.villeService.getVilles().then(data => {
+      data.forEach(v => {
+        v["expanded"] = false;
+      });
       this.villes = data;
+      this.paysAfrique.forEach(p => {
+        if (p.name === "Cameroon") {
+          p["ville"] = this.villes;
+        } else {
+          p["ville"] = [
+            { nom: "ville1" },
+            { nom: "ville2" },
+            { nom: "ville3" },
+            { nom: "ville4" }
+          ];
+        }
+      });
+
+      this.paysEurope.forEach(p => {
+        if (p.name === "Cameroon") {
+          p["ville"] = this.villes;
+        } else {
+          p["ville"] = [
+            { nom: "ville1" },
+            { nom: "ville2" },
+            { nom: "ville3" },
+            { nom: "ville4" }
+          ];
+        }
+      });
+
+      this.paysAmerique.forEach(p => {
+        if (p.name === "Cameroon") {
+          p["ville"] = this.villes;
+        } else {
+          p["ville"] = [
+            { nom: "ville1" },
+            { nom: "ville2" },
+            { nom: "ville3" },
+            { nom: "ville4" }
+          ];
+        }
+      });
     });
   }
   takeContinent() {
@@ -258,5 +363,51 @@ export class ProfilPage implements OnInit, AfterViewInit {
     this.smsService.sendSms(Numbero, userName).subscribe(data => {
       console.log(data);
     });
+  }
+
+  toggleSection(index) {
+    this.closeIndex = index;
+    this.continent[index].open = !this.continent[index].open;
+
+    if (this.automaticClose && this.continent[index].open) {
+      this.continent
+        .filter((item, itemIndex) => itemIndex != index)
+        .map(item => (item.open = false));
+    }
+  }
+
+  toggleItem(index, childIndex, pays) {
+    console.log("pays", pays);
+    this.closeIndex = index;
+    this.closeChildIndex = childIndex;
+    if (this.temporaire && this.temporaire === pays.name) {
+      console.log("rien");
+    } else {
+      this.villeService.getVillePays({ pays: pays.name }).then(data => {
+        console.log(data);
+        // this.listVilles = data;
+        this.temporaire = pays.name
+        pays["ville"] = data;
+      });
+    }
+    this.continent[index].children[childIndex].open = !this.continent[index]
+      .children[childIndex].open;
+  }
+
+  displayVille($event, item) {
+    console.log(item);
+
+    console.log($event);
+
+    this.userPays = $event["pays"];
+    this.userVille = $event["ville"];
+    this.userContinent = item["name"];
+    this.continent[this.closeIndex].children[this.closeChildIndex].open = !this
+      .continent[this.closeIndex].children[this.closeChildIndex].open;
+
+    this.continent[this.closeIndex].open = !this.continent[this.closeIndex]
+      .open;
+
+    this.checkPays = false;
   }
 }

@@ -7,7 +7,7 @@ import { IonicModule } from "@ionic/angular";
 import { RecherchePageRoutingModule } from "./recherche-routing.module";
 
 import { RecherchePage } from "./recherche.page";
-import { AccordionComponent } from "src/app/components/accordion/accordion.component";
+//import { AccordionComponent } from "src/app/components/accordion/accordion.component";
 import { AccordionpaysComponent } from "src/app/components/accordionpays/accordionpays.component";
 import { ShareModule } from "src/app/share.module";
 
@@ -19,6 +19,6 @@ import { ShareModule } from "src/app/share.module";
     RecherchePageRoutingModule,
     ShareModule
   ],
-  declarations: [RecherchePage, AccordionComponent, AccordionpaysComponent]
+  declarations: [RecherchePage, AccordionpaysComponent]
 })
 export class RecherchePageModule {}
