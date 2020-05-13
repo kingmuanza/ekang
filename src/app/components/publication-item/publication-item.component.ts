@@ -4,7 +4,7 @@ import {
   Input,
   OnChanges,
   ElementRef,
-  ViewChild
+  ViewChild,
 } from "@angular/core";
 import { Publication } from "src/app/models/publication.model";
 import { PublicationService } from "src/app/services/publication.service";
@@ -16,13 +16,18 @@ import { NotificationEkang } from "src/app/models/notification.model";
 import { NotificationService } from "src/app/services/notification.service";
 import { element } from "protractor";
 import { UserService } from "src/app/services/user.service";
-import { ModalController, ActionSheetController } from "@ionic/angular";
+import {
+  ModalController,
+  ActionSheetController,
+  AlertController,
+} from "@ionic/angular";
 import { LikeursPage } from "src/app/pages/likeurs/likeurs.page";
+import { ModificationPage } from "src/app/pages/modification/modification.page";
 
 @Component({
   selector: "app-publication-item",
   templateUrl: "./publication-item.component.html",
-  styleUrls: ["./publication-item.component.scss"]
+  styleUrls: ["./publication-item.component.scss"],
 })
 export class PublicationItemComponent implements OnInit, OnChanges {
   @Input() public publication: Publication;
@@ -40,7 +45,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     private userService: UserService,
     private notifService: NotificationService,
     public modalController: ModalController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -58,7 +64,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       if (this.publication && this.publication.dernierCommentaire) {
         this.userService
           .getProfilByID(this.publication["utilisateur"]["uid"])
-          .then(profil => {
+          .then((profil) => {
             // console.log('Mise à jour du profil');
             this.publication.profil = profil;
             this.publication.utilisateur = profil.utilisateur;
@@ -67,7 +73,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
         this.commentaire = this.publication.dernierCommentaire;
         this.userService
           .getProfilByID(this.commentaire.utilisateur.uid)
-          .then(profil => {
+          .then((profil) => {
             // console.log('Mise à jour du profil');
             this.commentaire.utilisateur = profil.utilisateur;
           });
@@ -81,7 +87,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       if (this.publication.profil && this.publication.profil.utilisateur) {
         this.userService
           .getProfilByID(this.publication.profil.utilisateur.uid)
-          .then(profil => {
+          .then((profil) => {
             // console.log('Mise à jour du profil');
             this.publication.profil = profil;
             this.publication.utilisateur = profil.utilisateur;
@@ -123,15 +129,16 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     this.router.navigate([
       "amis",
       "amis-view",
-      this.publication.utilisateur.uid
+      this.publication.utilisateur.uid,
     ]);
   }
 
   // Permet d'extraire un lien d'une URL
+
   urlify(text): string {
     const retour = this.getHashTag(text);
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return retour.replace(urlRegex, url => {
+    return retour.replace(urlRegex, (url) => {
       return '<a target="_blank" href="' + url + '">' + url + "</a>";
     });
   }
@@ -146,7 +153,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     let profil: Profil;
     if (this.publication) {
       if (this.publication.identifications) {
-        this.publication.identifications.forEach(element => {
+        this.publication.identifications.forEach((element) => {
           if (element.utilisateur.email === email) {
             profil = element;
           }
@@ -159,7 +166,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   getHashTag(text: string) {
     let textDeRetour = "";
     const mots = text.split(" ");
-    mots.forEach(mot => {
+    mots.forEach((mot) => {
       if (mot[0] && mot[0] === "#") {
         // console.log('il ya un hashtag');
         textDeRetour = textDeRetour + '<b class="vert">' + mot + "</b> ";
@@ -193,8 +200,8 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       const modal = await this.modalController.create({
         component: LikeursPage,
         componentProps: {
-          likeurs: this.publication.likeurs
-        }
+          likeurs: this.publication.likeurs,
+        },
       });
       return await modal.present();
     }
@@ -203,7 +210,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
 
   aiJeLike() {
     if (this.publication.likeurs) {
-      this.publication.likeurs.forEach(likeur => {
+      this.publication.likeurs.forEach((likeur) => {
         if (likeur === this.utilisateur.uid) {
           this.jaiLike = true;
         }
@@ -212,7 +219,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   }
 
   like() {
-    this.pubService.like(this.utilisateur, this.publication).then(p => {
+    this.pubService.like(this.utilisateur, this.publication).then((p) => {
       this.publication = p;
       this.jaiLike = true;
       this.createNotificationLike();
@@ -221,7 +228,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
 
   unlike() {
     if (this.publication.likeurs) {
-      this.publication.likeurs = this.publication.likeurs.filter(likeur => {
+      this.publication.likeurs = this.publication.likeurs.filter((likeur) => {
         if (likeur === this.utilisateur.uid) {
           return false;
         }
@@ -229,7 +236,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       });
     }
     this.jaiLike = false;
-    this.pubService.unlike(this.utilisateur, this.publication).then(p => {
+    this.pubService.unlike(this.utilisateur, this.publication).then((p) => {
       this.publication = p;
       this.jaiLike = false;
     });
@@ -239,7 +246,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     this.router.navigate([
       "publications",
       "publications-view",
-      this.publication.id
+      this.publication.id,
     ]);
   }
 
@@ -248,7 +255,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
     const profilFlou = new Profil(this.utilisateur);
     const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then(t => {});
+    this.notifService.createNotification(notification).then((t) => {});
   }
   toggleVideo() {
     this.videoplayer.nativeElement.play();
@@ -257,7 +264,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
   Delete() {
     console.log(this.publication.profil.utilisateur.uid);
     console.log(this.utilisateur.uid);
-    this.pubService.deletePublication(this.publication.id).then(data => {
+    this.pubService.deletePublication(this.publication.id).then((data) => {
       console.log(data);
       this.isShown = false;
     });
@@ -271,16 +278,16 @@ export class PublicationItemComponent implements OnInit, OnChanges {
           role: "destructive",
           icon: "trash",
           handler: () => {
-            this.Delete();
+            this.presentAlertConfirm();
             // console.log(this.publication);
-          }
+          },
         },
         {
           text: "Modifier",
           icon: "share",
           handler: () => {
-            console.log("Share clicked");
-          }
+            this.modifier();
+          },
         },
 
         {
@@ -289,10 +296,49 @@ export class PublicationItemComponent implements OnInit, OnChanges {
           role: "cancel",
           handler: () => {
             console.log("Cancel clicked");
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     await actionSheet.present();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: "Warning!",
+      message: "are you sure?",
+      buttons: [
+        {
+          text: "NO",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: (blah) => {
+            console.log("Confirm Cancel: blah");
+          },
+        },
+        {
+          text: "OK",
+          handler: () => {
+            this.Delete();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async modifier() {
+    console.log(this.publication);
+
+    const modal = await this.modalController.create({
+      component: ModificationPage,
+      componentProps: {
+        publication: this.publication,
+      },
+    });
+    return await modal.present();
+
+    /* */
   }
 }

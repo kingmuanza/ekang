@@ -16,10 +16,10 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
 import { DisplayPageModule } from "./display/display.module";
 import { ShareModule } from "./share.module";
-import { LikeursPageModule } from './pages/likeurs/likeurs.module';
-import { DisplayvillePageModule } from './pages/displayville/displayville.module';
+import { LikeursPageModule } from "./pages/likeurs/likeurs.module";
+import { DisplayvillePageModule } from "./pages/displayville/displayville.module";
+import { ModificationPageModule } from "./pages/modification/modification.module";
 //import { HttpClientModule, HttpClient } from "@angular/common/http";
-
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,13 +37,14 @@ import { DisplayvillePageModule } from './pages/displayville/displayville.module
     DisplayPageModule,
     ShareModule,
     LikeursPageModule,
-    DisplayvillePageModule
+    ModificationPageModule,
+    DisplayvillePageModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

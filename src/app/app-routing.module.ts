@@ -115,7 +115,11 @@ const routes: Routes = [
         m => m.DisplayvillePageModule
       )
   },
-  { path: "", redirectTo: "connexion", pathMatch: "full" }
+  { path: "", redirectTo: "connexion", pathMatch: "full" },  {
+    path: 'modification',
+    loadChildren: () => import('./pages/modification/modification.module').then( m => m.ModificationPageModule)
+  }
+
 ];
 
 @NgModule({
