@@ -3,7 +3,7 @@ import { Component, OnInit, HostListener } from "@angular/core";
 import {
   Platform,
   MenuController,
-  ActionSheetController
+  ActionSheetController,
 } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
@@ -17,7 +17,7 @@ import { ScreensizeService } from "./services/screensize.service";
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
-  styleUrls: ["app.component.scss"]
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
@@ -31,39 +31,45 @@ export class AppComponent implements OnInit {
     {
       title: "Notifications",
       url: "tabs/notifications",
-      icon: "notifications"
+      icon: "notifications",
     },
     {
       title: "Mes publications",
       url: "publications",
-      icon: "paper-plane"
+      icon: "paper-plane",
     },
     {
       title: "Mes amis",
       url: "tabs/amis",
-      icon: "people"
+      icon: "people",
     },
     {
       title: "Mes favoris",
       url: "/folder/Favorites",
-      icon: "heart"
+      icon: "heart",
     },
     {
       title: "Messages",
       url: "messages",
-      icon: "chatbox-ellipses"
+      icon: "chatbox-ellipses",
     },
     {
       title: "Rechercher",
       // url: '/folder/Archived',
       url: "recherche",
-      icon: "search"
+      icon: "search",
+    },
+    {
+      title: "Training",
+      // url: '/folder/Archived',
+      url: "training",
+      icon: "search",
     },
     {
       title: "Admin",
       url: "dashboard",
-      icon: "today"
-    }
+      icon: "today",
+    },
   ];
   public labels = ["Déconnexion"];
   verificateur = true;
@@ -80,7 +86,7 @@ export class AppComponent implements OnInit {
   ) {
     this.initializeApp();
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
-      utilisateur => {
+      (utilisateur) => {
         this.utilisateur = utilisateur;
         if (utilisateur) {
           const variable = utilisateur.photoURL;
@@ -96,7 +102,7 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
-      this.screensizeService.checkConnexionPage().subscribe(data => {
+      this.screensizeService.checkConnexionPage().subscribe((data) => {
         console.log(data);
         if (data === "connexionPage") {
           // this.verificateur = true;
@@ -109,7 +115,7 @@ export class AppComponent implements OnInit {
     const path = window.location.pathname.split("folder/")[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(
-        page => page.title.toLowerCase() === path.toLowerCase()
+        (page) => page.title.toLowerCase() === path.toLowerCase()
       );
     }
   }
@@ -123,7 +129,7 @@ export class AppComponent implements OnInit {
     return utilisateur.email.split("@")[0];
   }
   seDeconnecter() {
-    this.auth.deconnexion().then(data => {
+    this.auth.deconnexion().then((data) => {
       console.log(data);
 
       this.router.navigate(["connexion"]);

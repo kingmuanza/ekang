@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>training-online</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" size="small" color="red">{{heure}}</ion-button>
+      <ion-button fill="clear" size="small" color="red">{{minute}}</ion-button>
+      <ion-button fill="clear" size="small" color="red">{{seconde}}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="errorMsg"></div>
+
+  <video
+    id="partner-video"
+    (click)="swapVideo('my-video')"
+    autoplay
+    playsinline
+    [ngClass]="{'top-video': topVideoFrame === 'partner-video', 'main-video': topVideoFrame != 'partner-video'}"
+  ></video>
+  <video
+    id="my-video"
+    (click)="swapVideo('partner-video')"
+    autoplay
+    playsinline
+    controls
+    [ngClass]="{'top-video': topVideoFrame === 'my-video', 'main-video': topVideoFrame != 'my-video'}"
+  ></video>
+
+  <ion-row nowrap>
+    <ion-button (click)="init()">Login As: </ion-button>
+    <ion-item>
+      <ion-input
+        type="text"
+        [(ngModel)]="userId"
+        placeholder="enter your nick name"
+      ></ion-input>
+    </ion-item>
+  </ion-row>
+
+  <ion-row nowrap>
+    <ion-button (click)="call()">Call To: </ion-button>
+    <ion-item>
+      <ion-input
+        type="text"
+        [(ngModel)]="partnerId"
+        placeholder="your partner nick name"
+      ></ion-input>
+    </ion-item>
+  </ion-row>
+
+  <ion-list *ngIf="amis.length>0">
+    <ion-list-header>
+      <ion-label>Mes amis</ion-label>
+    </ion-list-header>
+    <ng-container *ngFor="let profil of amis">
+      <app-course-list
+        [profil]="profil"
+        [monProfil]="monProfil"
+      ></app-course-list>
+    </ng-container>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Personnes qui pourraient vous intéresser</ion-label>
+    </ion-list-header>
+    <ng-container *ngFor="let profil of propositions">
+      <app-course-list
+        [profil]="profil"
+        [monProfil]="monProfil"
+        (valueChange)="callUser($event)"
+      ></app-course-list>
+    </ng-container>
+  </ion-list>
+</ion-content>

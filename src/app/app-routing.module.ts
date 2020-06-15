@@ -118,6 +118,10 @@ const routes: Routes = [
   { path: "", redirectTo: "connexion", pathMatch: "full" },  {
     path: 'modification',
     loadChildren: () => import('./pages/modification/modification.module').then( m => m.ModificationPageModule)
+  },
+  {
+    path: 'training',
+    loadChildren: () => import('./training/training.module').then( m => m.TrainingPageModule)
   }
 
 ];

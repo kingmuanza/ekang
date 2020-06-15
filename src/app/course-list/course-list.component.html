@@ -1,0 +1,41 @@
+<ion-item>
+  <ion-avatar (click)="ouvrir()" slot="start">
+    <img
+      class="image-muanza"
+      [src]="
+        profil.utilisateur.photoURL
+          ? profil.utilisateur.photoURL
+          : '../../../assets/img/user.png'
+      "
+    />
+  </ion-avatar>
+  <ion-label (click)="ouvrir()">
+    <h2>
+      <b>
+        {{
+          profil.utilisateur.displayName
+            ? profil.utilisateur.displayName
+            : profil.utilisateur.email
+        }} </b
+      >,
+      {{ profil.profession }}
+    </h2>
+    <h3>
+      <span *ngIf="profil.ville"> {{ profil.ville }}, </span>
+      {{ profil.pays }}
+    </h3>
+    <small></small>
+  </ion-label>
+  <ion-button (click)="unSuivre()" *ngIf="sontAmis" shape="round" slot="end">
+    &nbsp; Suivi &nbsp;
+  </ion-button>
+  <ion-button
+    (click)="suivre()"
+    *ngIf="!sontAmis"
+    shape="round"
+    fill="outline"
+    slot="end"
+  >
+    &nbsp; Suivre &nbsp;
+  </ion-button>
+</ion-item>

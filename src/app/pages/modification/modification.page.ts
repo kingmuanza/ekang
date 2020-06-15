@@ -3,7 +3,6 @@ import { NavParams, ModalController } from "@ionic/angular";
 import { Publication } from "src/app/models/publication.model";
 import { Router } from "@angular/router";
 import { Profil } from "src/app/models/profil.model";
-
 @Component({
   selector: "app-modification",
   templateUrl: "./modification.page.html",
