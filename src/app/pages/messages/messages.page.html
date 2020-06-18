@@ -3,34 +3,28 @@
     <ion-buttons slot="start">
       <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-title size="large">Chats</ion-title>
+    <ion-title size="large">Messagerie</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar placeholder="Rechercher..."></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item *ngFor="let user of amis" (click)="chat(user)">
     <ion-avatar slot="start">
-      <img
-        [src]="user.utilisateur.photoURL ? user.utilisateur.photoURL: '../../../assets/img/user.png'"
-        alt=""
-      />
+      <img [src]="user.utilisateur.photoURL ? user.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
     </ion-avatar>
     <ion-label>
-      <div class="flex_box">
-        <h3>
-          {{ user.utilisateur.displayName ? user.utilisateur.displayName:
+      <h3>
+        {{ user.utilisateur.displayName ? user.utilisateur.displayName:
           'inconnu'}}
-        </h3>
-        <ion-note slot="end">12:54</ion-note>
-      </div>
+      </h3>
       <p>
-        <ion-icon class="text-icon" color="primary" name="done-all"></ion-icon>
         Listen, I've had a pretty messed up day...
       </p>
     </ion-label>
+    <ion-note slot="end">12:54</ion-note>
   </ion-item>
 
   <!--

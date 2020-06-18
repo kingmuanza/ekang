@@ -2,18 +2,18 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
+      <div style="padding: 8px;" slot="end">
+        <img style="height: 45px; width: 45px; border-radius: 50%;" [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
+      </div>
     </ion-buttons>
     <ion-title>
       {{ profil.utilisateur.displayName ? profil.utilisateur.displayName:
       'inconnu'}}<br />
-      <div class="status">En ligne</div></ion-title
-    >
-    <ion-avatar slot="end">
-      <img
-        [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'"
-        alt=""
-      />
-    </ion-avatar>
+      <div class="status">En ligne</div>
+    </ion-title>
+    
+    <ion-buttons slot="end">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <!--
@@ -29,23 +29,24 @@
 
 <ion-content>
   <ion-grid *ngIf="messages">
-    <ion-row *ngFor="let message of messagesChat">
-      <ion-col
-        size="9"
-        *ngIf="message.senderID != senderId"
-        class="message other-message"
-      >
-        <span>{{ message.texte }}</span>
-      </ion-col>
-      <ion-col
-        offset="3"
-        size="9"
-        *ngIf="message.senderID == senderId"
-        class="message my-message"
-      >
-        <span>{{ message.texte }}</span>
-      </ion-col>
-    </ion-row>
+    <div *ngFor="let message of messagesChat">
+      <div *ngIf="message.senderID != senderId" class="message other-message">
+        <span>
+          {{ message.texte }}
+          <small *ngIf="message.date">
+            {{ resolveDate(message.date) | date: 'HH:mm'}}
+          </small>
+        </span>
+      </div>
+      <div offset="3" size="9" *ngIf="message.senderID == senderId" class="message my-message">
+        <span>
+          {{ message.texte }}
+          <small *ngIf="message.date">
+            {{ resolveDate(message.date) | date: 'HH:mm'}}
+          </small>
+        </span>
+      </div>
+    </div>
   </ion-grid>
 
   <!--
@@ -93,25 +94,16 @@
   <ion-toolbar color="light">
     <ion-row align-items-center no-padding>
       <ion-col size="10">
-        <ion-textarea
-          class="msg-input"
-          autosize
-          maxRows="3"
-          [(ngModel)]="messageText"
-          (keyup.enter)="sendMessage()"
-        ></ion-textarea>
+        <ion-textarea class="msg-input" rows="1" autosize maxRows="3" [(ngModel)]="messageText" (keyup.enter)="sendMessage()">
+        </ion-textarea>
       </ion-col>
       <ion-col size="2">
-        <ion-button
-          expand="block"
-          fill="clear"
-          color="success"
-          [disabled]="messageText === ''"
-          class="msg-btn"
-          (click)="sendMessage()"
-        >
+        <div style="margin-top: 12px;">
+          <ion-button expand="block" fill="clear" color="primary" [disabled]="messageText === ''" class="msg-btn"
+          (click)="sendMessage()">
           <ion-icon name="send" slot="icon-only"></ion-icon>
         </ion-button>
+      </div>
       </ion-col>
     </ion-row>
   </ion-toolbar>

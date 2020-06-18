@@ -80,9 +80,8 @@ export class ChatPage implements OnInit {
       tab.push({
         senderID: this.senderId,
         receiverID: this.receiverId,
-        texte: this.messageText
-        // date: new Date(),
-        // user: this.utilisateur
+        texte: this.messageText,
+        date: new Date()
       });
       message["chats"] = tab;
       this.saveMessageChat(message);
@@ -91,9 +90,8 @@ export class ChatPage implements OnInit {
       this.messages.chats.push({
         senderID: this.senderId,
         receiverID: this.receiverId,
-        texte: this.messageText
-        // date: new Date(),
-        // user: this.utilisateur
+        texte: this.messageText,
+        date: new Date()
       });
       this.saveMessageChat2(this.messages);
       this.sendEmail(this.profil);
@@ -208,5 +206,13 @@ export class ChatPage implements OnInit {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  resolveDate(date) {
+    if(date.seconds) {
+      return date.toDate();
+    } else {
+      return date;
+    }
   }
 }
