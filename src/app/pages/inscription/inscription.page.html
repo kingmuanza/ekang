@@ -1,53 +1,42 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inscription</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div class="image-arriere">
+  <div style="height: 100vh; width: 100vw; overflow: hidden;">
+    <div class="image-arriere">
+    </div>
+    <div class="page filtre-noir">
 
-    <div class="page">
-
-      <div>
+      <div class="titre">
         <h1>
           Ekang
         </h1>
       </div>
 
-      <p style="text-align: center;">
-        Veuillez remplir les informations
-        <br>
-        ci-dessous !
-      </p>
-      <form [formGroup]="inscriptionForm" (ngSubmit)="onInscriptionFormSubmit()">
-        <input formControlName="login" type="text" placeholder="Login">
-        <input formControlName="passe" type="password" placeholder="Mot de passe">
-        <input formControlName="confirmation" type="password" placeholder="Confirmation">
-        
-        <div class="connexion">
-          <button [disabled]="inscriptionForm.invalid" class="bg-primaire">
-            Je m'inscris
-          </button>
+      <div class="contenu">
+
+        <p style="text-align: center; color: #eee;">
+          Veuillez remplir les informations
+          <br>
+          ci-dessous !
+        </p>
+        <form [formGroup]="inscriptionForm" (ngSubmit)="onInscriptionFormSubmit()">
+          <input formControlName="login" type="text" placeholder="Login">
+          <input formControlName="passe" type="password" placeholder="Mot de passe">
+          <input formControlName="confirmation" type="password" placeholder="Confirmation">
+
+          <div class="connexion">
+            <button [disabled]="inscriptionForm.invalid" class="bg-primaire">
+              Je m'inscris
+            </button>
+          </div>
+        </form>
+
+        <div class="infos-oubliees">
+          Conditions d'utilisation
         </div>
-      </form>
 
-      <div class="infos-oubliees">
-        Conditions d'utilisation
+        <div class="vague">
+          <img src="../../../assets/img/wave.png" style="width: 100%;">
+        </div>
       </div>
-
-      <div class="vague">
-        <img src="../../../assets/img/wave.png" style="width: 100%;">
-      </div>
-
       <div (click)="inscriptionGoogle()" class="inscription">
         Inscrivez-vous grâce à votre compte
         <br>

@@ -34,7 +34,7 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       this.aiJeLike();
       if (this.publication && this.publication.dernierCommentaire) {
 
-        this.userService.getProfilByID(this.publication.profil.utilisateur.uid).then((profil) => {
+        this.userService.getProfilByID(this.publication.utilisateur.uid).then((profil) => {
           console.log('Mise à jour du profil');
           this.publication.profil = profil;
           this.publication.utilisateur = profil.utilisateur;
