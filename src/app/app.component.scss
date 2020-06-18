@@ -14,8 +14,8 @@
   background-image: url("../assets/img/masque.jpg");
   background-size: cover;
   background-position: center center;
-  height: 100vh;
-  margin-top: -5vh;
+  height: 120vh;
+  margin-top: 0vh;
   filter: blur(25px);
   position: absolute;
   top: 0;
@@ -28,8 +28,6 @@
 
 .filtre-noir {
   background: linear-gradient(to bottom, rgba(#000, 0.4), rgba(#000, 0.95));
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  height: 100vh;
 }
 
 .contenu {
@@ -39,7 +37,7 @@
 
 .page {
   @include muanza-padding();
-  height: 100vh;
+  height: 120vh;
   margin-top: 0vh;
   position: absolute;
   top: 0;
