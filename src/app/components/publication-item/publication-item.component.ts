@@ -62,14 +62,6 @@ export class PublicationItemComponent implements OnInit, OnChanges {
       }
       this.aiJeLike();
       if (this.publication && this.publication.dernierCommentaire) {
-<<<<<<< HEAD
-
-        this.userService.getProfilByID(this.publication.utilisateur.uid).then((profil) => {
-          console.log('Mise à jour du profil');
-          this.publication.profil = profil;
-          this.publication.utilisateur = profil.utilisateur;
-        });
-=======
         this.userService
           .getProfilByID(this.publication["utilisateur"]["uid"])
           .then((profil) => {
@@ -77,7 +69,6 @@ export class PublicationItemComponent implements OnInit, OnChanges {
             this.publication.profil = profil;
             this.publication.utilisateur = profil.utilisateur;
           });
->>>>>>> 320794de4e4cfd402cb43848b13409da433a16db
 
         this.commentaire = this.publication.dernierCommentaire;
         this.userService
