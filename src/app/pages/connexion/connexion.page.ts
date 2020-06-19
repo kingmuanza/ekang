@@ -26,6 +26,7 @@ export class ConnexionPage implements OnInit {
 
   ngOnInit() {
     this.initConnexionForm();
+    console.log("onConnexionFormSubmit");
   }
 
   initConnexionForm(): void {
@@ -37,13 +38,15 @@ export class ConnexionPage implements OnInit {
 
   onConnexionFormSubmit(): void {
     this.inactif = true; // bouton inactif
-    console.log("onConnexionFormSubmit");
+
     const value = this.connexionForm.value;
     const login = value.login;
     const passe = value.passe;
     this.auth
       .connexion(login, passe)
       .then(utilisateur => {
+        // console.log(utilisateur);
+
         this.inactif = false; // bouton actif
         this.mauvaisCredentials = false;
         this.connexionReussie = true;
@@ -76,7 +79,8 @@ export class ConnexionPage implements OnInit {
       .getProfil(utilisateur)
       .then(profil => {
         if (profil) {
-          this.router.navigate(["accueil"]);
+          // this.router.navigate(["accueil"]);
+          this.router.navigate(["tabs"]);
         } else {
           this.router.navigate(["profil"]);
         }

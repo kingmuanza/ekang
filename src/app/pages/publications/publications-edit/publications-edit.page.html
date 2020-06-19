@@ -5,8 +5,11 @@
     </ion-buttons>
     <ion-title>Dites nous quelque chose</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="publicationForm.invalid || !utilisateur" color="primary"
-        (click)="onSubmitPublicationForm()">
+      <ion-button
+        [disabled]="publicationForm.invalid || !utilisateur"
+        color="primary"
+        (click)="onSubmitPublicationForm()"
+      >
         Publier
         <ion-icon name="checkmark"></ion-icon>
       </ion-button>
@@ -18,29 +21,57 @@
   <div style="padding-left: 1vw; padding-right: 1vw;">
     <form [formGroup]="publicationForm">
       <ion-item>
-        <ion-textarea rows="6" formControlName="texte" placeholder="Ecrivez quelque chose ici..."></ion-textarea>
+        <ion-textarea
+          rows="6"
+          formControlName="texte"
+          placeholder="Ecrivez quelque chose ici..."
+        ></ion-textarea>
       </ion-item>
     </form>
   </div>
   <div style="margin-top: 5vh;">
     <span (click)="galerie()" style="margin-left: 5vw;">
-      <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="camera"></ion-icon>
+      <ion-icon
+        color="primary"
+        style="font-size: 3em;"
+        slot="icon-only"
+        name="camera"
+      ></ion-icon>
     </span>
     <span (click)="galerie()" style="margin-left: 5vh;">
-      <ion-icon color="primary" style="font-size: 2.8em;" slot="icon-only" name="image"></ion-icon>
+      <ion-icon
+        color="primary"
+        style="font-size: 2.8em;"
+        slot="icon-only"
+        name="image"
+      ></ion-icon>
     </span>
     <span (click)="galerie()" style="margin-left: 5vh;">
-      <ion-icon color="primary" style="font-size: 3em;" slot="icon-only" name="videocam"></ion-icon>
+      <ion-icon
+        color="primary"
+        style="font-size: 3em;"
+        slot="icon-only"
+        name="videocam"
+      ></ion-icon>
     </span>
     <span (click)="presentActionSheet()" style="margin-left: 5vh;">
-      <ion-icon color="primary" style="font-size: 2.6em;" slot="icon-only" name="person-add"></ion-icon>
+      <ion-icon
+        color="primary"
+        style="font-size: 2.6em;"
+        slot="icon-only"
+        name="person-add"
+      ></ion-icon>
     </span>
   </div>
 
-
-
-  <input id="uploadBtn" type="file" class="upload" (change)="uploadFile($event)" class="filebtn" #fileButton />
-
+  <input
+    id="uploadBtn"
+    type="file"
+    class="upload"
+    (change)="uploadFile($event)"
+    class="filebtn"
+    #fileButton
+  />
 
   <div *ngIf="photoURL" class="photo" style="height: 50vh;">
     <div style="height: 50vh;">
@@ -53,4 +84,17 @@
     </div>
   </div>
 
+  <div *ngIf="videoURL" class="photo" style="height: 50vh;">
+    <div class="video">
+      <video controls (click)="toggleVideo()" #videoPlayer>
+        <source [src]="videoURL" type="video/mp4" />
+        Browser not supported
+      </video>
+    </div>
+    <div style="font-size: 2.0em; text-align: right; margin-top: -48vh;">
+      <span (click)="resetImage()" style="padding: 20px;">
+        <ion-icon style="" name="trash"></ion-icon>
+      </span>
+    </div>
+  </div>
 </ion-content>

@@ -3,11 +3,13 @@
     class="image-arriere"
     [ngStyle]="{'background-image': 'url('+ photoURL+')'}"
   ></div>
-  <div *ngIf="file" style="padding: 30px;">
+  <!--
+    <div *ngIf="file" style="padding: 30px;">
     <button (click)="save()">
       Terminer
     </button>
   </div>
+  -->
   <div class="conteneur">
     <div class="difference"></div>
     <div class="photo">
@@ -28,6 +30,9 @@
 
       <ion-fab-button *ngIf="file" color="primary" (click)="save()">
         Save
+      </ion-fab-button>
+      <ion-fab-button *ngIf="file" color="primary" (click)="annuler()">
+        Cancel
       </ion-fab-button>
     </ion-fab>
   </div>

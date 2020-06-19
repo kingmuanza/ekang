@@ -5,9 +5,9 @@ import { Publication } from "src/app/models/publication.model";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import { Commentaire } from "src/app/models/commentaire.model";
-import { NotificationEkang } from 'src/app/models/notification.model';
-import { Profil } from 'src/app/models/profil.model';
-import { NotificationService } from 'src/app/services/notification.service';
+import { NotificationEkang } from "src/app/models/notification.model";
+import { Profil } from "src/app/models/profil.model";
+import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
   selector: "app-publications-view",
@@ -36,31 +36,31 @@ export class PublicationsViewPage implements OnInit {
       if (id) {
         this.pubService.getPublication(id).then(publication => {
           this.publication = publication;
+          // console.log(this.publication);
 
           this.pubService
             .getCommentaires(this.publication)
             .then(commentaires => {
-              console.log("comment", commentaires);
+              // console.log("comment", commentaires);
 
               this.commentaires = commentaires;
-              this.commentaires.sort((a, b)=>{
-                return new Date(b.date).getTime() - new Date(a.date).getTime() > 0
+              this.commentaires.sort((a, b) => {
+                return new Date(b.date).getTime() - new Date(a.date).getTime() >
+                  0
                   ? -1
                   : 1;
-              })
+              });
               const listeDesIndex = new Array<string>();
               this.commentaires.forEach(comment => {
                 listeDesIndex.push(comment.id);
               });
               this.publication.commentaires = listeDesIndex;
-              this.pubService.savePublication(this.publication).then(()=>{
-
-              });
+              this.pubService.savePublication(this.publication).then(() => {});
             });
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
               this.utilisateur = utilisateur;
-              console.log(this.utilisateur);
+              // console.log(this.utilisateur);
               if (!utilisateur) {
                 this.router.navigate(["connexion"]);
               } else {
@@ -76,13 +76,12 @@ export class PublicationsViewPage implements OnInit {
 
   urlify(text) {
     var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, (url) => {
-      return '<a target="_blank" href="' + url + '">' + url + '</a>';
+    return text.replace(urlRegex, url => {
+      return '<a target="_blank" href="' + url + '">' + url + "</a>";
     });
     // or alternatively
     // return text.replace(urlRegex, '<a href="$1">$1</a>')
   }
-
 
   aiJeLike() {
     if (this.publication.likeurs) {
@@ -119,15 +118,17 @@ export class PublicationsViewPage implements OnInit {
   }
 
   envoyer() {
+    let tab = [];
+    //  console.log(this.commentaires);
+
     if (this.texte) {
-      
       const commentaire = new Commentaire(
         this.texte,
         this.publication,
         this.utilisateur
       );
 
-      if(!this.publication.commentaires) {
+      if (!this.publication.commentaires) {
         this.publication.commentaires = new Array<string>();
       }
       this.publication.commentaires.push(commentaire.id);
@@ -137,34 +138,47 @@ export class PublicationsViewPage implements OnInit {
         commentaire.publication = null;
         this.publication.dernierCommentaire = commentaire;
         this.publication.commentaires.push(commentaire.id);
-        
-        this.pubService.savePublication(this.publication).then((publication)=>{
+
+        this.pubService.savePublication(this.publication).then(publication => {
           this.publication = publication;
           // Création de la notification
           this.createNotificationCommentaire(commentaire.texte);
-
         });
       });
       this.texte = null;
+      if (this.publication.commentaires) {
+        this.commentaires.forEach(elt => {
+          if (
+            tab.includes(elt.utilisateur.email) ||
+            elt.utilisateur.email == this.utilisateur.email
+          ) {
+            console.log("rien");
+          } else {
+            tab.push(elt.utilisateur.email);
+          }
+        });
+        // console.log(tab);
+        this.notifService.envoyeurEmail(
+          tab,
+          this.utilisateur.displayName,
+          this.publication.utilisateur.displayName
+        );
+      }
     }
   }
 
   createNotificationCommentaire(texte: string) {
     const profilFlou = new Profil(this.utilisateur);
-    const notification = new NotificationEkang(profilFlou, 'COMMENTAIRE');
+    const notification = new NotificationEkang(profilFlou, "COMMENTAIRE");
     notification.publication = this.publication;
     notification.texte = texte;
-    this.notifService.createNotification(notification).then((t)=>{
-
-    });
+    this.notifService.createNotification(notification).then(t => {});
   }
   createNotificationLike() {
     const profilFlou = new Profil(this.utilisateur);
-    const notification = new NotificationEkang(profilFlou, 'LIKE');
+    const notification = new NotificationEkang(profilFlou, "LIKE");
     notification.publication = this.publication;
-    this.notifService.createNotification(notification).then((t)=>{
-
-    });
+    this.notifService.createNotification(notification).then(t => {});
   }
   onClick() {}
   ouvrirPublication() {}

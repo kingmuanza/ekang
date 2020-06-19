@@ -25,15 +25,18 @@
   padding-right: 0vw;
   padding-top: 1vh;
   padding-bottom: 0vh;
-  margin-left: 3vw;
-  margin-right: 3vw;
+  margin-left: 1vw;
+  margin-right: 1vw;
   margin-top: 1vh;
-  margin-bottom: 3vh;
+  margin-bottom: 1vh;
   border: 1px solid #ddd;
   background-color: #fefffe;
   &.gauche-verte {
     border-left: 3px solid #008800;
   }
+}
+span {
+  font-weight: bold;
 }
 
 ion-item {
@@ -50,4 +53,22 @@ ion-item.commentaire {
 
 .imageRadius {
   border-radius: 12px;
+}
+.nbrLike {
+  height: 5%;
+  font-size: 80%;
+  color: #aaa;
+}
+.nbrcommentaire {
+  height: 5%;
+  font-size: 80%;
+  color: #aaa;
+}
+.lesBoutons {
+  display: flex;
+  justify-content: space-between;
+}
+.nbrcommentaireLike {
+  display: flex;
+  justify-content: space-between;
 }

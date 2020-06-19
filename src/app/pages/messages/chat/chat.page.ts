@@ -47,8 +47,8 @@ export class ChatPage implements OnInit {
       if (id) {
         this.userService.getProfilByID(id).then(profil => {
           this.profil = profil;
-          console.log("leprofil");
-          console.log(profil);
+
+          // console.log(profil);
           this.receiverId = this.profil.utilisateur.uid;
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
             utilisateur => {
@@ -83,9 +83,16 @@ export class ChatPage implements OnInit {
         texte: this.messageText,
         date: new Date()
       });
+      let msg = {
+        senderID: this.senderId,
+        receiverID: this.receiverId,
+        texte: this.messageText,
+        date: new Date()
+        // user: this.utilisateur
+      };
       message["chats"] = tab;
       this.saveMessageChat(message);
-      this.sendEmail(this.profil);
+      this.sendEmail(this.profil, msg);
     } else {
       this.messages.chats.push({
         senderID: this.senderId,
@@ -93,8 +100,15 @@ export class ChatPage implements OnInit {
         texte: this.messageText,
         date: new Date()
       });
+      let msg = {
+        senderID: this.senderId,
+        receiverID: this.receiverId,
+        texte: this.messageText,
+        date: new Date()
+        // user: this.utilisateur
+      };
       this.saveMessageChat2(this.messages);
-      this.sendEmail(this.profil);
+      this.sendEmail(this.profil, msg);
     }
 
     setTimeout(() => {
@@ -122,7 +136,7 @@ export class ChatPage implements OnInit {
 
         this.userService.updateProfil(this.profil).then(() => {
           // this.router.navigate(['publications']);
-          console.log("update");
+          // console.log("update");
         });
       });
   }
@@ -153,7 +167,7 @@ export class ChatPage implements OnInit {
   getSenderMessage(senderID: string, receiverID: string) {
     const db = firebase.firestore();
     let id = senderID + "ekang" + receiverID;
-    console.log(id);
+    //  console.log(id);
 
     db.collection(`messages`)
       .doc(id)
@@ -166,31 +180,25 @@ export class ChatPage implements OnInit {
         }
       });
   }
-  sendEmail(profil: Profil) {
-    console.log(profil);
-
+  sendEmail(profil: Profil, message) {
     let curentDate = new Date().getTime();
     if (profil.lastConnexionDate) {
       let date = profil.lastConnexionDate;
       if (curentDate - date > 120000) {
-        //j'envoi le mail
-        console.log(profil);
-
-        this.envoyeurEmail({
-          email: profil.utilisateur.email,
-          name: profil.utilisateur.displayName
-          // email: "eric2mballa@gmail.com",
-          // name: "erico erico"
+        this.userService.updateProfil(profil).then(() => {
+          this.envoyeurEmail({
+            email: profil.utilisateur.email,
+            name: profil.utilisateur.displayName
+          });
         });
+
         return;
       }
     } else if (!profil.lastConnexionDate) {
-      console.log(profil);
+      //  console.log(profil);
       this.envoyeurEmail({
         email: profil.utilisateur.email,
         name: profil.utilisateur.displayName
-        // email: "eric2mballa@gmail.com",
-        // name: "erico erico"
       });
       return;
     } else {

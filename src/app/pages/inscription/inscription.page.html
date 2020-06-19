@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ion-content>
   <div style="height: 100vh; width: 100vw; overflow: hidden;">
     <div class="image-arriere">
@@ -5,11 +6,36 @@
     <div class="page filtre-noir">
 
       <div class="titre">
+=======
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Inscription</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon
+          slot="icon-only"
+          ios="ellipsis-horizontal"
+          md="ellipsis-vertical"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="image-arriere">
+    <div class="page">
+      <div>
+>>>>>>> 320794de4e4cfd402cb43848b13409da433a16db
         <h1>
           Ekang
         </h1>
       </div>
 
+<<<<<<< HEAD
       <div class="contenu">
 
         <p style="text-align: center; color: #eee;">
@@ -31,17 +57,52 @@
 
         <div class="infos-oubliees">
           Conditions d'utilisation
+=======
+      <p style="text-align: center;">
+        Veuillez remplir les informations
+        <br />
+        ci-dessous !
+      </p>
+      <form
+        [formGroup]="inscriptionForm"
+        (ngSubmit)="onInscriptionFormSubmit()"
+      >
+        <input formControlName="login" type="text" placeholder="Email" />
+        <input
+          formControlName="passe"
+          type="password"
+          placeholder="Mot de passe"
+        />
+        <input
+          formControlName="confirmation"
+          type="password"
+          placeholder="Confirmation"
+        />
+
+        <div class="connexion">
+          <button [disabled]="inscriptionForm.invalid" class="bg-primaire">
+            Je m'inscris
+          </button>
+>>>>>>> 320794de4e4cfd402cb43848b13409da433a16db
         </div>
 
+<<<<<<< HEAD
         <div class="vague">
           <img src="../../../assets/img/wave.png" style="width: 100%;">
         </div>
+=======
+      <div class="infos-oubliees">
+        Conditions d'utilisation
+      </div>
+
+      <div class="vague">
+        <img src="../../../assets/img/wave.png" style="width: 100%;" />
+>>>>>>> 320794de4e4cfd402cb43848b13409da433a16db
       </div>
       <div (click)="inscriptionGoogle()" class="inscription">
         Inscrivez-vous grâce à votre compte
-        <br>
+        <br />
         GOOGLE
-
       </div>
     </div>
   </div>

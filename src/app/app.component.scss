@@ -25,7 +25,6 @@
   z-index: 0;
 }
 
-
 .filtre-noir {
   background: linear-gradient(to bottom, rgba(#000, 0.4), rgba(#000, 0.95));
 }
@@ -89,8 +88,8 @@
     border: 0px solid #eee;
     border-bottom: 1px solid #eee;
 
-    padding: 5px;
-    padding-top: 5px;
+    padding: 3px;
+    padding-top: 3px;
     padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -158,7 +157,6 @@
   }
 }
 
-
 .muanza-image {
   height: 15vh;
   width: 15vh;
@@ -179,10 +177,11 @@
 
 ion-content {
   --padding-start: 0px;
-  --padding-end: 0px
+  --padding-end: 0px;
 }
 
-ion-list-header {}
+ion-list-header {
+}
 
 ion-note {
   --color: #fafafa;
@@ -190,7 +189,7 @@ ion-note {
 }
 
 ion-menu ion-content {
-  --background: rgba(var(--ion-color-primary-rgb), 0.0);
+  --background: rgba(var(--ion-color-primary-rgb), 0);
 }
 
 ion-menu.md ion-content {
@@ -216,7 +215,6 @@ ion-menu.md ion-note {
 
 ion-menu.md ion-list#inbox-list {
   margin-left: -20px;
-
 }
 
 ion-menu.md ion-list#inbox-list ion-list-header {
@@ -244,7 +242,7 @@ ion-menu.md ion-item {
 }
 
 ion-menu.md ion-item {
-  --background: rgba(var(--ion-color-primary-rgb), 0.0);
+  --background: rgba(var(--ion-color-primary-rgb), 0);
 }
 
 ion-menu.md ion-item.selected {
@@ -330,11 +328,9 @@ ion-menu.ios ion-item.selected ion-label {
 }
 
 ion-menu.ios ion-item {
-  --background: rgba(var(--ion-color-primary-rgb), 0.0);
+  --background: rgba(var(--ion-color-primary-rgb), 0);
 }
-
 
 ion-menu.ios ion-item.selected {
   --background: rgba(var(--ion-color-primary-rgb), 0.24);
-
 }

@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Programme</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="suivant()">
+        Enregistrer
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Vos Paramétres
+    </ion-list-header>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img
+          [src]="
+                  utilisateur
+                    ? utilisateur.photoURL
+                    : '../../../assets/img/user.png'
+                "
+        />
+      </ion-avatar>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="pencil-outline"></ion-icon>
+      <ion-label position="floating">
+        <h2>Nom utilisateur</h2>
+        <p>
+          {{utilisateur.displayName ? utilisateur.displayName : displayName ?
+          displayName : 'Nom d\'utilisateur'}}
+        </p>
+      </ion-label>
+      <ion-input [(ngModel)]="displayName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="call-outline"></ion-icon>
+      <ion-label position="floating" class="ion-text-wrap">
+        <h2>Telephone</h2>
+        <p>pas de signe +, EX: 237691087025</p>
+      </ion-label>
+      <ion-input [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-label position="floating" class="ion-text-wrap">
+        <h2>E-mail</h2>
+        <p></p>
+      </ion-label>
+      <ion-input [(ngModel)]="utilisateurEmail "></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start" *ngIf="photoCni">
+        <img [src]="photoCni" />
+      </ion-avatar>
+      <ion-icon *ngIf="!photoCni" slot="start" name="images"></ion-icon>
+      <ion-label>cni ou passport</ion-label>
+      <ion-input type="file" (change)="uploadFile($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon
+        *ngIf="photoDemande"
+        name="document-attach-outline"
+        slot="start"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="!photoDemande"
+        name="documents-outline"
+        slot="start"
+      ></ion-icon>
+      <ion-label>document</ion-label>
+      <ion-input type="file" (change)="uploadDocs($event)"></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>

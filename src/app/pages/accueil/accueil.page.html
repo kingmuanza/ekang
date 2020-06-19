@@ -3,26 +3,169 @@
     <ion-buttons slot="start">
       <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Accueil</ion-title>
+    <ion-title color="primary">ôssu</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary">
+      <ion-button color="primary" [hidden]="jeScrool">
         <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="utilisateur">
-  <ng-container *ngFor="let publication of all">
-    <ng-container *ngIf="publication.texte">
-      <app-publication-item
-        [montrerLeDernierCommentaire]="true"
-        [publication]="publication"
-        [utilisateur]="utilisateur"
-      >
-      </app-publication-item>
+<ion-content
+  *ngIf="utilisateur"
+  [scrollEvents]="true"
+  (ionScroll)="onScroll($event)"
+>
+  <ion-slides [options]="sliderConfig" pager="true" #one>
+    <ion-slide *ngIf="!phoneNumber">
+      <ion-list>
+        <ion-icon class="iconClose" slot="start" name="close"></ion-icon>
+        <ion-item lines="none">
+          <ion-icon class="myicon" slot="start" name="call-outline"></ion-icon>
+          <ion-label class="ion-text-wrap">
+            <h3>
+              Ajouter votre numéro de téléphone
+            </h3>
+            <ion-text color="secondary">
+              <p>
+                {{utilisateur.displayName}} Ajouter un numéro de téléphone et
+                bénéficier de nombreux avantages offertes sur la plateforme
+              </p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-button fill="clear" expand="full" (click)="goToProfile()"
+          >Ajouter telephone</ion-button
+        >
+      </ion-list>
+    </ion-slide>
+    <ion-slide class="slider" *ngIf="!photoURL">
+      <ion-list>
+        <ion-item lines="none">
+          <ion-icon
+            class="myicon"
+            slot="start"
+            name="camera-outline"
+          ></ion-icon>
+          <ion-label class="ion-text-wrap">
+            <h3>
+              Ajouter une photo de profil pour obtenir plus de vues de profil
+            </h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+    <ion-slide class="slider" *ngIf="!userProgram">
+      <ion-list>
+        <ion-item lines="none">
+          <ion-icon
+            class="myicon"
+            slot="start"
+            name="document-text-outline"
+          ></ion-icon>
+          <ion-label class="ion-text-wrap">
+            <h3>
+              Obtenez une bourse d'études, un financement pour votre projet,
+              ...etc en vous inscrivant au programme d'assistance ekang
+            </h3>
+          </ion-label>
+        </ion-item>
+        <ion-button fill="clear" expand="full" (click)="goToProgramme()"
+          >Inscrivez vous</ion-button
+        >
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+  <div class="divcontent" *ngIf="all">
+    <ion-button
+      class="firstBtn"
+      expand="block"
+      fill="clear"
+      (click)="nouveau()"
+      [hidden]="jeScrool"
+    >
+      <ion-icon slot="start" name="share-outline"></ion-icon>
+      Partagez votre avis</ion-button
+    >
+    <ng-container class="firstContainer" *ngFor="let publication of all">
+      <ng-container *ngIf="publication.texte">
+        <app-publication-item
+          [montrerLeDernierCommentaire]="true"
+          [publication]="publication"
+          [utilisateur]="utilisateur"
+        >
+        </app-publication-item>
+      </ng-container>
     </ng-container>
-  </ng-container>
+  </div>
+  <div *ngIf="!pubs">
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </div>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-skeleton-text
+          animated
+          style="width: 27px; height: 27px"
+          slot="start"
+        ></ion-skeleton-text>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="primary" (click)="nouveau()">
       <ion-icon name="add"></ion-icon>

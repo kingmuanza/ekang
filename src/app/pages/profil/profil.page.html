@@ -1,88 +1,153 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="monprofil/id"></ion-back-button>
     </ion-buttons>
-    <ion-title>Mon profil</ion-title>
+    <ion-title>Profil</ion-title>
     <ion-buttons slot="end">
       <ion-button
         color="primary"
         *ngIf="userPays && userProfession"
         (click)="suivant()"
       >
-        Suivant
-        <ion-icon name="arrow-forward-outline"></ion-icon>
+        Enregistrer
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="page">
-    <div class="div--photo">
-      <div class="photo" *ngIf="!photoURL">
-        <img src="../../../assets/img/user.png" style="width: 100%;" />
-      </div>
-      <div [ngStyle]="{'background-image': 'url('+ photoURL +')'}" class="photo" *ngIf="photoURL">
-        
-      </div>
-      <div class="photo moins" (click)="photo()">
-        <small>
-          Appuyer ici pour modifier
-        </small>
-      </div>
-
-      <div *ngIf="utilisateur" style="margin-top: 20px; text-align: center;">
-        <b style="font-size: 1.2em;">
+  <ion-list>
+    <ion-list-header>
+      Vos Paramétres
+    </ion-list-header>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img
+          [src]="
+              utilisateur
+                ? utilisateur.photoURL
+                : '../../../assets/img/user.png'
+            "
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>Photo de profile</h2>
+        <h3>
           {{utilisateur.displayName ? utilisateur.displayName : displayName ?
           displayName : 'Nom d\'utilisateur'}}
-        </b>
-        <br />
-        <small *ngIf="utilisateur" style="color: #777;">
-          {{utilisateur.email}}
-        </small>
+        </h3>
+        <p (click)="photo()">
+          Appuyer ici pour modifier
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="pencil-outline"></ion-icon>
+      <ion-label position="floating">
+        <h2>Nom utilisateur</h2>
+        <p>
+          {{utilisateur.displayName ? utilisateur.displayName : displayName ?
+          displayName : 'Nom d\'utilisateur'}}
+        </p>
+      </ion-label>
+      <ion-input [(ngModel)]="displayName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="call-outline"></ion-icon>
+      <ion-label position="floating" class="ion-text-wrap">
+        <h2>Telephone</h2>
+        <p>pas de signe +, EX: 237691087025</p>
+      </ion-label>
+      <ion-input [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="mail-outline"></ion-icon>
+      <ion-label position="floating" class="ion-text-wrap">
+        <h2>E-mail</h2>
+        <p></p>
+      </ion-label>
+      <ion-input [(ngModel)]="utilisateurEmail "></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="!checkPays" (click)="checkPays = !checkPays">
+    <ion-card-header class="image-card-header">
+      <ion-card-title
+        ><div class="recherche">{{userVille}}</div></ion-card-title
+      >
+    </ion-card-header>
+    <ion-card-content> </ion-card-content>
+  </ion-card>
+  <div *ngIf="checkPays">
+    <ion-list
+      *ngFor="let item of continent; let i = index;"
+      class="accordion-list"
+      lines="none"
+      detail="false"
+      no-padding
+    >
+      <ion-item
+        tappable
+        (click)="toggleSection(i)"
+        [ngClass]="{'section-active': item.open, 'section': !item.open}"
+      >
+        <ion-icon
+          slot="start"
+          name="arrow-forward"
+          *ngIf="!item.open"
+        ></ion-icon>
+        <ion-icon slot="start" name="arrow-down" *ngIf="item.open"></ion-icon>
+        <ion-label>
+          {{item.name}}
+        </ion-label>
+      </ion-item>
+
+      <div *ngIf="item.children && item.open">
+        <ion-list
+          class="child-list"
+          *ngFor="let child of item.children; let j = index;"
+          lines="none"
+        >
+          <ion-item
+            tappable
+            (click)="toggleItem(i, j, child)"
+            *ngIf="child.ville"
+            [ngClass]="{'child-active': child.open, 'child': !child.open}"
+          >
+            <ion-icon slot="start" name="add" *ngIf="!child.open"></ion-icon>
+            <ion-icon slot="start" name="close" *ngIf="child.open"></ion-icon>
+            <ion-label>
+              {{child.name}}
+            </ion-label>
+          </ion-item>
+
+          <app-accordion [product]="child" *ngIf="!child.ville"></app-accordion>
+
+          <ion-list
+            *ngIf="child.ville && child.open"
+            class="product-list"
+            lines="none"
+          >
+            <app-accordion
+              [product]="product"
+              (valueChange)="displayVille($event, item)"
+              *ngFor="let product of child.ville"
+            ></app-accordion>
+          </ion-list>
+        </ion-list>
       </div>
-    </div>
+
+      <p *ngIf="item.children.length == 0 && item.open" text-center>
+        Sorry, nothing in here!
+      </p>
+    </ion-list>
+  </div>
+
+  <div class="page">
     <div class="div--informations">
       <div style="margin-left: 5vw; margin-right: 5vw;">
-        <input
-          [(ngModel)]="displayName"
-          type="text"
-          placeholder="Nom d'utilisateur"
-        />
-        <div>
-          <small>Ce nom sera visible par tous les utilisateurs</small>
-        </div>
-        <ion-select
-          [value]="profil ? profil.continent : ''"
-          (ionChange)="chooseContinent($event)"
-          interface="popover"
-          placeholder="Continent de residence"
-        >
-          <ion-select-option *ngFor="let c of continents" [value]="c.name">
-            {{ c.name }}
-          </ion-select-option>
-        </ion-select>
-        <ion-select
-          [value]="profil ? profil.pays : ''"
-          (ionChange)="chooseCountry($event)"
-          interface="popover"
-          placeholder="Pays de residence"
-        >
-          <ion-select-option *ngFor="let p of pays" [value]="p.name">
-            {{ p.name }}
-          </ion-select-option>
-        </ion-select>
-        <ion-select
-          [value]="profil ? profil.ville : ''"
-          (ionChange)="chooseVille($event)"
-          interface="popover"
-          placeholder="Votre ville"
-        >
-          <ion-select-option *ngFor="let v of villes" [value]="v.nom"
-            >{{ v.nom | titlecase}}</ion-select-option
-          >
-        </ion-select>
         <ion-select
           [value]="profil ? profil.profession : ''"
           (ionChange)="chooseProfession($event)"
@@ -97,3 +162,7 @@
     </div>
   </div>
 </ion-content>
+
+<!--
+ 
+-->

@@ -48,7 +48,7 @@ export class PublicationService {
   getPublications(): Promise<Array<Publication>> {
     const db = firebase.firestore();
     let publications = new Array<Publication>();
-    return new Promise((resolve, reject) => {
+    /*  return new Promise((resolve, reject) => {
       db.collection("publications")
         .get()
         .then(resultats => {
@@ -61,6 +61,25 @@ export class PublicationService {
         .catch(e => {
           reject(e);
         });
+    }); */
+
+    return new Promise((resolve, reject) => {
+      db.collection("publications").onSnapshot(data => {
+        let resultats = data.docChanges();
+
+        resultats.forEach(resultat => {
+          if (resultat.type == "added") {
+            const publication = resultat.doc.data() as Publication;
+            publications.push(publication);
+          }
+          if (resultat.type == "modified") {
+            const publication = resultat.doc.data() as Publication;
+            publications.push(publication);
+          }
+        });
+
+        resolve(publications);
+      });
     });
   }
 
@@ -86,7 +105,20 @@ export class PublicationService {
     });
   }
 
-  deletePublication(id: string) {}
+  deletePublication(id: string) {
+    const db = firebase.firestore();
+    return new Promise((resolve, reject) => {
+      db.collection("publications")
+        .doc(id)
+        .delete()
+        .then(resultats => {
+          resolve("resultats");
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
+  }
 
   like(
     utilisateur: firebase.User,
@@ -195,7 +227,9 @@ export class PublicationService {
         });
     });
   }
-  getCommentairesofUtilisateur(utilisateur: firebase.User): Promise<Array<Commentaire>> {
+  getCommentairesofUtilisateur(
+    utilisateur: firebase.User
+  ): Promise<Array<Commentaire>> {
     const db = firebase.firestore();
     const commentaires = new Array<Commentaire>();
     return new Promise((resolve, reject) => {
@@ -216,7 +250,9 @@ export class PublicationService {
         });
     });
   }
-  getLikesofUtilisateur(utilisateur: firebase.User): Promise<Array<Publication>> {
+  getLikesofUtilisateur(
+    utilisateur: firebase.User
+  ): Promise<Array<Publication>> {
     const db = firebase.firestore();
     const publications = new Array<Publication>();
     return new Promise((resolve, reject) => {

@@ -83,7 +83,47 @@ const routes: Routes = [
       import("./pages/monprofil/monprofil.module").then(
         m => m.MonprofilPageModule
       )
+  },
+  {
+    path: "tabs",
+    loadChildren: () =>
+      import("./pages/tabs/tabs.module").then(m => m.TabsPageModule)
+  },
+  {
+    path: "dashboard",
+    loadChildren: () =>
+      import("./pages/dashboard/dashboard.module").then(
+        m => m.DashboardPageModule
+      )
+  },
+  {
+    path: "likeurs",
+    loadChildren: () =>
+      import("./pages/likeurs/likeurs.module").then(m => m.LikeursPageModule)
+  },
+  {
+    path: "programme/:id",
+    loadChildren: () =>
+      import("./pages/programme/programme.module").then(
+        m => m.ProgrammePageModule
+      )
+  },
+  {
+    path: "displayville",
+    loadChildren: () =>
+      import("./pages/displayville/displayville.module").then(
+        m => m.DisplayvillePageModule
+      )
+  },
+  { path: "", redirectTo: "connexion", pathMatch: "full" },  {
+    path: 'modification',
+    loadChildren: () => import('./pages/modification/modification.module').then( m => m.ModificationPageModule)
+  },
+  {
+    path: 'training',
+    loadChildren: () => import('./training/training.module').then( m => m.TrainingPageModule)
   }
+
 ];
 
 @NgModule({

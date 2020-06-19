@@ -16,6 +16,7 @@ export class AccordionpaysComponent implements AfterViewInit {
   @ViewChild("expandWrapper", { static: true }) expandWrapper: ElementRef;
   @Input("expanded") expanded: boolean = false;
   @Input("expandHeight") expandHeight: string = "2500px";
+  @Input("lesVilles") lesVilles: Array<any>;
   constructor(public renderer: Renderer2) {}
 
   ngAfterViewInit() {

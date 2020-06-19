@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import * as firebase from "firebase";
 import { Subscription } from "rxjs";
 import { AuthentificationService } from "src/app/services/authentification.service";
@@ -16,14 +16,24 @@ import { UserService } from "src/app/services/user.service";
   styleUrls: ["./accueil.page.scss"]
 })
 export class AccueilPage implements OnInit {
+  @ViewChild("one", { static: true }) allslide: ElementRef;
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
   photoURL: string;
   displayName: string;
+  userProgram: boolean;
+  pubs: boolean = false;
   profil: Profil;
   publications = new Array<Publication>();
   notifications = new Array<NotificationEkang>();
   all = new Array<Publication | NotificationEkang>();
+  phoneNumber: any;
+  jeScrool: boolean;
+  sliderConfig = {
+    //slidesPerView: 1.6,
+    //spaceBetween: 10,
+    centeredSlides: true
+  };
   constructor(
     private router: Router,
     private pubService: PublicationService,
@@ -35,11 +45,16 @@ export class AccueilPage implements OnInit {
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
       utilisateur => {
+        // console.log(utilisateur);
+
         this.utilisateur = utilisateur;
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
+          console.log("utilisateur");
+          //* this.router.navigate(["tabs"]);
         } else {
           this.utlisateurLastConnexion(utilisateur);
+          this.takeUserProfil(utilisateur.uid);
           if (utilisateur.photoURL) {
             this.photoURL = utilisateur.photoURL;
           }
@@ -53,6 +68,23 @@ export class AccueilPage implements OnInit {
     this.auth.emettre();
   }
 
+  onScroll(event) {
+    // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
+    if (event.detail.deltaY > 0 && this.jeScrool) return;
+    if (event.detail.deltaY < 0 && !this.jeScrool) return;
+    if (event.detail.deltaY > 0) {
+      // console.log("scrolling down, hiding footer...");
+      this.jeScrool = true;
+    } else {
+      // console.log("scrolling up, revealing footer...");
+      this.jeScrool = false;
+    }
+  }
+  ngAfterViewInit() {
+    // console.log(this.allslide);
+    // this.allslide.nativeElement.insertAdjacentHTML('beforeend', '<div class="two">two</div>');
+  }
+
   voirProfil() {
     this.router.navigate(["profil"]);
   }
@@ -64,6 +96,7 @@ export class AccueilPage implements OnInit {
   getPublications() {
     this.pubService.getPublications().then(publications => {
       if (publications) {
+        this.pubs = true;
         this.publications = publications;
         this.all = this.publications;
         // console.log('this.publications');
@@ -89,8 +122,27 @@ export class AccueilPage implements OnInit {
       ).getTime();
 
       this.userservice.updateProfil(profil).then(() => {
-        console.log("update!!");
+        //console.log("update!!");
       });
     });
+  }
+
+  goToProfile() {
+    this.router.navigate(["profil"]);
+  }
+
+  goToProgramme() {
+    this.router.navigate(["programme", this.utilisateur.uid]);
+  }
+  takeUserProfil(uid) {
+    this.userservice
+      .getProfilByID(this.utilisateur.uid)
+      .then(profil => {
+        // console.log("========hello===");
+        // console.log(profil);
+
+        this.phoneNumber = profil["tel"];
+      })
+      .catch(err => {});
   }
 }

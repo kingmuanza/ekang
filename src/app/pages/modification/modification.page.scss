@@ -1,0 +1,77 @@
+.tweet ion-label {
+  line-height: 1 !important;
+  font-size: 15px;
+  margin: 6px 0px 6px 0px !important;
+  min-height: 34px;
+}
+
+.tweet {
+  margin-top: -10px !important;
+}
+
+.tweet-img {
+  border-radius: 10px;
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+.menu {
+  position: absolute;
+  z-index: 2;
+}
+
+.muanza-card {
+  padding-left: 0vw;
+  padding-right: 0vw;
+  padding-top: 1vh;
+  padding-bottom: 0vh;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  border: 1px solid #ddd;
+  background-color: #fefffe;
+  &.gauche-verte {
+    border-left: 3px solid #008800;
+  }
+}
+span {
+  font-weight: bold;
+}
+
+ion-item {
+  --background: rgba(var(--ion-color-primary-rgb), 0);
+}
+
+ion-item.commentaire {
+  --background: rgba(var(--ion-color-primary-rgb), 0.1);
+}
+
+::ng-deep b {
+  color: #0f9b0f;
+}
+
+.imageRadius {
+  border-radius: 12px;
+}
+.nbrLike {
+  height: 5%;
+  font-size: 80%;
+  color: #aaa;
+}
+.nbrcommentaire {
+  height: 5%;
+  font-size: 80%;
+  color: #aaa;
+}
+.lesBoutons {
+  display: flex;
+  justify-content: space-between;
+}
+.nbrcommentaireLike {
+  display: flex;
+  justify-content: space-between;
+}
+textarea {
+  width: 100%;
+}

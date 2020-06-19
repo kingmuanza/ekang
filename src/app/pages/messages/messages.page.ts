@@ -18,6 +18,7 @@ export class MessagesPage implements OnInit {
   profils = new Array<Profil>();
   profilsResultats = new Array<Profil>();
   amis = new Array<Profil>();
+  amis2 = new Array<Profil>();
   propositions = new Array<Profil>();
 
   saisie = "";
@@ -35,17 +36,18 @@ export class MessagesPage implements OnInit {
         this.userService.getProfil(this.utilisateur).then(monProfil => {
           this.monProfil = monProfil;
         });
-        console.log(this.utilisateur);
+        //  console.log(this.utilisateur);
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
           this.userService.getProfils().then(profils => {
-            console.log(profils);
+            //  console.log(profils);
 
             this.profilsResultats = profils.filter(profil => {
               return profil.utilisateur.uid !== this.utilisateur.uid;
             });
             this.setAmis();
+            // this.messageRecu();
           });
         }
       }
@@ -53,13 +55,44 @@ export class MessagesPage implements OnInit {
     this.auth.emettre();
   }
 
+  messageRecu() {
+    this.monProfil.sendersMessages.forEach(id => {
+      this.userService.getProfilByID(id).then((profil: Profil) => {
+        this.amis2.push(profil);
+      });
+    });
+
+    this.amis2 = this.amis2.sort((a: Profil, b: Profil) => {
+      return new Date(a.lastConnexionDate).getTime() -
+        new Date(b.lastConnexionDate).getTime() >
+        0
+        ? -1
+        : 1;
+    });
+    //console.log("mes amis", this.amis);
+    this.amis2.forEach(ami => {
+      this.isOnline(ami);
+      //this.getSenderMessage(this.utilisateur.uid, ami.utilisateur.uid, ami);
+    });
+  }
+
   setAmis() {
     // Mes amis
     this.amis = this.profilsResultats.filter(profil => {
       return this.sontIlsAmis(profil);
     });
-    console.log("mes amis", this.amis);
-
+    this.amis = this.amis.sort((a: Profil, b: Profil) => {
+      return new Date(a.lastConnexionDate).getTime() -
+        new Date(b.lastConnexionDate).getTime() >
+        0
+        ? -1
+        : 1;
+    });
+    //console.log("mes amis", this.amis);
+    this.amis.forEach(ami => {
+      this.isOnline(ami);
+      this.getSenderMessage(this.utilisateur.uid, ami.utilisateur.uid, ami);
+    });
     this.propositions = this.profilsResultats.filter(profil => {
       return !this.sontIlsAmis(profil);
     });
@@ -83,16 +116,27 @@ export class MessagesPage implements OnInit {
     //return this.chatService.isUserOnline(user);
     let curentDate = new Date().getTime();
     if (user.lastConnexionDate) {
-      let date = user.lastConnexionDate;
+      let laDate = user.lastConnexionDate;
       // console.log(curentDate - date);
+      /*
+      console.log(new Date().getTime() - new Date(laDate).getTime());
+      console.log(new Date(laDate).getHours());
+      console.log(new Date(laDate).getMinutes());
+      console.log(new Date(laDate).getSeconds());
+      console.log(new Date(laDate).getDate());
+      console.log(new Date(laDate).getFullYear());
+     */
 
-      if (curentDate - date <= 120000) {
-        return true;
+      new Date().getTime() - new Date(laDate).getTime() > 0;
+      if (curentDate - laDate <= 120000) {
+        user["enligne"] = true;
+        // return true;
       } else {
-        return false;
+        user["enligne"] = false;
+        // return false;
       }
     } else {
-      return false;
+      // return false;
     }
   }
 
@@ -104,5 +148,32 @@ export class MessagesPage implements OnInit {
   chat(user: Profil) {
     //this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
     this.router.navigate(["messages", "chat", user.utilisateur.uid]);
+  }
+
+  getSenderMessage(senderID: string, receiverID: string, ami) {
+    const db = firebase.firestore();
+    let id = senderID + "ekang" + receiverID;
+
+    db.collection(`messages`)
+      .doc(id)
+      .onSnapshot(messages => {
+        let changes = messages.data();
+        // this.messages = changes;
+        /* if (this.messages["chats"].length) {
+          this.messagesChat = this.messages["chats"];
+        } */
+        if (changes["chats"] && changes["chats"].length) {
+          /* changes["chats"].reverse().forEach(msg => {
+            if (msg["senderID"] != senderID) {
+              ami["lastMessage"] = msg["texte"];
+            }
+          }); */
+          changes["chats"] = changes["chats"].reverse();
+          ami["lastMessage"] = changes["chats"][0]["texte"];
+          if (changes["chats"][0]["date"]) {
+            ami["ladate"] = changes["chats"][0]["date"];
+          }
+        }
+      });
   }
 }

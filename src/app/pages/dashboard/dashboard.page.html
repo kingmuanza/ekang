@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-searchbar
+        type="text"
+        debounce="500"
+        (ionInput)="getItems($event)"
+      ></ion-searchbar>
+      <ion-list *ngIf="isItemAvailable">
+        <ion-item *ngFor="let p of pays" (click)="choisirPays(p)"
+          >{{ p }}</ion-item
+        >
+      </ion-list>
+    </ion-row>
+    <ion-row *ngIf="lePays">
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="lePays"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input
+            placeholder="Entrer la ville"
+            [(ngModel)]="ville"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="CreateVille()" [disabled]="!ville || !lePays">
+          <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+          &nbsp;Ajouter La ville
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card *ngFor="let item of listVilles">
+    <span>
+      <ion-card-header>
+        <ion-card-title>ville: {{item.ville}}</ion-card-title>
+        <ion-card-subtitle>Pays: {{lePays}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button
+          shape="round"
+          color="secondary"
+          size="small"
+          (click)="EditRecord(item)"
+        >
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button
+          shape="round"
+          color="danger"
+          size="small"
+          (click)="RemoveRecord(item)"
+        >
+          <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </span>
+  </ion-card>
+</ion-content>

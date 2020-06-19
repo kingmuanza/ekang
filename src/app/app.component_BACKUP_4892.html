@@ -1,0 +1,140 @@
+<ion-app>
+<<<<<<< HEAD
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content style="overflow: hidden; height: 100vh; padding-left: 0px!important;">
+        <div style="height: 100vh; width: 100vw; overflow: hidden;">
+          <div class="image-arriere"></div>
+          <div class="page filtre-noir">
+            <div *ngIf="utilisateur" class="muanza-image">
+              <div class="muanza-photo" menuClose (click)="profil()" [ngStyle]="{
+                  'background-image': 'url(' + utilisateur.photoURL + ')'
+                }"></div>
+            </div>
+            <ion-list style="background: none;" id="inbox-list">
+              <ion-list-header *ngIf="utilisateur" style="font-size: 0.8; font-weight: 100; color: #eee;">
+                {{
+                  utilisateur.displayName
+                    ? utilisateur.displayName
+                    : defaultName(utilisateur)
+                }}
+              </ion-list-header>
+              <ion-note *ngIf="utilisateur" style="color: #bbb;">
+                {{ utilisateur.email }}
+              </ion-note>
+
+              <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+                <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
+                  detail="false" [class.selected]="selectedIndex == i">
+                  <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <ion-menu-toggle>
+                <ion-item (click)="ouvrir()">
+                  <ion-icon slot="start" [ios]="'person' + '-outline'" [md]="'person' + '-sharp'"></ion-icon>
+                  <ion-label>Mon Profil</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            </ion-list>
+            <ion-list style="background: none; margin-left: -20px;">
+              <ion-menu-toggle>
+                <ion-item (click)="seDeconnecter()">
+                  <ion-icon slot="start" name="arrow-forward-circle-outline"></ion-icon>
+                  <ion-label>Log out</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            </ion-list>
+          </div>
+        </div>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
+=======
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content style="padding-left: 0px!important;">
+      <div style="height: 100vh; width: 100vw; overflow: hidden;">
+        <div class="image-arriere"></div>
+        <div class="page filtre-noir">
+          <div *ngIf="utilisateur" class="muanza-image">
+            <div
+              class="muanza-photo"
+              menuClose
+              (click)="profil()"
+              [ngStyle]="{
+                'background-image': 'url(' + utilisateur.photoURL + ')'
+              }"
+            ></div>
+          </div>
+          <ion-list style="background: none;" id="inbox-list">
+            <ion-list-header
+              *ngIf="utilisateur"
+              style="font-size: 0.8; font-weight: 100; color: #eee;"
+            >
+              {{
+                utilisateur.displayName
+                  ? utilisateur.displayName
+                  : defaultName(utilisateur)
+              }}
+            </ion-list-header>
+            <ion-note *ngIf="utilisateur" style="color: #bbb;">
+              {{ utilisateur.email }}
+            </ion-note>
+
+            <ion-menu-toggle>
+              <ion-item routerLink="tabs/accueil">
+                <ion-icon
+                  slot="start"
+                  [ios]="'home' + '-outline'"
+                  [md]="'home' + '-sharp'"
+                ></ion-icon>
+                <ion-label>Accueil</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle
+              auto-hide="false"
+              *ngFor="let p of appPages; let i = index"
+            >
+              <ion-item
+                (click)="selectedIndex = i"
+                routerDirection="root"
+                [routerLink]="[p.url]"
+                lines="none"
+                detail="false"
+                [class.selected]="selectedIndex == i"
+              >
+                <ion-icon
+                  slot="start"
+                  [ios]="p.icon + '-outline'"
+                  [md]="p.icon + '-sharp'"
+                ></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle>
+              <ion-item (click)="ouvrir()">
+                <ion-icon
+                  slot="start"
+                  [ios]="'person' + '-outline'"
+                  [md]="'person' + '-sharp'"
+                ></ion-icon>
+                <ion-label>Mon Profil</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle>
+              <ion-item (click)="seDeconnecter()">
+                <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                <ion-label>Log out</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </div>
+      </div>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-app>
+>>>>>>> 320794de4e4cfd402cb43848b13409da433a16db
