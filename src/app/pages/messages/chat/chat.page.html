@@ -40,7 +40,7 @@
         </div>
       </div>
       <div *ngFor="let message of messagesDate.messages">
-        <div *ngIf="message.senderID != senderId" class="message other-message">
+        <div *ngIf="message.emetteurID != senderId" class="message other-message">
           <span>
             {{ message.texte }}
             <small *ngIf="message.date">
@@ -48,7 +48,7 @@
             </small>
           </span>
         </div>
-        <div (click)="presentActionSheet(message)" offset="3" size="9" *ngIf="message.senderID === senderId"
+        <div (click)="presentActionSheet(message)" offset="3" size="9" *ngIf="message.emetteurID === senderId"
           class="message my-message">
           <span>
             {{ message.texte }}
@@ -60,46 +60,6 @@
       </div>
     </ng-container>
   </ion-grid>
-
-  <!--
-    <div class="stream" *ngIf="messages">
-    <ion-item lines="none" *ngFor="let message of messagesChat">
-      <ion-badge
-        class="line-breaker right-bubble"
-        text-wrap
-        slot="start"
-        color="light"
-        *ngIf="message.senderID != senderId"
-        >{{ message.texte }}</ion-badge
-      >
-      <ion-badge
-        class="line-breaker left-bubble"
-        text-wrap
-        slot="end"
-        color="primary"
-        *ngIf="message.senderID == senderId"
-        >{{ message.texte }}</ion-badge
-      >
-    </ion-item>
-    
-  </div>
-    <ion-footer no-border>
-    <div class="input-wrap">
-      <textarea
-        #messageInput
-        placeholder="Enter your message!"
-        [(ngModel)]="messageText"
-        (keyup.enter)="sendMessage()"
-      >
-      </textarea>
-
-      <button ion-button clear icon-only item-right (click)="sendMessage()">
-        SEND
-        <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
-      </button>
-    </div>
-  </ion-footer>
- -->
 </ion-content>
 
 <ion-footer>
@@ -107,13 +67,13 @@
     <ion-row align-items-center no-padding>
       <ion-col size="10">
         <ion-textarea class="msg-input" rows="1" autosize maxRows="3" [(ngModel)]="messageText"
-          (keyup.enter)="sendMessage()">
+          (keyup.enter)="envoyerMessage()">
         </ion-textarea>
       </ion-col>
       <ion-col size="2">
         <div style="margin-top: 12px;">
-          <ion-button expand="block" fill="clear" color="primary" [disabled]="messageText === ''" class="msg-btn"
-            (click)="sendMessage()">
+          <ion-button [disabled]="!messageText" expand="block" fill="clear" color="primary" class="msg-btn"
+            (click)="envoyerMessage()">
             <ion-icon name="send" slot="icon-only"></ion-icon>
           </ion-button>
         </div>

@@ -11,51 +11,30 @@
 </ion-header>
 
 <ion-content>
-  <ion-item *ngFor="let user of amis" (click)="chat(user)">
-    <ion-avatar slot="start">
-      <img [src]="user.utilisateur.photoURL ? user.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
+  <ion-item *ngFor="let chat of chats" (click)="goToChat(chat)">
+    <ion-avatar *ngIf="chat.profil1.utilisateur.uid === utilisateur.uid" slot="start">
+      <img [src]="chat.profil2.utilisateur.photoURL ? chat.profil2.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
+    </ion-avatar>
+    <ion-avatar *ngIf="chat.profil2.utilisateur.uid === utilisateur.uid" slot="start">
+      <img [src]="chat.profil1.utilisateur.photoURL ? chat.profil1.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
     </ion-avatar>
     <ion-label>
-      <h3>
-        {{ user.utilisateur.displayName ? user.utilisateur.displayName:
+      <h3 *ngIf="chat.profil2.utilisateur.uid === utilisateur.uid">
+        {{ chat.profil1.utilisateur.displayName ? chat.profil1.utilisateur.displayName:
+          'inconnu'}}
+      </h3>
+      <h3 *ngIf="chat.profil1.utilisateur.uid === utilisateur.uid">
+        {{ chat.profil2.utilisateur.displayName ? chat.profil2.utilisateur.displayName:
           'inconnu'}}
       </h3>
       <p>
-        Listen, I've had a pretty messed up day...
+        <span *ngIf="chat.dernierMessages[0]">
+          {{chat.dernierMessages[0].texte}}
+        </span>
       </p>
     </ion-label>
-    <ion-note slot="end">12:54</ion-note>
+    <ion-note slot="end">
+      {{getDate(chat) | date: 'HH:mm'}}
+    </ion-note>
   </ion-item>
-
-  <!--
-
-   <ion-list>
-    <ion-item class="user-item" *ngFor="let user of amis">
-      <div class="user-avatar">
-        <img
-          [src]="user.utilisateur.photoURL ? user.utilisateur.photoURL: '../../../assets/img/user.png'"
-          alt=""
-        />
-      </div>
-      <ion-label class="user-name">
-        {{ user.utilisateur.displayName ? user.utilisateur.displayName:
-        'inconnu'}}
-      </ion-label>
-      <div class="user-presence">
-        <ion-icon
-          [class.user-online]="isOnline(user)"
-          name="radio-button-on"
-        ></ion-icon>
-      </div>
-      <div>
-        <ion-button
-          size="small"
-          [routerLink]="['/messages', 'chat', user.utilisateur.uid]"
-        >
-          <ion-icon name="chatbubbles"></ion-icon>
-        </ion-button>
-      </div>
-    </ion-item>
-  </ion-list>
- -->
 </ion-content>

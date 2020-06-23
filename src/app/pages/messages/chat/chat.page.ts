@@ -8,6 +8,8 @@ import { Message } from "src/app/models/message.model";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import * as firebase from "firebase";
 import { IonContent, ActionSheetController } from "@ionic/angular";
+import { MessageChat } from 'src/app/models/message.chat.model';
+import { Chat } from 'src/app/models/chat.model';
 
 @Component({
   selector: "app-chat",
@@ -22,12 +24,14 @@ export class ChatPage implements OnInit {
   sontAmis = false;
   utilisateur: firebase.User;
   utilisateurSubscription: Subscription;
-  messages: any;
+  messages = new Array<MessageChat>();
   messagesChat = [];
   messageText: any;
   senderId: string;
   receiverId: string;
   actionSheet: any;
+  chat: Chat;
+  messagesGroupes = [];
 
   constructor(
     private userService: UserService,
@@ -50,17 +54,23 @@ export class ChatPage implements OnInit {
       if (id) {
         this.userService.getProfilByID(id).then(profil => {
           this.profil = profil;
-
-          // console.log(profil);
           this.receiverId = this.profil.utilisateur.uid;
           this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
-            utilisateur => {
-              this.utilisateur = utilisateur;
-              this.senderId = utilisateur.uid;
-              this.getSenderMessage(this.senderId, this.receiverId);
-              this.userService.getProfil(this.utilisateur).then(monProfil => {
-                this.monProfil = monProfil;
-              });
+            (utilisateur) => {
+
+              if (!utilisateur) {
+                this.router.navigate(['connexion']);
+              } else {
+                this.utilisateur = utilisateur;
+                this.senderId = utilisateur.uid;
+                this.getMessages(this.senderId, this.receiverId);
+                this.userService.getProfil(this.utilisateur).then(monProfil => {
+                  this.monProfil = monProfil;
+                  this.chat = new Chat(profil, monProfil);
+                  console.log('this.chat');
+                  console.log(this.chat);
+                });
+              }
             }
           );
 
@@ -87,14 +97,14 @@ export class ChatPage implements OnInit {
     await actionSheet.present();
   }
 
-  messageGroupe(messages: Array<any>) {
+  messageGroupe(messages: Array<MessageChat>) {
     let groupes = {
 
     } as any;
 
-    messages['chats'].forEach((message) => {
+    messages.forEach((message) => {
       if (message.date) {
-        const key = new Date(message.date.seconds*1000).toISOString().split('T')[0];
+        const key = new Date(message.date).toISOString().split('T')[0];
         if (groupes[key]) {
 
         } else {
@@ -103,7 +113,7 @@ export class ChatPage implements OnInit {
         groupes[key].push(message);
       }
     });
-    
+
     const messagesGroupesParDate = [];
     const keys = Object.keys(groupes);
     keys.forEach((key) => {
@@ -112,22 +122,24 @@ export class ChatPage implements OnInit {
         messages: groupes[key]
       });
     });
-    console.log('messagesGroupesParDate');
-    console.log(messagesGroupesParDate);
+    // console.log('messagesGroupesParDate');
+    // console.log(messagesGroupesParDate);
     return messagesGroupesParDate;
 
   }
 
-  supprimerMessage(message) {
+  supprimerMessage(message: MessageChat) {
     if (!this.messages) {
       console.log("rien");
     } else {
-      this.messages.chats = this.messages.chats.filter((element) => {
-        const isText = message.texte === element.texte;
-        const isDate = message.date === element.date;
-        return !(isText && isDate);
+      this.messages = this.messages.filter((element) => {
+        const isID = message.id === element.id;
+        return !(isID);
       });
-      this.saveMessageChat2(this.messages);
+      const db = firebase.firestore();
+      db.collection(`messagesChats`).doc(message.id).delete().then(() => {
+
+      });
     }
     setTimeout(() => {
       this.content.scrollToBottom(200);
@@ -135,154 +147,67 @@ export class ChatPage implements OnInit {
     this.messageText = "";
   }
 
-  sendMessage() {
-    if (!this.messages) {
-      console.log("rien");
 
-      const message = new Message(
-        this.messageText,
-        this.senderId,
-        this.receiverId
-      );
-      let tab = [];
-      tab.push({
-        senderID: this.senderId,
-        receiverID: this.receiverId,
-        texte: this.messageText,
-        date: new Date()
-      });
-      let msg = {
-        senderID: this.senderId,
-        receiverID: this.receiverId,
-        texte: this.messageText,
-        date: new Date()
-        // user: this.utilisateur
-      };
-      message["chats"] = tab;
-      this.saveMessageChat(message);
-      this.sendEmail(this.profil, msg);
-    } else {
-      this.messages.chats.push({
-        senderID: this.senderId,
-        receiverID: this.receiverId,
-        texte: this.messageText,
-        date: new Date()
-      });
-      let msg = {
-        senderID: this.senderId,
-        receiverID: this.receiverId,
-        texte: this.messageText,
-        date: new Date()
-        // user: this.utilisateur
-      };
-      this.saveMessageChat2(this.messages);
-      this.sendEmail(this.profil, msg);
-    }
-
-    setTimeout(() => {
-      this.content.scrollToBottom(200);
+  getIDChat(senderID: string, receiverID: string) {
+    let ids = [];
+    ids.push(senderID);
+    ids.push(receiverID);
+    ids = ids.sort();
+    let ID = '';
+    ids.forEach((id) => {
+      ID = ID + id;
     });
-
-    this.messageText = "";
+    return ID;
   }
 
-  saveMessageChat(message: Message) {
-    this.messagerie
-      .saveMessage(message, this.senderId, this.receiverId)
-      .then(() => {
-        if (this.profil.sendersMessages) {
-          this.profil.sendersMessages = this.profil.sendersMessages.filter(
-            elt => {
-              return elt !== this.senderId;
-            }
-          );
-          this.profil.sendersMessages.unshift(this.senderId);
-        } else {
-          this.profil.sendersMessages = [];
-          this.profil.sendersMessages.unshift(this.senderId);
-        }
-
-        this.userService.updateProfil(this.profil).then(() => {
-          // this.router.navigate(['publications']);
-          // console.log("update");
-        });
-      });
-  }
-
-  saveMessageChat2(message: Message) {
-    this.messagerie
-      .saveMessage2(message, this.senderId, this.receiverId)
-      .then(() => {
-        if (this.profil.sendersMessages) {
-          this.profil.sendersMessages = this.profil.sendersMessages.filter(
-            elt => {
-              return elt !== this.senderId;
-            }
-          );
-          this.profil.sendersMessages.unshift(this.senderId);
-        } else {
-          this.profil.sendersMessages = [];
-          this.profil.sendersMessages.unshift(this.senderId);
-        }
-
-        this.userService.updateProfil(this.profil).then(() => {
-          // this.router.navigate(['publications']);
-          console.log("update");
-        });
-      });
-  }
-
-  getSenderMessage(senderID: string, receiverID: string) {
+  getMessages(senderID: string, receiverID: string) {
+    this.messages = [];
+    console.log('messages...');
     const db = firebase.firestore();
-    let id = senderID + "ekang" + receiverID;
-    //  console.log(id);
-
-    db.collection(`messages`)
-      .doc(id)
-      .onSnapshot(messages => {
-        let changes = messages.data();
-        console.log(changes);
-        this.messages = changes;
-        this.messageGroupe(this.messages);
-        if (this.messages["chats"] && this.messages["chats"].length) {
-          this.messagesChat = this.messages["chats"];
-        }
+    let ID = this.getIDChat(senderID, receiverID);
+    db.collection(`messagesChats`)
+      .where('chatID', '==', ID)
+      .orderBy('date')
+      .onSnapshot((resultats) => {
+        this.messages = [];
+        resultats.forEach((resultat) => {
+          const message = resultat.data() as MessageChat;
+          this.messages.push(message);
+        })
+        this.messagesGroupes = this.messageGroupe(this.messages);
       });
   }
-  sendEmail(profil: Profil, message) {
-    let curentDate = new Date().getTime();
-    if (profil.lastConnexionDate) {
-      let date = profil.lastConnexionDate;
-      if (curentDate - date > 120000) {
-        this.userService.updateProfil(profil).then(() => {
-          this.envoyeurEmail({
-            email: profil.utilisateur.email,
-            name: profil.utilisateur.displayName
-          });
-        });
 
-        return;
-      }
-    } else if (!profil.lastConnexionDate) {
-      //  console.log(profil);
-      this.envoyeurEmail({
-        email: profil.utilisateur.email,
-        name: profil.utilisateur.displayName
-      });
-      return;
-    } else {
-      return false;
+  envoyerMessage() {
+    if (this.messageText) {
+      let ID = this.getIDChat(this.senderId, this.receiverId);
+      const messageChat = new MessageChat();
+      messageChat.chatID = this.chat.id;
+      messageChat.texte = this.messageText;
+      messageChat.emetteurID = this.monProfil.utilisateur.uid;
+      messageChat.date = new Date();
+      this.chat.dernierMessages = [];
+      this.chat.dernierMessages.push(messageChat);
+      this.chat.dernierMessageDate = new Date();
+      
+      const db = firebase.firestore();
+      db.collection(`messagesChats`)
+      .doc(messageChat.id).set(JSON.parse(JSON.stringify(messageChat))).then(() => {
+          this.saveChat(this.chat);
+        });
+      this.messageText = '';
     }
   }
-  envoyeurEmail(data) {
-    const email = firebase.functions().httpsCallable("sendChatEmail");
-    email(data)
-      .then(res => {
-        console.log(res);
+
+  saveChat(chat: Chat) {
+    console.log('chat');
+    console.log(chat);
+
+    const db = firebase.firestore();
+    db.collection(`chats`)
+      .doc(chat.id).set(JSON.parse(JSON.stringify(chat))).then(() => {
+
       })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   resolveDate(date) {

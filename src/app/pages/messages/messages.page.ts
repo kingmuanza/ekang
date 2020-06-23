@@ -5,6 +5,7 @@ import { AuthentificationService } from "src/app/services/authentification.servi
 import { Router } from "@angular/router";
 import { UserService } from "src/app/services/user.service";
 import { Profil } from "src/app/models/profil.model";
+import { Chat } from 'src/app/models/chat.model';
 
 @Component({
   selector: "app-messages",
@@ -20,6 +21,7 @@ export class MessagesPage implements OnInit {
   amis = new Array<Profil>();
   amis2 = new Array<Profil>();
   propositions = new Array<Profil>();
+  chats = new Array<Chat>();
 
   saisie = "";
 
@@ -27,11 +29,11 @@ export class MessagesPage implements OnInit {
     private userService: UserService,
     private router: Router,
     public auth: AuthentificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
-      utilisateur => {
+      (utilisateur) => {
         this.utilisateur = utilisateur;
         this.userService.getProfil(this.utilisateur).then(monProfil => {
           this.monProfil = monProfil;
@@ -40,6 +42,7 @@ export class MessagesPage implements OnInit {
         if (!utilisateur) {
           this.router.navigate(["connexion"]);
         } else {
+          this.getChats();
           this.userService.getProfils().then(profils => {
             //  console.log(profils);
 
@@ -53,6 +56,21 @@ export class MessagesPage implements OnInit {
       }
     );
     this.auth.emettre();
+  }
+
+  getChats() {
+    this.chats = [];
+    console.log('Get chats');
+    console.log(this.utilisateur.uid);
+    const db = firebase.firestore();
+    db.collection(`chats`)
+      .where('chatersID', 'array-contains', this.utilisateur.uid)
+      .get().then((resultats) => {
+        resultats.forEach((resultat) => {
+          const chat = resultat.data() as Chat;
+          this.chats.push(chat);
+        });
+      });
   }
 
   messageRecu() {
@@ -69,10 +87,8 @@ export class MessagesPage implements OnInit {
         ? -1
         : 1;
     });
-    //console.log("mes amis", this.amis);
     this.amis2.forEach(ami => {
       this.isOnline(ami);
-      //this.getSenderMessage(this.utilisateur.uid, ami.utilisateur.uid, ami);
     });
   }
 
@@ -117,38 +133,32 @@ export class MessagesPage implements OnInit {
     let curentDate = new Date().getTime();
     if (user.lastConnexionDate) {
       let laDate = user.lastConnexionDate;
-      // console.log(curentDate - date);
-      /*
-      console.log(new Date().getTime() - new Date(laDate).getTime());
-      console.log(new Date(laDate).getHours());
-      console.log(new Date(laDate).getMinutes());
-      console.log(new Date(laDate).getSeconds());
-      console.log(new Date(laDate).getDate());
-      console.log(new Date(laDate).getFullYear());
-     */
-
       new Date().getTime() - new Date(laDate).getTime() > 0;
       if (curentDate - laDate <= 120000) {
         user["enligne"] = true;
-        // return true;
       } else {
         user["enligne"] = false;
-        // return false;
       }
     } else {
-      // return false;
     }
   }
 
-  voir() {
-    //this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
-    this.router.navigate(["messages", "chat"]);
+  goToChat(chat: Chat) {
+    const profil1 = chat.profil1;
+    const profil2 = chat.profil1;
+    if (profil1.utilisateur.uid === this.utilisateur.uid) {
+      this.router.navigate(["messages", "chat", profil1.utilisateur.uid]);
+    } else {
+      this.router.navigate(["messages", "chat", profil2.utilisateur.uid]);
+    }
   }
 
-  chat(user: Profil) {
-    //this.router.navigate(['amis', 'amis-view', this.publication.utilisateur.uid]);
-    this.router.navigate(["messages", "chat", user.utilisateur.uid]);
+  getDate(chat: Chat) {
+    
+    return new Date(chat.dernierMessageDate);
   }
+
+
 
   getSenderMessage(senderID: string, receiverID: string, ami) {
     const db = firebase.firestore();
@@ -158,16 +168,7 @@ export class MessagesPage implements OnInit {
       .doc(id)
       .onSnapshot(messages => {
         let changes = messages.data();
-        // this.messages = changes;
-        /* if (this.messages["chats"].length) {
-          this.messagesChat = this.messages["chats"];
-        } */
         if (changes["chats"] && changes["chats"].length) {
-          /* changes["chats"].reverse().forEach(msg => {
-            if (msg["senderID"] != senderID) {
-              ami["lastMessage"] = msg["texte"];
-            }
-          }); */
           changes["chats"] = changes["chats"].reverse();
           ami["lastMessage"] = changes["chats"][0]["texte"];
           if (changes["chats"][0]["date"]) {
