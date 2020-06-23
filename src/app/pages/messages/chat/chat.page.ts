@@ -7,7 +7,7 @@ import { MessagerieService } from "src/app/services/messagerie.service";
 import { Message } from "src/app/models/message.model";
 import { AuthentificationService } from "src/app/services/authentification.service";
 import * as firebase from "firebase";
-import { IonContent } from "@ionic/angular";
+import { IonContent, ActionSheetController } from "@ionic/angular";
 
 @Component({
   selector: "app-chat",
@@ -27,12 +27,15 @@ export class ChatPage implements OnInit {
   messageText: any;
   senderId: string;
   receiverId: string;
+  actionSheet: any;
+
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
     public auth: AuthentificationService,
     private router: Router,
-    private messagerie: MessagerieService
+    private messagerie: MessagerieService,
+    public actionSheetController: ActionSheetController
   ) {
     setTimeout(() => {
       this.content.scrollToBottom(200);
@@ -65,6 +68,71 @@ export class ChatPage implements OnInit {
         });
       }
     });
+  }
+
+  async presentActionSheet(message) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Actions',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Supprimer',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+          this.supprimerMessage(message);
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  messageGroupe(messages: Array<any>) {
+    let groupes = {
+
+    } as any;
+
+    messages['chats'].forEach((message) => {
+      if (message.date) {
+        const key = new Date(message.date.seconds*1000).toISOString().split('T')[0];
+        if (groupes[key]) {
+
+        } else {
+          groupes[key] = []
+        }
+        groupes[key].push(message);
+      }
+    });
+    
+    const messagesGroupesParDate = [];
+    const keys = Object.keys(groupes);
+    keys.forEach((key) => {
+      messagesGroupesParDate.push({
+        date: key,
+        messages: groupes[key]
+      });
+    });
+    console.log('messagesGroupesParDate');
+    console.log(messagesGroupesParDate);
+    return messagesGroupesParDate;
+
+  }
+
+  supprimerMessage(message) {
+    if (!this.messages) {
+      console.log("rien");
+    } else {
+      this.messages.chats = this.messages.chats.filter((element) => {
+        const isText = message.texte === element.texte;
+        const isDate = message.date === element.date;
+        return !(isText && isDate);
+      });
+      this.saveMessageChat2(this.messages);
+    }
+    setTimeout(() => {
+      this.content.scrollToBottom(200);
+    });
+    this.messageText = "";
   }
 
   sendMessage() {
@@ -175,7 +243,8 @@ export class ChatPage implements OnInit {
         let changes = messages.data();
         console.log(changes);
         this.messages = changes;
-        if (this.messages["chats"].length) {
+        this.messageGroupe(this.messages);
+        if (this.messages["chats"] && this.messages["chats"].length) {
           this.messagesChat = this.messages["chats"];
         }
       });
@@ -217,7 +286,7 @@ export class ChatPage implements OnInit {
   }
 
   resolveDate(date) {
-    if(date.seconds) {
+    if (date.seconds) {
       return date.toDate();
     } else {
       return date;

@@ -103,3 +103,24 @@ ion-input {
   display: flex;
   justify-content: space-between;
 }
+
+.division {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  .ligne {
+    height: 10px;
+    border-bottom: 1px solid #888;
+  }
+  .texte {
+    text-align: center;
+    margin-top: -15px;
+    span {
+      padding: 7px;
+      padding-left: 13px;
+      padding-right: 13px;
+      font-size: 20px;
+      color: #444;
+      background-color: #fff;
+    }
+  }
+}
