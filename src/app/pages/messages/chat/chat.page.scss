@@ -2,6 +2,7 @@
   color: grey;
   font-weight: 400;
   font-size: 13px;
+  margin-top: -2px;
 }
 ion-header ion-avatar {
   padding: 3px;
@@ -25,15 +26,36 @@ ion-item {
   margin-bottom: 4px;
 }
 
+@keyframes message {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes message2 {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
 .other-message {
   span {
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     background: #eee;
     color: #000;
     line-height: 1.5;
     display: inline-block;
     max-width: 80%;
+    font-size: 0.9em;
   }
   small {
     padding-left: 20px;
@@ -48,10 +70,13 @@ ion-item {
     display: inline-block;
     max-width: 80%;
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     line-height: 1.5;
     background: var(--ion-color-primary);
     color: #fff;
+    font-size: 0.9em;
   }
   small {
     padding-left: 20px;
@@ -109,7 +134,7 @@ ion-input {
   margin-bottom: 5px;
   .ligne {
     height: 10px;
-    border-bottom: 1px solid #888;
+    border-bottom: 1px solid #bbb;
   }
   .texte {
     text-align: center;
@@ -119,7 +144,7 @@ ion-input {
       padding-left: 13px;
       padding-right: 13px;
       font-size: 20px;
-      color: #444;
+      color: #bbb;
       background-color: #fff;
     }
   }

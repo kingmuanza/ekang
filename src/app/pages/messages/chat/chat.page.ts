@@ -47,17 +47,17 @@ export class ChatPage implements OnInit {
   }
 
   ngOnInit() {
+    this.profil = JSON.parse(localStorage.getItem('interlocuteurEkang'));
     this.route.paramMap.subscribe(params => {
       const id = params.get("id");
+      console.log('ID du recepteur');
       console.log(id);
-
       if (id) {
-        this.userService.getProfilByID(id).then(profil => {
-          this.profil = profil;
-          this.receiverId = this.profil.utilisateur.uid;
-          this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(
-            (utilisateur) => {
-
+        this.userService.getProfilByID(id).then((profil) => {
+          if (profil) {
+            this.profil = profil;
+            this.receiverId = this.profil.utilisateur.uid;
+            this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe((utilisateur) => {
               if (!utilisateur) {
                 this.router.navigate(['connexion']);
               } else {
@@ -71,10 +71,11 @@ export class ChatPage implements OnInit {
                   console.log(this.chat);
                 });
               }
-            }
-          );
-
-          this.auth.emettre();
+            });
+            this.auth.emettre();
+          } else {
+            console.log('On ne retrouve plus le profil');
+          }
         });
       }
     });
@@ -189,10 +190,10 @@ export class ChatPage implements OnInit {
       this.chat.dernierMessages = [];
       this.chat.dernierMessages.push(messageChat);
       this.chat.dernierMessageDate = new Date();
-      
+
       const db = firebase.firestore();
       db.collection(`messagesChats`)
-      .doc(messageChat.id).set(JSON.parse(JSON.stringify(messageChat))).then(() => {
+        .doc(messageChat.id).set(JSON.parse(JSON.stringify(messageChat))).then(() => {
           this.saveChat(this.chat);
         });
       this.messageText = '';

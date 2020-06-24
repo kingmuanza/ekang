@@ -1,33 +1,26 @@
 <ion-header *ngIf="profil">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-      <div style="padding: 8px;" slot="end">
-        <img style="height: 45px; width: 45px; border-radius: 50%;"
+      <ion-back-button color="primary"></ion-back-button>
+      <div style="padding: 8px; padding-right: 0px;" slot="end">
+        <img style="height: 40px; width: 40px; border-radius: 50%;"
           [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
       </div>
     </ion-buttons>
     <ion-title>
-      {{ profil.utilisateur.displayName ? profil.utilisateur.displayName:
-      'inconnu'}}<br />
+      <div>
+        {{ profil.utilisateur.displayName ? profil.utilisateur.displayName:'inconnu'}}
+        </div>
       <div class="status">En ligne</div>
     </ion-title>
 
     <ion-buttons slot="end">
+      <ion-button color="primary">
+        <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!--
-  <ion-header>
-  <ion-toolbar>
-    <ion-title>chat</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
--->
-
 <ion-content>
   <ion-grid *ngIf="messages">
     <ng-container *ngFor="let messagesDate of messageGroupe(messages)">
