@@ -27,6 +27,7 @@ export class ConnexionPage implements OnInit {
   ngOnInit() {
     this.initConnexionForm();
     console.log("onConnexionFormSubmit");
+    this.connexion('muanza@gmail.com', '123456');
   }
 
   initConnexionForm(): void {
@@ -42,6 +43,10 @@ export class ConnexionPage implements OnInit {
     const value = this.connexionForm.value;
     const login = value.login;
     const passe = value.passe;
+    this.connexion(login, passe);
+  }
+
+  connexion(login: string, passe: string) {
     this.auth
       .connexion(login, passe)
       .then(utilisateur => {

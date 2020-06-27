@@ -1,3 +1,12 @@
+@keyframes apparition {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
 .tweet ion-label {
   line-height: 1 !important;
   font-size: 15px;
@@ -21,6 +30,8 @@
 }
 
 .muanza-card {
+  animation-name: apparition;
+  animation-duration: 400ms;
   padding-left: 0vw;
   padding-right: 0vw;
   padding-top: 1vh;
