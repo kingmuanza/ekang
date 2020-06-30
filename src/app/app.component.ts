@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public actionSheetController: ActionSheetController;
   public appPages = [
-    /* {
+    {
       title: "Accueil",
       url: "accueil",
       icon: "home"
-    },*/
+    },
     {
       title: "Notifications",
       url: "tabs/notifications",

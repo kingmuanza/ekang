@@ -1,24 +1,8 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inscription</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon
-          slot="icon-only"
-          ios="ellipsis-horizontal"
-          md="ellipsis-vertical"
-        ></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <div class="image-arriere">
-    <div class="page">
+  </div>
+  <div class="page">
+    <div class="contenu">
       <div>
         <h1>
           Ekang
@@ -30,21 +14,10 @@
         <br />
         ci-dessous !
       </p>
-      <form
-        [formGroup]="inscriptionForm"
-        (ngSubmit)="onInscriptionFormSubmit()"
-      >
+      <form [formGroup]="inscriptionForm" (ngSubmit)="onInscriptionFormSubmit()">
         <input formControlName="login" type="text" placeholder="Email" />
-        <input
-          formControlName="passe"
-          type="password"
-          placeholder="Mot de passe"
-        />
-        <input
-          formControlName="confirmation"
-          type="password"
-          placeholder="Confirmation"
-        />
+        <input formControlName="passe" type="password" placeholder="Mot de passe" />
+        <input formControlName="confirmation" type="password" placeholder="Confirmation" />
 
         <div class="connexion">
           <button [disabled]="inscriptionForm.invalid" class="bg-primaire">

@@ -32,6 +32,8 @@ export class AccueilPage implements OnInit {
   sliderConfig = {
     //slidesPerView: 1.6,
     //spaceBetween: 10,
+    autoplay:true,
+    speed: 500,
     centeredSlides: true
   };
   constructor(

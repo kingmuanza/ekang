@@ -12,89 +12,87 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  *ngIf="utilisateur"
-  [scrollEvents]="true"
-  (ionScroll)="onScroll($event)"
->
+<ion-content *ngIf="utilisateur" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <ion-slides [options]="sliderConfig" pager="true" #one>
     <ion-slide *ngIf="!phoneNumber">
-      <ion-list>
-        <ion-icon class="iconClose" slot="start" name="close"></ion-icon>
-        <ion-item lines="none">
-          <ion-icon class="myicon" slot="start" name="call-outline"></ion-icon>
-          <ion-label class="ion-text-wrap">
-            <h3>
-              Ajouter votre numéro de téléphone
-            </h3>
-            <ion-text color="secondary">
+      <div style="background-color: rgba(0, 255, 0, 0.1); padding-bottom: 80px; height: 50vh; overflow: hidden;">
+        <div style="padding: 10px; text-align: right; color: #444;">
+          <span style="padding: 10px;">
+            <ion-icon name="close"></ion-icon>
+          </span>
+        </div>
+        <div style="background: none!important;">
+          <div style="font-size: 2.0em;">
+            <ion-icon class="myicon" slot="start" name="call-outline"></ion-icon>
+          </div>
+          <div>
+            <h2 style="font-size: 1.2em; padding-left: 15%; padding-right: 15%;">
+              <b style="color: #111;">
+                Ajouter votre numéro de téléphone
+              </b>
+            </h2>
+            <div style="padding-left: 5%; padding-right: 5%;">
               <p>
-                {{utilisateur.displayName}} Ajouter un numéro de téléphone et
+                {{utilisateur.displayName}} ! Ajoutez un numéro de téléphone et
                 bénéficier de nombreux avantages offertes sur la plateforme
               </p>
-            </ion-text>
-          </ion-label>
-        </ion-item>
-        <ion-button fill="clear" expand="full" (click)="goToProfile()"
-          >Ajouter telephone</ion-button
-        >
-      </ion-list>
+            </div>
+          </div>
+        </div>
+        <div>
+          <ion-button fill="clear" expand="full" (click)="goToProfile()">
+            Ajouter mon numéro
+          </ion-button>
+        </div>
+
+      </div>
     </ion-slide>
     <ion-slide class="slider" *ngIf="!photoURL">
-      <ion-list>
-        <ion-item lines="none">
-          <ion-icon
-            class="myicon"
-            slot="start"
-            name="camera-outline"
-          ></ion-icon>
-          <ion-label class="ion-text-wrap">
+      <div>
+        <div lines="none">
+          <div>
+            <ion-icon class="myicon" slot="start" name="camera-outline"></ion-icon>
+          </div>
+          <div class="ion-text-wrap">
             <h3>
               Ajouter une photo de profil pour obtenir plus de vues de profil
             </h3>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+          </div>
+        </div>
+      </div>
     </ion-slide>
     <ion-slide class="slider" *ngIf="!userProgram">
-      <ion-list>
-        <ion-item lines="none">
-          <ion-icon
-            class="myicon"
-            slot="start"
-            name="document-text-outline"
-          ></ion-icon>
-          <ion-label class="ion-text-wrap">
-            <h3>
-              Obtenez une bourse d'études, un financement pour votre projet,
+      <div style="background-color: rgba(0, 255, 0, 0.1); padding-bottom: 80px; height: 50vh; overflow: hidden;">
+        <div style="padding: 10px; text-align: right; color: #444;">
+          <span style="padding: 10px;">
+            <ion-icon name="close"></ion-icon>
+          </span>
+        </div>
+        <div>
+          <div style="font-size: 2.0em;">
+            <ion-icon class="myicon" slot="start" name="document-text-outline"></ion-icon>
+          </div>
+          <h2 style="font-size: 1.2em; padding-left: 15%; padding-right: 15%;">
+            <b style="color: #111;">
+              Assistance Ekang
+            </b>
+          </h2>
+          <div style="padding-left: 5%; padding-right: 5%;">
+            <p>
+              Obtenez une bourse d'étude, un financement pour votre projet,
               ...etc en vous inscrivant au programme d'assistance ekang
-            </h3>
-          </ion-label>
-        </ion-item>
-        <ion-button fill="clear" expand="full" (click)="goToProgramme()"
-          >Inscrivez vous</ion-button
-        >
-      </ion-list>
+            </p>
+          </div>
+        </div>
+        <ion-button fill="clear" expand="full" (click)="goToProgramme()">Inscrivez vous</ion-button>
+      </div>
     </ion-slide>
   </ion-slides>
   <div class="divcontent" *ngIf="all">
-    <ion-button
-      class="firstBtn"
-      expand="block"
-      fill="clear"
-      (click)="nouveau()"
-      [hidden]="jeScrool"
-    >
-      <ion-icon slot="start" name="share-outline"></ion-icon>
-      Partagez votre avis</ion-button
-    >
     <ng-container class="firstContainer" *ngFor="let publication of all">
       <ng-container *ngIf="publication.texte">
-        <app-publication-item
-          [montrerLeDernierCommentaire]="true"
-          [publication]="publication"
-          [utilisateur]="utilisateur"
-        >
+        <app-publication-item [montrerLeDernierCommentaire]="true" [publication]="publication"
+          [utilisateur]="utilisateur">
         </app-publication-item>
       </ng-container>
     </ng-container>
@@ -147,11 +145,7 @@
         </ion-label>
       </ion-item>
       <ion-item>
-        <ion-skeleton-text
-          animated
-          style="width: 27px; height: 27px"
-          slot="start"
-        ></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 27px; height: 27px" slot="start"></ion-skeleton-text>
         <ion-label>
           <h3>
             <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
