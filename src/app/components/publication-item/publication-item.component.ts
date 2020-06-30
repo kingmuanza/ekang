@@ -179,11 +179,11 @@ export class PublicationItemComponent implements OnInit, OnChanges {
             const profil = this.getNameFromEmailInIdentification(email);
             textDeRetour =
               textDeRetour +
-              '<a href="amis/amis-view/' +
+              '<b ' +
               profil.utilisateur.uid +
               '" class="vert">' +
               profil.utilisateur.displayName +
-              "</a> ";
+              "</b> ";
           }
         } else {
           textDeRetour = textDeRetour + mot + " ";

@@ -9,7 +9,7 @@
 
 
 
-<ion-content *ngIf="utilisateur">
+<ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)" *ngIf="utilisateur">
   <ng-container *ngFor="let publication of publications">
     <ng-container *ngIf="publication.texte">
       <app-publication-item

@@ -24,8 +24,8 @@ export class PublicationsPage implements OnInit {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe(utilisateur => {
       if (utilisateur) {
         this.utilisateur = utilisateur;
-        this.pubService.getPublicationsFromUser(this.utilisateur).then((publications)=>{
-          if(publications) {
+        this.pubService.getPublicationsFromUser(this.utilisateur).then((publications) => {
+          if (publications) {
             this.publications = publications;
             this.publications.sort((a, b) => {
               return new Date(a.date).getTime() - new Date(b.date).getTime() > 0 ? -1 : 1;
@@ -42,7 +42,12 @@ export class PublicationsPage implements OnInit {
   nouveau() {
     this.router.navigate(['publications', 'publications-edit'])
   }
-onClick(){
-  
-}
+  onClick() {
+
+  }
+
+  logScrolling(event) {
+    console.log('event');
+    console.log(event.detail);
+  }
 }

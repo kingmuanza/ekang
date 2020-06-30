@@ -12,119 +12,133 @@
   <ion-list>
 
     <ng-container *ngFor="let notification of notifications">
-      <ion-item> 
+      <ion-item style="line-height: 1.15;">
         <ion-avatar (click)="voirProfil(notification)" slot="start">
           <img class="image-muanza"
             [src]="notification.profil.utilisateur.photoURL ? notification.profil.utilisateur.photoURL: '../../../assets/img/user.png'">
         </ion-avatar>
         <!--MISE A JOUR DU PROFIL -->
-        <ion-label (click)="voirProfil(notification)" class="ion-text-wrap" *ngIf="notification.type === 'UPDATE_PROFIL'">
-          <b color="primary">
-            {{notification.profil.utilisateur.displayName}}
-          </b>
-          a mis à jour son profil
-          <div class="date">
-            <small>
-              le
-              {{notification.date | date: 'dd-MM-yyyy'}}
-              à
-              {{notification.date | date: 'HH:mm'}}
-            </small>
+        <ion-label (click)="voirProfil(notification)" class="ion-text-wrap"
+          *ngIf="notification.type === 'UPDATE_PROFIL'">
+          <div style="line-height: 1.15; font-size: 0.9em;">
+            <b color="primary">
+              {{notification.profil.utilisateur.displayName}}
+            </b>
+            a mis à jour son profil
+            <div class="date">
+              <small>
+                le
+                {{notification.date | date: 'dd-MM-yyyy'}}
+                à
+                {{notification.date | date: 'HH:mm'}}
+              </small>
+            </div>
           </div>
         </ion-label>
 
         <!-- PUBLICATION -->
-        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'PUBLICATION'">
-          <b ion-text color="primary">
-            {{notification.profil.utilisateur.displayName}}
-          </b>
-          vient de faire une publication :
-          <i *ngIf="notification.publication">
-            "{{couperTexte(notification.publication.texte)}}"
-          </i>
-          <div class="date">
-            <small>
-              le
-              {{notification.date | date: 'dd-MM-yyyy'}}
-              à
-              {{notification.date | date: 'HH:mm'}}
-            </small>
+        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap"
+          *ngIf="notification.type === 'PUBLICATION'">
+          <div style="line-height: 1.15; font-size: 0.9em;">
+            <b ion-text color="primary">
+              {{notification.profil.utilisateur.displayName}}
+            </b>
+            vient de faire une publication :
+            <i *ngIf="notification.publication">
+              "{{couperTexte(notification.publication.texte)}}"
+            </i>
+            <div class="date">
+              <small>
+                le
+                {{notification.date | date: 'dd-MM-yyyy'}}
+                à
+                {{notification.date | date: 'HH:mm'}}
+              </small>
+            </div>
           </div>
         </ion-label>
 
 
         <!-- LIKE -->
         <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'LIKE'">
-          <b ion-text color="primary">
-            {{notification.profil.utilisateur.displayName}}
-          </b>
-          a aimé une publication de 
-          <b *ngIf="notification.publication">
-            {{notification.publication.utilisateur.displayName}}
-          </b>
-          <span> 
-            :
-            <i *ngIf="notification.publication">
-              "{{couperTexte(notification.publication.texte)}}"
-            </i>
-          </span>
-          <div class="date">
-            <small>
-              le
-              {{notification.date | date: 'dd-MM-yyyy'}}
-              à
-              {{notification.date | date: 'HH:mm'}}
-            </small>
+          <div style="line-height: 1.15; font-size: 0.9em;">
+            <b ion-text color="primary">
+              {{notification.profil.utilisateur.displayName}}
+            </b>
+            a aimé une publication de
+            <b *ngIf="notification.publication">
+              {{notification.publication.utilisateur.displayName}}
+            </b>
+            <span>
+              :
+              <i *ngIf="notification.publication">
+                "{{couperTexte(notification.publication.texte)}}"
+              </i>
+            </span>
+            <div class="date">
+              <small>
+                le
+                {{notification.date | date: 'dd-MM-yyyy'}}
+                à
+                {{notification.date | date: 'HH:mm'}}
+              </small>
+            </div>
           </div>
         </ion-label>
 
 
         <!-- COMMENTAIRE -->
-        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'COMMENTAIRE'">
-          <b ion-text color="primary">
-            {{notification.profil.utilisateur.displayName}}
-          </b>
-          a commenté la publication de
-          <b *ngIf="notification.publication">
-            {{notification.publication.utilisateur.displayName}}
-          </b>
-          <span *ngIf="notification.texte">
-            :
-            <i>
-              "{{notification.texte}}"
-            </i>
-          </span>
-          <div class="date">
-            <small>
-              le
-              {{notification.date | date: 'dd-MM-yyyy'}}
-              à
-              {{notification.date | date: 'HH:mm'}}
-            </small>
+        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap"
+          *ngIf="notification.type === 'COMMENTAIRE'">
+          <div style="line-height: 1.15; font-size: 0.9em;">
+            <b ion-text color="primary">
+              {{notification.profil.utilisateur.displayName}}
+            </b>
+            a commenté la publication de
+            <b *ngIf="notification.publication">
+              {{notification.publication.utilisateur.displayName}}
+            </b>
+            <span *ngIf="notification.texte">
+              :
+              <i>
+                "{{notification.texte}}"
+              </i>
+            </span>
+            <div class="date">
+              <small>
+                le
+                {{notification.date | date: 'dd-MM-yyyy'}}
+                à
+                {{notification.date | date: 'HH:mm'}}
+              </small>
+            </div>
           </div>
         </ion-label>
 
 
         <!-- IDENTIFICATION -->
-        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap" *ngIf="notification.type === 'IDENTIFICATION'">
-          <b ion-text color="primary">
-            {{notification.profil.utilisateur.displayName}}
-          </b>
-          a identifié
-          <b *ngIf="notification.identifiee">
-            {{notification.identifiee.utilisateur.displayName}}
-          </b>
-          sur sa publication :
-          <i *ngIf="notification.publication">
-            "{{couperTexte(notification.publication.texte)}}"
-          </i>
-          <div class="date">
-            <small>
-              le
-              {{notification.date | date: 'dd-MM-yyyy'}}
-              à
-              {{notification.date | date: 'HH:mm'}}
-            </small>
+        <ion-label (click)="voirPublication(notification)" class="ion-text-wrap"
+          *ngIf="notification.type === 'IDENTIFICATION'">
+          <div style="line-height: 1.15; font-size: 0.9em;">
+            <b ion-text color="primary">
+              {{notification.profil.utilisateur.displayName}}
+            </b>
+            a identifié
+            <b *ngIf="notification.identifiee">
+              {{notification.identifiee.utilisateur.displayName}}
+            </b>
+            sur sa publication :
+            <i *ngIf="notification.publication">
+              "{{couperTexte(notification.publication.texte)}}"
+            </i>
+            <div class="date">
+              <small>
+                le
+                {{notification.date | date: 'dd-MM-yyyy'}}
+                à
+                {{notification.date | date: 'HH:mm'}}
+              </small>
+            </div>
           </div>
         </ion-label>
 

@@ -1,7 +1,7 @@
 <div class="muanza-card" *ngIf="isShown">
   <ion-item lines="none">
     <ion-avatar slot="start">
-      <img
+      <img style="border: 2px solid #0f9b0f; padding: 2px"
         [src]="
           publication.utilisateur
             ? publication.utilisateur.photoURL
@@ -17,7 +17,7 @@
             : "Aucun utilisateur"
         }}
       </span>
-      <div *ngIf="publication.profil" style="margin-top: -5px; color: #aaa;">
+      <div *ngIf="publication.profil" style="margin-top: -7px; color: #444;">
         <small>
           {{ publication.profil ? publication.profil.ville : "" }},
           {{ publication.profil ? publication.profil.pays : "" }}
@@ -30,14 +30,15 @@
       </small>
     </p>
     <ion-icon
+    color="primary"
       slot="end"
       name="ellipsis-vertical-outline"
       (click)="presentActionSheet()"
       *ngIf="auteur"
     ></ion-icon>
   </ion-item>
-  <div (click)="ouvrirPublication()" style="margin: 15px; margin-top: 10px; line-height: 1.15;">
-    <span style="color: #222;" [innerHTML]="urlify(publication.texte)"></span>
+  <div (click)="ouvrirPublication()" class="ubuntu" style="margin: 15px; font-size: 1.2em; font-weight: 50; margin-top: 10px; line-height: 1.15;">
+    <small style="color: #222;" [innerHTML]="urlify(publication.texte)"></small>
   </div>
   <div *ngIf="!publication.le_type">
     <img
@@ -106,13 +107,13 @@
 
       </ion-button>
       <ion-button
-        style="border-right: 1px solid #eee;"
+        style=""
         size="large"
         color="medium"
         fill="clear"
         (click)="ouvrirPublication()"
       >
-        <ion-icon name="arrow-redo-outline"></ion-icon>
+        <ion-icon name="share-social-outline"></ion-icon>
       </ion-button>
     </div>
   </div>
@@ -129,6 +130,7 @@
   >
     <ion-avatar slot="start">
       <img
+        style="padding: 7px"
         class="image-muanza"
         [src]="
           commentaire.utilisateur.photoURL
