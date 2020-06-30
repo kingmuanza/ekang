@@ -27,7 +27,6 @@ export class ConnexionPage implements OnInit {
   ngOnInit() {
     this.initConnexionForm();
     console.log("onConnexionFormSubmit");
-    this.connexion('muanza@gmail.com', '123456');
   }
 
   initConnexionForm(): void {
