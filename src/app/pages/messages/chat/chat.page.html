@@ -2,16 +2,15 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button color="primary"></ion-back-button>
-      <div style="padding: 8px; padding-right: 0px;" slot="end">
-        <img style="height: 40px; width: 40px; border-radius: 50%;"
-          [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
-      </div>
     </ion-buttons>
+    <div style="padding: 8px; padding-right: 0px; display: inline-block; width: 60px;" slot="start">
+      <img style="height: 40px; width: 40px; border-radius: 50%;"
+        [src]="profil.utilisateur.photoURL ? profil.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
+    </div>
     <ion-title>
-      <div>
+      <div style="display: inline-block;">
         {{ profil.utilisateur.displayName ? profil.utilisateur.displayName:'inconnu'}}
-        </div>
-      <div class="status">En ligne</div>
+      </div>
     </ion-title>
 
     <ion-buttons slot="end">
@@ -28,7 +27,7 @@
         <div class="ligne"></div>
         <div class="texte">
           <span>
-            {{messagesDate.date}}
+            {{messagesDate.date === aujourdhui ? "Aujourd'hui" : messagesDate.date}}
           </span>
         </div>
       </div>
@@ -53,24 +52,20 @@
       </div>
     </ng-container>
   </ion-grid>
+  <div style="height: 200px;">
+
+  </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="light">
-    <ion-row align-items-center no-padding>
-      <ion-col size="10">
-        <ion-textarea class="msg-input" rows="1" autosize maxRows="3" [(ngModel)]="messageText"
-          (keyup.enter)="envoyerMessage()">
-        </ion-textarea>
-      </ion-col>
-      <ion-col size="2">
-        <div style="margin-top: 12px;">
-          <ion-button [disabled]="!messageText" expand="block" fill="clear" color="primary" class="msg-btn"
-            (click)="envoyerMessage()">
-            <ion-icon name="send" slot="icon-only"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-</ion-footer>
+<div style="position: absolute; bottom: 0; width: 100vw; left: 0; background-color: #fff;">
+  <div>
+    <div style="vertical-align: top; display: inline-block; width: 80%; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;">
+      <textarea placeholder="Ecrivez votre message ici..." [(ngModel)]="messageText" (keyup.enter)="envoyerMessage()"></textarea>
+    </div>
+    <div style="vertical-align: top; display: inline-block; width: 20%; text-align: center;">
+        <button class="button muanza" [disabled]="!messageText" (click)="envoyerMessage()">
+          <ion-icon name="send"></ion-icon>
+        </button>
+    </div>
+  </div>
+</div>

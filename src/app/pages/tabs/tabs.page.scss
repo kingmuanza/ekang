@@ -53,28 +53,6 @@ span {
   position: fixed;
   bottom: 0px;
 }
-//le bordeur dans tabs
-ion-tabs ion-tab-bar {
-  //  background: #121212;
-  //  width: 90% !important;
-  //  max-width: 400px !important;
-  // border-radius: 30px;
-  //  margin: 0px 0px 20px 5% !important;
-  // max-height: 56px;
-  // height: 56px;
-}
-//couleurs des icones dans tabs
-ion-tabs ion-tab-button[aria-selected="true"] ion-icon {
-  color: white;
-  -webkit-transform: translate3d(0, -5px, 0);
-  transform: translate3d(0, -5px, 0);
-}
-
-ion-tabs ion-icon {
-  //color: #f2f2f2;
-  padding-bottom: 3px;
-}
-
 //commentaires
 .notificationimage {
   content: url(../../../assets/custumimage/noti1.png) !important;

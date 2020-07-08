@@ -23,12 +23,21 @@ export class MessagesPage implements OnInit {
   propositions = new Array<Profil>();
   chats = new Array<Chat>();
   saisie = "";
+  rechercher = false;
 
   constructor(
     private userService: UserService,
     private router: Router,
     public auth: AuthentificationService
   ) { }
+
+  recherchons() {
+    this.rechercher = true;
+  }
+
+  NeCherchonsPlus() {
+    this.rechercher = false;
+  }
 
   ngOnInit() {
     this.utilisateurSubscription = this.auth.utilisateurSubject.subscribe((utilisateur) => {
@@ -62,6 +71,11 @@ export class MessagesPage implements OnInit {
           const chat = resultat.data() as Chat;
           this.chats.push(chat);
         });
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('this.chats');
+        console.log(this.chats);
       });
   }
 

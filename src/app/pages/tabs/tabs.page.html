@@ -1,37 +1,23 @@
 <ion-tabs #tabs (ionTabsDidChange)="choistab()" *ngIf="!isDesktop">
   <ion-tab-bar>
     <ion-tab-button tab="accueil">
-      <ion-icon class="acceuil"></ion-icon>
-      <ion-label>Acceuil</ion-label>
+      <div></div>
+      <ion-icon color="dark" name="home-outline"></ion-icon>
+      <ion-label>Accueil</ion-label>
     </ion-tab-button>
-    <!--
-      <ion-icon  name="home-sharp"></ion-icon>
-      <ion-tab-button tab="amis">
-      <ion-icon name="people-sharp"></ion-icon>
-      <ion-label>Mes Amis</ion-label>
-    </ion-tab-button>
-     <ion-icon name="notifications-sharp"></ion-icon>
-    -->
-    <ion-tab-button
-      tab="notifications"
-      class="notification"
-      (click)="choistab()"
-    >
-      <ion-badge class="notification-badge">{{nbrNotification}}</ion-badge>
-      <ion-icon class="notificationimage"></ion-icon>
+
+    <ion-tab-button tab="notifications" class="notification" (click)="choistab()">
+      <ion-icon color="dark" name="notifications-outline"></ion-icon>
       <ion-label>Notifications </ion-label>
     </ion-tab-button>
+
     <ion-tab-button tab="recherche">
-      <ion-icon class="interet"></ion-icon>
-      <ion-label>Centre d'intérêt</ion-label>
+      <ion-icon color="dark" name="aperture-outline"></ion-icon>
+      <ion-label>Centres d'intérêt</ion-label>
     </ion-tab-button>
-    <ion-tab-button
-      tab="messages"
-      class="notification"
-      (click)="messageNonlus()"
-    >
-      <ion-badge class="notification-badge">{{msg}}</ion-badge>
-      <ion-icon class="message"></ion-icon>
+
+    <ion-tab-button tab="messages" (click)="messageNonlus()">
+      <ion-icon color="dark" name="mail-outline"></ion-icon>
       <ion-label>Messages</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
@@ -46,31 +32,16 @@
         </ion-col>
         <ion-col size="10">
           <div class="navbar" class="ion-text-center">
-            <ion-button
-              fill="clear"
-              routerLink="/tabs/tab1"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
+            <ion-button fill="clear" routerLink="/tabs/tab1" routerDirection="root" routerLinkActive="active-link"
+              class="link">
               Tab 1
             </ion-button>
-            <ion-button
-              fill="clear"
-              routerLink="/tabs/tab2"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
+            <ion-button fill="clear" routerLink="/tabs/tab2" routerDirection="root" routerLinkActive="active-link"
+              class="link">
               Tab 2
             </ion-button>
-            <ion-button
-              fill="clear"
-              routerLink="/tabs/tab3"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
+            <ion-button fill="clear" routerLink="/tabs/tab3" routerDirection="root" routerLinkActive="active-link"
+              class="link">
               Tab 3
             </ion-button>
           </div>

@@ -30,11 +30,13 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
 // Enelver l'ombre sur le header
+/*
 ion-header {
   &.header-md:after {
     background: none;
   }
 }
+*/
 
 ion-fab-button {
   margin-bottom: 5vw;

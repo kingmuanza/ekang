@@ -19,6 +19,8 @@ import { ShareModule } from "./share.module";
 import { LikeursPageModule } from "./pages/likeurs/likeurs.module";
 import { DisplayvillePageModule } from "./pages/displayville/displayville.module";
 import { ModificationPageModule } from "./pages/modification/modification.module";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 //import Peer from "simple-peer";
 
 //import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -41,6 +43,7 @@ import { ModificationPageModule } from "./pages/modification/modification.module
     LikeursPageModule,
     ModificationPageModule,
     DisplayvillePageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // Peer,
   ],
   providers: [

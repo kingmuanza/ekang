@@ -3,20 +3,26 @@
     <ion-buttons slot="start">
       <ion-menu-button color="primary"></ion-menu-button>
     </ion-buttons>
-    <ion-title size="large">Messagerie</ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar placeholder="Rechercher..."></ion-searchbar>
+    <ion-title *ngIf="!rechercher">Messagerie</ion-title>
+    <ion-searchbar *ngIf="rechercher" placeholder="Rechercher..."></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!rechercher" (click)="recherchons()" color="primary">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="rechercher" (click)="NeCherchonsPlus()" color="primary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item *ngFor="let chat of chats" (click)="goToChat(chat)">
     <ion-avatar *ngIf="chat.profil1.utilisateur.uid === utilisateur.uid" slot="start">
-      <img [src]="chat.profil2.utilisateur.photoURL ? chat.profil2.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
+      <img class="image-profil" [src]="chat.profil2.utilisateur.photoURL ? chat.profil2.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
     </ion-avatar>
     <ion-avatar *ngIf="chat.profil2.utilisateur.uid === utilisateur.uid" slot="start">
-      <img [src]="chat.profil1.utilisateur.photoURL ? chat.profil1.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
+      <img class="image-profil" [src]="chat.profil1.utilisateur.photoURL ? chat.profil1.utilisateur.photoURL: '../../../assets/img/user.png'" alt="" />
     </ion-avatar>
     <ion-label>
       <h3 *ngIf="chat.profil2.utilisateur.uid === utilisateur.uid">
@@ -34,7 +40,13 @@
       </p>
     </ion-label>
     <ion-note slot="end">
-      {{getDate(chat) | date: 'HH:mm'}}
+      <div style="margin-top: -7px;">
+        {{getDate(chat) | date: 'HH:mm'}}
+        <br>
+        <span *ngIf="chat.nonLus && chat.nonLus[utilisateur.uid]" style="text-align: right; float: right; background-color: #0f9b0f; padding: 3px; color: white; padding-left: 10px; padding-right: 10px; border-radius: 50%;">
+          {{chat.nonLus[utilisateur.uid]}}
+        </span>
+      </div>
     </ion-note>
   </ion-item>
 </ion-content>

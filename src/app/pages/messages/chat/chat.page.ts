@@ -32,6 +32,7 @@ export class ChatPage implements OnInit {
   actionSheet: any;
   chat: Chat;
   messagesGroupes = [];
+  aujourdhui = new Date().toISOString().split('T')[0];
 
   constructor(
     private userService: UserService,
@@ -41,9 +42,6 @@ export class ChatPage implements OnInit {
     private messagerie: MessagerieService,
     public actionSheetController: ActionSheetController
   ) {
-    setTimeout(() => {
-      this.content.scrollToBottom(200);
-    }, 2000);
   }
 
   ngOnInit() {
@@ -67,6 +65,7 @@ export class ChatPage implements OnInit {
                 this.userService.getProfil(this.utilisateur).then(monProfil => {
                   this.monProfil = monProfil;
                   this.chat = new Chat(profil, monProfil);
+                  this.getChat(this.chat.id);
                   console.log('this.chat');
                   console.log(this.chat);
                 });
@@ -176,6 +175,9 @@ export class ChatPage implements OnInit {
           this.messages.push(message);
         })
         this.messagesGroupes = this.messageGroupe(this.messages);
+        setTimeout(() => {
+          this.content.scrollToBottom(200);
+        }, 400);
       });
   }
 
@@ -187,14 +189,24 @@ export class ChatPage implements OnInit {
       messageChat.texte = this.messageText;
       messageChat.emetteurID = this.monProfil.utilisateur.uid;
       messageChat.date = new Date();
+      messageChat.lu = false;
       this.chat.dernierMessages = [];
       this.chat.dernierMessages.push(messageChat);
       this.chat.dernierMessageDate = new Date();
+      if (this.chat.nonLus) {
+      } else {
+        this.chat.nonLus = {};
+        this.chat.nonLus[this.profil.utilisateur.uid] = 0;
+      }
+      this.chat.nonLus[this.profil.utilisateur.uid] += 1;
 
       const db = firebase.firestore();
       db.collection(`messagesChats`)
         .doc(messageChat.id).set(JSON.parse(JSON.stringify(messageChat))).then(() => {
           this.saveChat(this.chat);
+          setTimeout(() => {
+            this.content.scrollToBottom(200);
+          }, 200);
         });
       this.messageText = '';
     }
@@ -203,12 +215,38 @@ export class ChatPage implements OnInit {
   saveChat(chat: Chat) {
     console.log('chat');
     console.log(chat);
-
     const db = firebase.firestore();
     db.collection(`chats`)
       .doc(chat.id).set(JSON.parse(JSON.stringify(chat))).then(() => {
 
-      })
+      });
+  }
+
+  getChat(id: string) {
+    const db = firebase.firestore();
+    db.collection(`chats`)
+      .doc(id).get().then((resultat) => {
+        this.chat = resultat.data() as Chat;
+        if (this.chat.dernierVus) {
+          this.chat.dernierVus[this.monProfil.utilisateur.uid] = new Date();
+        } else {
+          this.chat.dernierVus = {};
+          this.chat.dernierVus[this.monProfil.utilisateur.uid] = new Date();
+        }
+        if (this.chat.nonLus) {
+        } else {
+          this.chat.nonLus = {};
+        }
+        this.chat.nonLus[this.monProfil.utilisateur.uid] = 0;
+        this.saveChat(this.chat);
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('');
+        console.log('this.chat');
+        console.log(this.chat);
+      });
   }
 
   resolveDate(date) {

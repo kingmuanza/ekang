@@ -94,10 +94,6 @@ ion-item {
   padding-left: 10px;
   padding-right: 10px;
 }
-.msg-btn {
-  --padding-start: 0.5em;
-  --padding-end: 0.5em;
-}
 ion-item ion-note {
   font-size: 10px;
   margin-left: 8px;
@@ -109,7 +105,12 @@ ion-item ion-note ion-icon {
 }
 
 ion-footer ion-toolbar {
-  --background: #f4f4f4;
+}
+
+ion-footer {
+  &.header-md:before {
+    background: none;
+  }
 }
 ion-footer ion-button {
   font-weight: 600;
@@ -134,7 +135,7 @@ ion-input {
   margin-bottom: 5px;
   .ligne {
     height: 10px;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 0px solid #bbb;
   }
   .texte {
     text-align: center;
@@ -148,4 +149,42 @@ ion-input {
       background-color: #fff;
     }
   }
+}
+
+ion-button {
+  --border-radius: 50%;
+  --border-width: 50px;
+  height: 50px;
+}
+
+.button.muanza {
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+  background-color: green;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  padding-left: 7px;
+  padding-top: 2px;
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+textarea {
+  height: 40px;
+  padding: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 12px;
+  width: 100%;
+  border: 1px solid #444;
+  border-radius: 100px;
+  outline: none;
+
+}
+​textarea:focus { 
+  outline: none; 
+  border: 1px solid #0f9b0f;
 }
